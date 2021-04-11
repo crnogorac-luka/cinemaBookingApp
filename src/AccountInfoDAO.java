@@ -28,7 +28,7 @@ public class AccountInfoDAO {
 
     /**
      * @param email unique EMAIL of the AccountInfo we want to fetch from the
-     * table
+     *              table
      * @return object of class AccountInfo
      */
     public AccountInfo fetch(String email) {
@@ -53,7 +53,7 @@ public class AccountInfoDAO {
 
     /**
      * @param AccountInfo prepared object of class AccountInfo whose attributes
-     * are translated to column values of the new row in AccountInfo table
+     *                    are translated to column values of the new row in AccountInfo table
      * @return true if insertion is successful, false if otherwise
      */
     public boolean create(AccountInfo accountInfo) {
@@ -74,8 +74,8 @@ public class AccountInfoDAO {
 
     /**
      * @param AccountInfo prepared object of class AccountInfo whose attributes
-     * are translated to column values of the existing row with specified ID in
-     * AccountInfo table
+     *                    are translated to column values of the existing row with specified ID in
+     *                    AccountInfo table
      * @return true if insertion is successful, false if otherwise
      */
     public boolean update(AccountInfo accountInfo) {
@@ -152,7 +152,6 @@ public class AccountInfoDAO {
         }
 
         /**
-         *
          * @param email
          * @param password
          * @param role
@@ -164,7 +163,6 @@ public class AccountInfoDAO {
         }
 
         /**
-         *
          * @return
          */
         public String getEmail() {
@@ -172,7 +170,6 @@ public class AccountInfoDAO {
         }
 
         /**
-         *
          * @param email
          */
         public void setEmail(String email) {
@@ -180,7 +177,6 @@ public class AccountInfoDAO {
         }
 
         /**
-         *
          * @return
          */
         public String getPassword() {
@@ -188,7 +184,6 @@ public class AccountInfoDAO {
         }
 
         /**
-         *
          * @param password
          */
         public void setPassword(String password) {
@@ -196,7 +191,6 @@ public class AccountInfoDAO {
         }
 
         /**
-         *
          * @return
          */
         public Role getRole() {
@@ -204,10 +198,10 @@ public class AccountInfoDAO {
         }
 
         /**
-         *
          * @param role
          */
         public void setRole(Role role) {
             this.role = role;
         }
     }
+}

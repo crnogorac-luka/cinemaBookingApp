@@ -28,7 +28,7 @@ public class CashierDAO {
 
     /**
      * @param id unique Cashier ID of the Cashier we want to fetch from the
-     * table
+     *           table
      * @return object of class Cashier
      */
     public Cashier fetch(int id) {
@@ -55,7 +55,7 @@ public class CashierDAO {
 
     /**
      * @param cashierInfo prepared object of class Cashier whose attributes
-     * are translated to column values of the new row in Cashier table
+     *                    are translated to column values of the new row in Cashier table
      * @return true if insertion is successful, false if otherwise
      */
     public boolean create(Cashier cashierInfo) {
@@ -77,8 +77,8 @@ public class CashierDAO {
 
     /**
      * @param cashierInfo prepared object of class Cashier whose attributes
-     * are translated to column values of the existing row with specified CashierID in
-     * Cashier table
+     *                    are translated to column values of the existing row with specified CashierID in
+     *                    Cashier table
      * @return true if insertion is successful, false if otherwise
      */
     public boolean update(Cashier cashierInfo) {
@@ -169,6 +169,7 @@ public class CashierDAO {
         }
 
         // ACCESSORS
+
         /**
          * @return cashierID
          */
@@ -198,6 +199,7 @@ public class CashierDAO {
         }
 
         // MUTATORS
+
         /**
          * @param cashierID sets new cashierID
          */
@@ -226,3 +228,4 @@ public class CashierDAO {
             this.email = email;
         }
     }
+}
