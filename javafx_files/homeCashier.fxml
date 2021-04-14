@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="22.0" prefWidth="325.0" text="Reservations management" textAlignment="CENTER" textFill="#5cbfdd">
@@ -49,8 +48,8 @@
          <children>
             <Pane prefHeight="264.0" prefWidth="276.0">
                <children>
-                  <TextArea layoutX="38.0" layoutY="72.0" prefHeight="178.0" prefWidth="200.0" />
-                  <Label alignment="CENTER" layoutX="77.0" layoutY="31.0" prefHeight="17.0" prefWidth="122.0" text="Project info" textFill="#5cbfdd">
+                  <TextArea disable="true" layoutX="38.0" layoutY="72.0" prefHeight="178.0" prefWidth="200.0" />
+                  <Label alignment="CENTER" layoutX="77.0" layoutY="31.0" prefHeight="17.0" prefWidth="122.0" text="Projection info" textFill="#5cbfdd">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -59,7 +58,7 @@
             </Pane>
             <Pane prefHeight="264.0" prefWidth="275.0">
                <children>
-                  <TextArea layoutX="38.0" layoutY="72.0" prefHeight="178.0" prefWidth="200.0" />
+                  <TextArea disable="true" layoutX="38.0" layoutY="72.0" prefHeight="178.0" prefWidth="200.0" />
                   <Label alignment="CENTER" layoutX="63.0" layoutY="33.0" prefHeight="27.0" prefWidth="150.0" text="Reservation info" textFill="#5cbfdd">
                      <font>
                         <Font size="18.0" />
@@ -69,7 +68,7 @@
             </Pane>
             <Pane prefHeight="264.0" prefWidth="277.0">
                <children>
-                  <TextArea layoutX="39.0" layoutY="72.0" prefHeight="178.0" prefWidth="200.0" />
+                  <TextArea disable="true" layoutX="39.0" layoutY="72.0" prefHeight="178.0" prefWidth="200.0" />
                   <Label alignment="CENTER" layoutX="78.0" layoutY="34.0" prefHeight="17.0" prefWidth="122.0" text="Customer info" textFill="#5cbfdd">
                      <font>
                         <Font size="18.0" />

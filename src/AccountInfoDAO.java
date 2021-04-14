@@ -40,7 +40,7 @@ public class AccountInfoDAO {
             ArrayList<ArrayList<String>> row = db.getData("SELECT * FROM AccountInfo WHERE email = ?", values, false);
             fetchedAccount.setEmail(row.get(0).get(0));
             fetchedAccount.setPassword(row.get(0).get(1));
-            fetchedAccount.setRole(row.get(0).get(2));
+            fetchedAccount.setRole(Role.valueOf(row.get(0).get(2).toUpperCase()));
             return fetchedAccount;
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
@@ -60,7 +60,7 @@ public class AccountInfoDAO {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + accountInfo.getEmail());
         values.add(accountInfo.getPassword());
-        values.add(accountInfo.getRole());
+        values.add(accountInfo.getRole().toString());
 
         boolean response = false;
         try {
@@ -82,7 +82,7 @@ public class AccountInfoDAO {
         ArrayList<String> values = new ArrayList<String>();
         values.add(accountInfo.getEmail());
         values.add(accountInfo.getPassword());
-        values.add(accountInfo.getRole());
+        values.add(""+accountInfo.getRole());
 
         boolean response = false;
         try {
@@ -95,7 +95,7 @@ public class AccountInfoDAO {
     }
 
     /**
-     * @param id unique ID of the AccountInfo we want to delete from the table
+     * @param email unique ID of the AccountInfo we want to delete from the table
      * @return true if insertion is successful, false if otherwise
      */
     public boolean remove(String email) {
@@ -124,7 +124,7 @@ public class AccountInfoDAO {
                 AccountInfo currentAccount = new AccountInfo();
                 currentAccount.setEmail(record.get(0));
                 currentAccount.setPassword(record.get(1));
-                currentAccount.setRole(record.get(2));
+                currentAccount.setRole(Role.valueOf(record.get(2).toUpperCase()));
                 getList().add(currentAccount);
             }
 

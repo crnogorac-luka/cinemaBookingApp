@@ -1,3 +1,6 @@
+import javafx.application.Application;
+import javafx.stage.Stage;
+
 import java.util.Scanner;
 
 public class AppRunner {
@@ -20,5 +23,8 @@ public class AppRunner {
         if(close){
             System.out.println("close successful");
         }
+
+        Application.launch(View.class, args);
+
     }
 }
