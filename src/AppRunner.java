@@ -26,5 +26,6 @@ public class AppRunner {
 
         Application.launch(View.class, args);
 
+
     }
 }

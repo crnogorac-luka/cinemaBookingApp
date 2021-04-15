@@ -1,6 +1,8 @@
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -12,6 +14,8 @@ public class View extends Application{
     private Scene homeUserPage;
     private Scene seatsPage;
     private Scene homeCashierPage;
+
+
 
     public View() {
 
