@@ -1,10 +1,11 @@
 import java.util.ArrayList;
 
-public class TicketReservationDAO {
+public class TicketReservationDAO implements DAO<TicketReservationDAO.TicketReservation>{
 
 
         private DBConnect db;
         private ArrayList<TicketReservation> list;
+        private TicketReservation currentTicketReservation;
 
         /**
          * @param db object that contains database connection protocols
@@ -21,12 +22,20 @@ public class TicketReservationDAO {
             return list;
         }
 
+        public TicketReservation getCurrentTicketReservation() {
+            return currentTicketReservation;
+        }
+
+        public void setCurrentTicketReservation(TicketReservation currentTicketReservation) {
+            this.currentTicketReservation = currentTicketReservation;
+        }
 
         /**
          * @param id unique ID of the TicketReservation we want to fetch from the table
          * @return object of class Movie
          */
-        public TicketReservation fetch(int id) {
+        @Override
+        public void fetch(int id) {
             ArrayList<String> values = new ArrayList<String>();
             values.add("" + id);
             TicketReservation fetchedTicketReservation = new TicketReservation();
@@ -37,13 +46,11 @@ public class TicketReservationDAO {
                 fetchedTicketReservation.setReservationID(Integer.parseInt(row.get(0).get(1)));
 
 
-                return fetchedTicketReservation;
+                setCurrentTicketReservation(fetchedTicketReservation);
             } catch (IndexOutOfBoundsException ex) {
                 System.out.println("The record does not exist.");
-                return null;
             } catch (Exception e) {
                 e.printStackTrace();
-                return null;
             }
         }
 
@@ -52,6 +59,7 @@ public class TicketReservationDAO {
          * @param ticketReservation prepared object of class Customer whose attributes are translated to column values of the new row in Ticket table
          * @return true if insertion is successful, false if otherwise
          */
+        @Override
         public boolean create(TicketReservation ticketReservation) {
             ArrayList<String> values = new ArrayList<String>();
             values.add("" + ticketReservation.getTicketID());
@@ -72,12 +80,13 @@ public class TicketReservationDAO {
          * @param ticketReservation prepared object of class TicketReservation whose attributes are translated to column values of the existing row with specified ID in TicketReservation table
          * @return true if insertion is successful, false if otherwise
          */
-        public boolean update(TicketReservation ticketReservation) {
+        @Override
+        public boolean update(int id, TicketReservation ticketReservation) {
             ArrayList<String> values = new ArrayList<String>();
             values.add("" + ticketReservation.getReservationID());
-
             values.add("" + ticketReservation.getTicketID());
 
+            values.add("" + id);
             boolean response = false;
             try {
                 response = db.setData("UPDATE TicketReservation SET ReservationID = '?' WHERE TicketID = '?'", values);
@@ -92,6 +101,7 @@ public class TicketReservationDAO {
          * @param id unique ID of the ticketReservation we want to delete from the table
          * @return true if insertion is successful, false if otherwise
          */
+        @Override
         public boolean remove(int id) {
             ArrayList<String> values = new ArrayList<String>();
             values.add("" + id);
@@ -110,6 +120,7 @@ public class TicketReservationDAO {
         /**
          * retrieves all rows from TicketReservation table and translates them to objects of class TicketReservation and stores them in the list
          */
+        @Override
         public void fetchAll() {
 
             try {

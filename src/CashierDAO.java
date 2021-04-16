@@ -1,22 +1,27 @@
-
 import java.util.ArrayList;
-import java.util.*;
-import java.sql.*;
 
 /**
  * class that represents cashier account info 
  * Authors: Igor, Ante
  */
-public class CashierDAO {
+public class CashierDAO implements DAO<CashierDAO.Cashier> {
 
     private DBConnect db;
     private ArrayList<Cashier> list;
-
+    private CashierDAO.Cashier currentCashier;
     /**
      * @param db object that contains database connection protocols
      */
     public CashierDAO(DBConnect db) {
         this.db = db;
+    }
+
+    public Cashier getCurrentCashier() {
+        return currentCashier;
+    }
+
+    public void setCurrentCashier(Cashier currentCashier) {
+        this.currentCashier = currentCashier;
     }
 
     /**
@@ -27,11 +32,10 @@ public class CashierDAO {
     }
 
     /**
-     * @param id unique Cashier ID of the Cashier we want to fetch from the
-     *           table
-     * @return object of class Cashier
+     * @param id unique Cashier ID of the Cashier we want to fetch from the table
      */
-    public Cashier fetch(int id) {
+    @Override
+    public void fetch(int id) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + id);
         Cashier fetchedCashier = new Cashier();
@@ -43,13 +47,11 @@ public class CashierDAO {
             fetchedCashier.setSalary(Double.parseDouble(row.get(0).get(2)));
             fetchedCashier.setEmail(row.get(0).get(3));
 
-            return fetchedCashier;
+            setCurrentCashier(fetchedCashier);
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
-            return null;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
     }
 
@@ -58,6 +60,7 @@ public class CashierDAO {
      *                    are translated to column values of the new row in Cashier table
      * @return true if insertion is successful, false if otherwise
      */
+    @Override
     public boolean create(Cashier cashierInfo) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + cashierInfo.getCashierID());
@@ -81,13 +84,15 @@ public class CashierDAO {
      *                    Cashier table
      * @return true if insertion is successful, false if otherwise
      */
-    public boolean update(Cashier cashierInfo) {
+    @Override
+    public boolean update(int id, Cashier cashierInfo) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + cashierInfo.getCashierID());
         values.add(cashierInfo.getName());
         values.add("" + cashierInfo.getSalary());
         values.add(cashierInfo.getEmail());
 
+        values.add("" + id);
         boolean response = false;
         try {
             response = db.setData("UPDATE Cashier SET CashierID = '?', name = '?', salary = '?', email = '?'", values);
@@ -102,6 +107,7 @@ public class CashierDAO {
      * @param id unique ID of the Cashier we want to delete from the table
      * @return true if insertion is successful, false if otherwise
      */
+    @Override
     public boolean remove(int id) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + id);
@@ -120,6 +126,7 @@ public class CashierDAO {
      * retrieves all rows from Cashier table and translates them to objects
      * of class Cashier and stores them in the list
      */
+    @Override
     public void fetchAll() {
 
         try {
@@ -144,7 +151,7 @@ public class CashierDAO {
      * inner class of CashierDAO that serves as an object model used for
      * object-oriented manipulation of database data
      */
-    public class Cashier {
+     class Cashier {
 
         public int cashierID;
         public String name;

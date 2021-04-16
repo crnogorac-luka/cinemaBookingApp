@@ -1,9 +1,10 @@
 import java.util.ArrayList;
 
-public class TicketDAO {
+public class TicketDAO implements DAO<TicketDAO.Ticket>{
 
         private DBConnect db;
         private ArrayList<Ticket> list;
+        private Ticket currentTicket;
 
         /**
          * @param db object that contains database connection protocols
@@ -20,12 +21,20 @@ public class TicketDAO {
             return list;
         }
 
+        public Ticket getCurrentTicket() {
+            return currentTicket;
+        }
+
+        public void setCurrentTicket(Ticket currentTicket) {
+            this.currentTicket = currentTicket;
+        }
 
         /**
          * @param id unique ID of the Ticket we want to fetch from the table
          * @return object of class Movie
          */
-        public Ticket fetch(int id) {
+        @Override
+        public void fetch(int id) {
             ArrayList<String> values = new ArrayList<String>();
             values.add("" + id);
             Ticket fetchedTicket = new Ticket();
@@ -37,13 +46,11 @@ public class TicketDAO {
                 fetchedTicket.setCashierID(Integer.parseInt(row.get(0).get(1)));
 
 
-                return fetchedTicket;
+                setCurrentTicket(fetchedTicket);
             } catch (IndexOutOfBoundsException ex) {
                 System.out.println("The record does not exist.");
-                return null;
             } catch (Exception e) {
                 e.printStackTrace();
-                return null;
             }
         }
 
@@ -52,6 +59,7 @@ public class TicketDAO {
          * @param ticket prepared object of class Ticket whose attributes are translated to column values of the new row in Ticket table
          * @return true if insertion is successful, false if otherwise
          */
+        @Override
         public boolean create(Ticket ticket) {
             ArrayList<String> values = new ArrayList<String>();
             values.add("" + ticket.getTicketID());
@@ -73,14 +81,14 @@ public class TicketDAO {
          * @param ticket prepared object of class Ticket whose attributes are translated to column values of the existing row with specified ID in Ticket table
          * @return true if insertion is successful, false if otherwise
          */
-        public boolean update(Ticket ticket) {
+        @Override
+        public boolean update(int id, Ticket ticket) {
             ArrayList<String> values = new ArrayList<String>();
             values.add("" + ticket.getPrice());
             values.add("" + ticket.getCashierID());
-
-
             values.add("" + ticket.getTicketID());
 
+            values.add("" + id);
             boolean response = false;
             try {
                 response = db.setData("UPDATE Ticket SET Price = '?', CashierID = '?',  WHERE TicketID = '?'", values);
@@ -95,6 +103,7 @@ public class TicketDAO {
          * @param id unique ID of the Ticket we want to delete from the table
          * @return true if insertion is successful, false if otherwise
          */
+        @Override
         public boolean remove(int id) {
             ArrayList<String> values = new ArrayList<String>();
             values.add("" + id);
@@ -113,6 +122,7 @@ public class TicketDAO {
         /**
          * retrieves all rows from Ticket table and translates them to objects of class Ticket and stores them in the list
          */
+        @Override
         public void fetchAll() {
 
             try {

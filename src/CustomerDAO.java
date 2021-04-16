@@ -5,8 +5,6 @@ public class CustomerDAO implements DAO<CustomerDAO.Customer>{
 
     private DBConnect db;
     private ArrayList<Customer> list;
-
-
     private Customer currentCustomer;
 
     /**
@@ -35,7 +33,6 @@ public class CustomerDAO implements DAO<CustomerDAO.Customer>{
 
     /**
      * @param id unique ID of the customer we want to fetch from the table
-     * @return object of class Movie
      */
     @Override
     public void fetch(int id) {

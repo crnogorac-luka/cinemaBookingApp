@@ -6,10 +6,11 @@ import java.util.Date;
 /**
  * class that represents one unique projection
  */
-public class ProjectionDAO {
+public class ProjectionDAO implements DAO<ProjectionDAO.Projection>{
 
     private DBConnect db;
     private ArrayList<Projection> list;
+    private Projection currentProjection;
 
     /**
      * @param db object that contains database connection protocols
@@ -26,12 +27,19 @@ public class ProjectionDAO {
         return list;
     }
 
+    public Projection getCurrentProjection() {
+        return currentProjection;
+    }
+
+    public void setCurrentProjection(Projection currentProjection) {
+        this.currentProjection = currentProjection;
+    }
 
     /**
      * @param id unique ID of the projection we want to fetch from the table
-     * @return object of class Projection
      */
-    public Projection fetch(int id) {
+    @Override
+    public void fetch(int id) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + id);
         Projection fetchedProjection = new Projection();
@@ -46,13 +54,11 @@ public class ProjectionDAO {
             fetchedProjection.setRoomID(Integer.parseInt(row.get(0).get(4)));
             fetchedProjection.setMovieID(Integer.parseInt(row.get(0).get(5)));
 
-            return fetchedProjection;
+            setCurrentProjection(fetchedProjection);
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
-            return null;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
     }
 
@@ -61,6 +67,7 @@ public class ProjectionDAO {
      * @param projection prepared object of class Projection whose attributes are translated to column values of the new row in Projection table
      * @return true if insertion is successful, false if otherwise
      */
+    @Override
     public boolean create(Projection projection) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + projection.getProjectionID());
@@ -86,7 +93,8 @@ public class ProjectionDAO {
      * @param projection prepared object of class Projection whose attributes are translated to column values of the existing row with specified ID in Projection table
      * @return true if insertion is successful, false if otherwise
      */
-    public boolean update(Projection projection) {
+    @Override
+    public boolean update(int id, Projection projection) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + projection.getStartTime());
         values.add("" + projection.getEndTime());
@@ -96,6 +104,7 @@ public class ProjectionDAO {
         values.add("" + projection.getMovieID());
         values.add("" + projection.getProjectionID());
 
+        values.add("" + id);
         boolean response = false;
         try {
             response = db.setData("UPDATE Projection SET StartTime = '?', EndTime = '?', Date = '?', RoomID = '?', MovieID = '?' WHERE ProjectionID = '?'", values);
@@ -110,6 +119,7 @@ public class ProjectionDAO {
      * @param id unique ID of the projection we want to delete from the table
      * @return true if insertion is successful, false if otherwise
      */
+    @Override
     public boolean remove(int id) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + id);
@@ -128,6 +138,7 @@ public class ProjectionDAO {
     /**
      * retrieves all rows from Projection table and translates them to objects of class Projection and stores them in the list
      */
+    @Override
     public void fetchAll() {
 
         try {

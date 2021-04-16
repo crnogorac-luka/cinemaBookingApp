@@ -3,10 +3,11 @@ import java.util.ArrayList;
 /**
  * class that represents one unique reservation
  */
-public class ProjectionReservationDAO {
+public class ProjectionReservationDAO implements DAO<ProjectionReservationDAO.ProjectionReservation>{
 
     private DBConnect db;
     private ArrayList<ProjectionReservation> list;
+    private ProjectionReservation currentProjectionReservation;
 
     /**
      * @param db object that contains database connection protocols
@@ -23,11 +24,20 @@ public class ProjectionReservationDAO {
         return list;
     }
 
+    public ProjectionReservation getCurrentProjectionReservation() {
+        return currentProjectionReservation;
+    }
+
+    public void setCurrentProjectionReservation(ProjectionReservation currentProjectionReservation) {
+        this.currentProjectionReservation = currentProjectionReservation;
+    }
+
     /**
      * @param id unique ID of the PROJECTION_RESERVATION we want to fetch from the table
      * @return object of class ProjectionReservation
      */
-    public ProjectionReservation fetch(int id) {
+    @Override
+    public void fetch(int id) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + id);
         ProjectionReservation fetchedProjectionReservation = new ProjectionReservation();
@@ -37,13 +47,11 @@ public class ProjectionReservationDAO {
             fetchedProjectionReservation.setProjectionID(Integer.parseInt(row.get(0).get(0)));
             fetchedProjectionReservation.setReservationID(Integer.parseInt(row.get(0).get(1)));
 
-            return fetchedProjectionReservation;
+            setCurrentProjectionReservation(fetchedProjectionReservation);
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
-            return null;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
     }
 
@@ -52,6 +60,7 @@ public class ProjectionReservationDAO {
      * @param projectionReservation prepared object of class ProjectionReservation whose attributes are translated to column values of the new row in PROJECTION_RESERVATION table
      * @return true if insertion is successful, false if otherwise
      */
+    @Override
     public boolean create(ProjectionReservation projectionReservation) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + projectionReservation.getProjectionID());
@@ -71,11 +80,13 @@ public class ProjectionReservationDAO {
      * @param projectionReservation prepared object of class ProjectionReservation whose attributes are translated to column values of the existing row with specified ID in PROJECTION_RESERVATION table
      * @return true if insertion is successful, false if otherwise
      */
-    public boolean update(ProjectionReservation projectionReservation) {
+    @Override
+    public boolean update(int id, ProjectionReservation projectionReservation) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + projectionReservation.getReservationID());
         values.add("" + projectionReservation.getProjectionID());
 
+        values.add("" + id);
         boolean response = false;
         try {
             response = db.setData("UPDATE PROJECTION_RESERVATION SET ReservationID = ? WHERE ProjectionID = ?", values);
@@ -87,9 +98,10 @@ public class ProjectionReservationDAO {
     }
 
     /**
-     * @param id unique ID of the PROJECTION_RESERVATION we want to delete from the table
+     * @param id unique ID of the  PROJECTION_RESERVATION we want to delete from the table
      * @return true if insertion is successful, false if otherwise
      */
+    @Override
     public boolean remove(int id) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + id);
@@ -108,6 +120,7 @@ public class ProjectionReservationDAO {
     /**
      * retrieves all rows from PROJECTION_RESERVATION table and translates them to objects of class ProjectionReservation and stores them in the list
      */
+    @Override
     public void fetchAll() {
 
         try {

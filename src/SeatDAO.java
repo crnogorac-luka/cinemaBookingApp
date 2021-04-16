@@ -3,10 +3,11 @@ import java.util.ArrayList;
 /**
  * class that represents one unique seat
  */
-public class SeatDAO {
+public class SeatDAO implements DAO<SeatDAO.Seat>{
 
     private DBConnect db;
     private ArrayList<Seat> list;
+    private Seat currentSeat;
 
     /**
      * @param db object that contains database connection protocols
@@ -23,11 +24,20 @@ public class SeatDAO {
         return list;
     }
 
+    public Seat getCurrentSeat() {
+        return currentSeat;
+    }
+
+    public void setCurrentSeat(Seat currentSeat) {
+        this.currentSeat = currentSeat;
+    }
+
     /**
      * @param id unique ID of the seat we want to fetch from the table
      * @return object of class Seat
      */
-    public Seat fetch(int id) {
+    @Override
+    public void fetch(int id) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + id);
         Seat fetchedSeat = new Seat();
@@ -38,13 +48,11 @@ public class SeatDAO {
             fetchedSeat.setRow(Integer.parseInt(row.get(0).get(1)));
             fetchedSeat.setColumn(Integer.parseInt(row.get(0).get(2)));
 
-            return fetchedSeat;
+            setCurrentSeat(fetchedSeat);
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
-            return null;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
     }
 
@@ -53,6 +61,7 @@ public class SeatDAO {
      * @param seat prepared object of class Seat whose attributes are translated to column values of the new row in Seat table
      * @return true if insertion is successful, false if otherwise
      */
+    @Override
     public boolean create(Seat seat) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + seat.getSeatCode());
@@ -73,12 +82,14 @@ public class SeatDAO {
      * @param seat prepared object of class Seat whose attributes are translated to column values of the existing row with specified ID in Seat table
      * @return true if insertion is successful, false if otherwise
      */
-    public boolean update(Seat seat) {
+    @Override
+    public boolean update(int id, Seat seat) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + seat.getRow());
         values.add("" + seat.getColumn());
         values.add("" + seat.getSeatCode());
 
+        values.add("" + id);
         boolean response = false;
         try {
             response = db.setData("UPDATE Seat SET Row = ?, Column = ? WHERE SeatCode = ?", values);
@@ -93,6 +104,7 @@ public class SeatDAO {
      * @param id unique ID of the seat we want to delete from the table
      * @return true if insertion is successful, false if otherwise
      */
+    @Override
     public boolean remove(int id) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + id);
@@ -111,6 +123,7 @@ public class SeatDAO {
     /**
      * retrieves all rows from Seat table and translates them to objects of class Seat and stores them in the list
      */
+    @Override
     public void fetchAll() {
 
         try {

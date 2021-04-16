@@ -3,10 +3,11 @@ import java.util.ArrayList;
 /**
  * Represents a room (hall) in a cinema with a unique ID
  */
-public class RoomDAO {
+public class RoomDAO implements DAO<RoomDAO.Room>{
 
     private DBConnect db;
     private ArrayList<Room> list;
+    private Room currentRoom;
 
     /**
      * @param db object that contains database connection protocols
@@ -23,12 +24,20 @@ public class RoomDAO {
         return list;
     }
 
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public void setCurrentRoom(Room currentRoom) {
+        this.currentRoom = currentRoom;
+    }
 
     /**
      * @param id unique ID of the room we want to fetch from the table
      * @return object of class Room
      */
-    public Room fetch(int id) {
+    @Override
+    public void fetch(int id) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + id);
         Room fetchedRoom = new Room();
@@ -37,13 +46,11 @@ public class RoomDAO {
             ArrayList<ArrayList<String>> row = db.getData("SELECT * FROM Room WHERE RoomID = ?", values, false);
             fetchedRoom.setRoomID(Integer.parseInt(row.get(0).get(0)));
 
-            return fetchedRoom;
+            setCurrentRoom(fetchedRoom);
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
-            return null;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
     }
 
@@ -52,6 +59,7 @@ public class RoomDAO {
      * @param room prepared object of class Room whose attributes are translated to column values of the new row in Room table
      * @return true if insertion is successful, false if otherwise
      */
+    @Override
     public boolean create(Room room) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + room.getRoomID());
@@ -70,11 +78,13 @@ public class RoomDAO {
      * @param room prepared object of class Room whose attributes are translated to column values of the existing row with specified ID in Room table
      * @return true if insertion is successful, false if otherwise
      */
-    public boolean update(Room room) {
+    @Override
+    public boolean update(int id, Room room) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + room.getRoomID());
         values.add("" + room.getRoomID());
 
+        values.add("" + id);
         boolean response = false;
         try {
             response = db.setData("UPDATE Room SET RoomID = '?' WHERE RoomID = '?'", values);
@@ -89,6 +99,7 @@ public class RoomDAO {
      * @param id unique ID of the room we want to delete from the table
      * @return true if insertion is successful, false if otherwise
      */
+    @Override
     public boolean remove(int id) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + id);
@@ -107,6 +118,7 @@ public class RoomDAO {
     /**
      * retrieves all rows from Room table and translates them to objects of class Room and stores them in the list
      */
+    @Override
     public void fetchAll() {
 
         try {
@@ -125,7 +137,7 @@ public class RoomDAO {
     }
 
 
-    public class Room {
+    class Room {
 
         private int roomID;
 

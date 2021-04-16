@@ -3,10 +3,11 @@ import java.util.ArrayList;
 /**
  * class that represents one unique movie
  */
-public class MovieDAO {
+public class MovieDAO implements DAO<MovieDAO.Movie>{
 
     private DBConnect db;
     private ArrayList<Movie> list;
+    private Movie currentMovie;
 
     /**
      * @param db object that contains database connection protocols
@@ -23,12 +24,20 @@ public class MovieDAO {
         return list;
     }
 
+    public Movie getCurrentMovie() {
+        return currentMovie;
+    }
+
+    public void setCurrentMovie(Movie currentMovie) {
+        this.currentMovie = currentMovie;
+    }
 
     /**
      * @param id unique ID of the movie we want to fetch from the table
      * @return object of class Movie
      */
-    public Movie fetch(int id) {
+    @Override
+    public void fetch(int id) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + id);
         Movie fetchedMovie = new Movie();
@@ -44,13 +53,11 @@ public class MovieDAO {
             if (is3D.equals("Yes")) fetchedMovie.setIs3D(true);
             else fetchedMovie.setIs3D(false);
 
-            return fetchedMovie;
+            setCurrentMovie(fetchedMovie);
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
-            return null;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
     }
 
@@ -59,6 +66,7 @@ public class MovieDAO {
      * @param movie prepared object of class Movie whose attributes are translated to column values of the new row in Movie table
      * @return true if insertion is successful, false if otherwise
      */
+    @Override
     public boolean create(Movie movie) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + movie.getMovieID());
@@ -83,7 +91,8 @@ public class MovieDAO {
      * @param movie prepared object of class Movie whose attributes are translated to column values of the existing row with specified ID in Movie table
      * @return true if insertion is successful, false if otherwise
      */
-    public boolean update(Movie movie) {
+    @Override
+    public boolean update(int id, Movie movie) {
         ArrayList<String> values = new ArrayList<String>();
         values.add(movie.getTitle());
         values.add(movie.getGenre());
@@ -93,6 +102,7 @@ public class MovieDAO {
         else values.add("No");
         values.add("" + movie.getMovieID());
 
+        values.add("" + id);
         boolean response = false;
         try {
             response = db.setData("UPDATE Movie SET Title = '?', Genre = '?', Description = '?', Duration = '?', Is3D = '?' WHERE MovieID = '?'", values);
@@ -107,6 +117,7 @@ public class MovieDAO {
      * @param id unique ID of the movie we want to delete from the table
      * @return true if insertion is successful, false if otherwise
      */
+    @Override
     public boolean remove(int id) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + id);
@@ -125,6 +136,7 @@ public class MovieDAO {
     /**
      * retrieves all rows from Movie table and translates them to objects of class Movie and stores them in the list
      */
+    @Override
     public void fetchAll() {
 
         try {
