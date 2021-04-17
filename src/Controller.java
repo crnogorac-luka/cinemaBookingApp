@@ -116,13 +116,13 @@ public class Controller {
     /**
      * buyTickets listener
      */
-    private class buyTickets implements ActionListener{
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-        }
-    }
+//    private class buyTickets implements ActionListener{
+//
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//
+//        }
+//    }
 
 
     // HOME CASHIER LISTENERS
