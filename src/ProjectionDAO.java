@@ -35,6 +35,11 @@ public class ProjectionDAO implements DAO<ProjectionDAO.Projection>{
         this.currentProjection = currentProjection;
     }
 
+    @Override
+    public Projection getCurrentItem() {
+        return currentProjection;
+    }
+
     /**
      * @param id unique ID of the projection we want to fetch from the table
      */

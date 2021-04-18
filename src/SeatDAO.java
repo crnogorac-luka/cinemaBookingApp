@@ -32,6 +32,11 @@ public class SeatDAO implements DAO<SeatDAO.Seat>{
         this.currentSeat = currentSeat;
     }
 
+    @Override
+    public Seat getCurrentItem() {
+        return currentSeat;
+    }
+
     /**
      * @param id unique ID of the seat we want to fetch from the table
      * @return object of class Seat

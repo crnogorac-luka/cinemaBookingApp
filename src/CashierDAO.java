@@ -31,6 +31,11 @@ public class CashierDAO implements DAO<CashierDAO.Cashier> {
         return list;
     }
 
+    @Override
+    public Cashier getCurrentItem() {
+        return currentCashier;
+    }
+
     /**
      * @param id unique Cashier ID of the Cashier we want to fetch from the table
      */

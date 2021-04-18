@@ -28,6 +28,8 @@ public class View extends Application {
             VBox homeCashierPageBox = FXMLLoader.<VBox>load(getClass().getResource("/javafx_files/homeCashier.fxml"));
             homeCashierPage = new HomeUserScene(homeCashierPageBox);
 
+            launch("");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,7 +42,23 @@ public class View extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         launch(args);
+    }*/
+
+    public LoginScene getLoginPage() {
+        return loginPage;
+    }
+
+    public HomeUserScene getHomeUserPage() {
+        return homeUserPage;
+    }
+
+    public SeatsScene getSeatsPage() {
+        return seatsPage;
+    }
+
+    public HomeUserScene getHomeCashierPage() {
+        return homeCashierPage;
     }
 }

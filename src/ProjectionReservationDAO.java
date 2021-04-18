@@ -32,6 +32,11 @@ public class ProjectionReservationDAO implements DAO<ProjectionReservationDAO.Pr
         this.currentProjectionReservation = currentProjectionReservation;
     }
 
+    @Override
+    public ProjectionReservation getCurrentItem() {
+        return currentProjectionReservation;
+    }
+
     /**
      * @param id unique ID of the PROJECTION_RESERVATION we want to fetch from the table
      * @return object of class ProjectionReservation

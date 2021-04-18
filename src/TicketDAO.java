@@ -29,7 +29,12 @@ public class TicketDAO implements DAO<TicketDAO.Ticket>{
             this.currentTicket = currentTicket;
         }
 
-        /**
+    @Override
+    public Ticket getCurrentItem() {
+        return currentTicket;
+    }
+
+    /**
          * @param id unique ID of the Ticket we want to fetch from the table
          * @return object of class Movie
          */

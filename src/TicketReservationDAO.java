@@ -30,7 +30,12 @@ public class TicketReservationDAO implements DAO<TicketReservationDAO.TicketRese
             this.currentTicketReservation = currentTicketReservation;
         }
 
-        /**
+    @Override
+    public TicketReservation getCurrentItem() {
+        return currentTicketReservation;
+    }
+
+    /**
          * @param id unique ID of the TicketReservation we want to fetch from the table
          * @return object of class Movie
          */

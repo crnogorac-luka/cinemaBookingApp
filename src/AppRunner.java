@@ -1,11 +1,9 @@
-import javafx.application.Application;
-import javafx.stage.Stage;
 
 import java.util.Scanner;
 
 public class AppRunner {
     public static void main(String[] args) {
-        /*DBConnect dbConnect = new DBConnect();
+        DBConnect dbConnect = new DBConnect();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please provide below details to connect MySQL Database");
         System.out.println("Enter Database");
@@ -22,9 +20,11 @@ public class AppRunner {
         boolean close = dbConnect.close();
         if(close){
             System.out.println("close successful");
-        }*/
+        }
 
-        Application.launch(View.class, args);
+        Model model = new Model(dbConnect);
+        View view = new View();
+        new Controller(view, model);
 
 
     }

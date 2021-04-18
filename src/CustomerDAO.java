@@ -22,7 +22,8 @@ public class CustomerDAO implements DAO<CustomerDAO.Customer>{
         return list;
     }
 
-    public Customer getCurrentCustomer() {
+    @Override
+    public Customer getCurrentItem() {
         return currentCustomer;
     }
 

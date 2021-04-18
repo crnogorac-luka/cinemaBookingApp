@@ -69,7 +69,7 @@
                   </Label>
                   <TextField promptText="E-mail" style="-fx-border-radius: 10px;" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <PasswordField promptText="Password" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <Button mnemonicParsing="false" style="-fx-background-color: lightblue;" text="Log In" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                  <Button fx:id="loginBtn" mnemonicParsing="false" style="-fx-background-color: lightblue;" text="Log In" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                   <Label text="No account?" textFill="#2f2f2f" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                      <font>
                         <Font size="18.0" />

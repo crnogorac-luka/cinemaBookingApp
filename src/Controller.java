@@ -1,3 +1,6 @@
+import javafx.event.Event;
+import javafx.event.EventHandler;
+
 import java.awt.event.*;
 
 /**
@@ -7,17 +10,32 @@ import java.awt.event.*;
 
 public class Controller {
 
+    private View view;
+    private Model model;
+
+    public Controller(View view, Model model) {
+        this.view = view;
+        this.model = model;
+
+        EventHandler loginUser = new LoginUser();
+
+        this.view.getLoginPage().attachHandlerLoginBtn(loginUser);
+
+
+    }
 
     // LOGIN SCREEN LISTENERS
 
     /**
      * loginUser listener
      */
-    private class loginUser implements ActionListener {
+    private class LoginUser implements EventHandler {
 
         @Override
-        public void actionPerformed(ActionEvent e) {
-
+        public void handle(Event e) {
+            String id = view.getLoginPage().getEmail().getText();
+            model.getDaoCollection().get("customer").fetch(Integer.parseInt(id));
+            System.out.println(((CustomerDAO.Customer) model.getDaoCollection().get("customer").getCurrentItem()).getFirstName());
         }
     }
 

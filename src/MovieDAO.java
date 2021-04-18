@@ -32,6 +32,11 @@ public class MovieDAO implements DAO<MovieDAO.Movie>{
         this.currentMovie = currentMovie;
     }
 
+    @Override
+    public Movie getCurrentItem() {
+        return currentMovie;
+    }
+
     /**
      * @param id unique ID of the movie we want to fetch from the table
      * @return object of class Movie
