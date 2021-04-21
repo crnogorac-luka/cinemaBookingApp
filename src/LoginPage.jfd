@@ -1,0 +1,75 @@
+JFDML JFormDesigner: "7.0.3.0.337" Java: "11.0.6" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.intellij.uiDesigner.core.GridLayoutManager ) {
+			"$columnCount": 1
+			"$rowCount": 7
+		} ) {
+			name: "this"
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "Cinema Booking App"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 15, false )
+				"foreground": new java.awt.Color( 102, 204, 255, 255 )
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label2"
+				"text": "Login"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 7, false )
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"row": 1
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField1"
+				"toolTipText": "E-mail"
+				"text": "E-mail"
+				auxiliary() {
+					"JavaCodeGenerator.variableName": "loginFld"
+				}
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"row": 2
+				"minimumSize": &Dimension0 new java.awt.Dimension( 200, 20 )
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField2"
+				"toolTipText": "Password"
+				"text": "Password"
+				auxiliary() {
+					"JavaCodeGenerator.variableName": "passwordFld"
+				}
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"row": 3
+				"minimumSize": #Dimension0
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button1"
+				"text": "Login"
+				"background": new java.awt.Color( 102, 204, 255, 255 )
+				auxiliary() {
+					"JavaCodeGenerator.variableName": "loginBtn"
+				}
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"row": 4
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label3"
+				"text": "Don't have an account?"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 7, false )
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"row": 5
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button2"
+				"text": "Register"
+				"background": new java.awt.Color( 102, 204, 255, 255 )
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"row": 6
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 5, 0 )
+			"size": new java.awt.Dimension( 885, 575 )
+		} )
+	}
+}

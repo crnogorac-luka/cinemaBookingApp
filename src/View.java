@@ -1,23 +1,23 @@
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+public class View {
 
-import java.io.IOException;
-
-public class View extends Application {
-
-    private LoginScene loginPage;
-    private HomeUserScene homeUserPage;
-    private SeatsScene seatsPage;
-    private HomeUserScene homeCashierPage;
+    private LoginPage loginPage;
+    private HomeUserPage homeUserPage;
+    private HomeCashierPage homeCashierPage;
+    private SeatsPage seatsPage;
 
 
     public View() {
 
-        try {
-            VBox loginPageBox = FXMLLoader.load(getClass().getResource("/javafx_files/login.fxml"));
-            loginPage = new LoginScene(loginPageBox);
+            loginPage = new LoginPage();
+/*
+            VBox loginPageBox = new LoginBox();
+            homeUserPage = new Scene(loginPageBox);
+
+            VBox loginPageBox = new LoginBox();
+            seatsPage = new Scene(loginPageBox);
+
+            VBox loginPageBox = new LoginBox();
+            homeCashierPage = new Scene(loginPageBox);
 
             VBox homeUserPageBox = FXMLLoader.<VBox>load(getClass().getResource("/javafx_files/homeUser.fxml"));
             homeUserPage = new HomeUserScene(homeUserPageBox);
@@ -28,37 +28,26 @@ public class View extends Application {
             VBox homeCashierPageBox = FXMLLoader.<VBox>load(getClass().getResource("/javafx_files/homeCashier.fxml"));
             homeCashierPage = new HomeUserScene(homeCashierPageBox);
 
-            launch("");
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+ */
+
+
     }
 
 
-    @Override
-    public void start(Stage primaryStage) {
-        primaryStage.setScene(loginPage);
-        primaryStage.show();
-    }
-
-    /*public static void main(String[] args) {
-        launch(args);
-    }*/
-
-    public LoginScene getLoginPage() {
+    public LoginPage getLoginPage() {
         return loginPage;
     }
 
-    public HomeUserScene getHomeUserPage() {
+    public HomeUserPage getHomeUserPage() {
         return homeUserPage;
     }
 
-    public SeatsScene getSeatsPage() {
-        return seatsPage;
+    public HomeCashierPage getHomeCashierPage() {
+        return homeCashierPage;
     }
 
-    public HomeUserScene getHomeCashierPage() {
-        return homeCashierPage;
+    public SeatsPage getSeatsPage() {
+        return seatsPage;
     }
 }
