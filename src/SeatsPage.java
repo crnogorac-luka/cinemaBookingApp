@@ -1,4 +1,5 @@
 
+import java.awt.*;
 import javax.swing.*;
 
 public class SeatsPage extends JFrame {
@@ -26,5 +27,17 @@ public class SeatsPage extends JFrame {
 
     public JButton getBuyTicketBtn() {
         return buyTicketBtn;
+    }
+
+    private void initComponents() {
+        // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
+        // Generated using JFormDesigner Evaluation license - Luka Crnogorac
+
+        //======== this ========
+        var contentPane = getContentPane();
+        contentPane.setLayout(new BorderLayout(7, 7));
+        pack();
+        setLocationRelativeTo(getOwner());
+        // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 }
