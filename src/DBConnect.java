@@ -8,7 +8,14 @@ public class DBConnect {
     private String mySQL;
     private Connection connection;
 
+    private DBException dbException;
+
     public DBConnect() {
+        userName = "";
+        password = "";
+        mySQL = "";
+        connection = null;
+        dbException = null;
     }
 
     public DBConnect(String userName, String password, String mySQL) {
@@ -17,63 +24,74 @@ public class DBConnect {
         this.mySQL = mySQL;
     }
 
+    // GETTERS
+
     public String getUserName() {
         return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getMySQL() {
         return mySQL;
-    }
-
-    public void setMySQL(String mySQL) {
-        this.mySQL = mySQL;
     }
 
     public Connection getConnection() {
         return connection;
     }
 
+
+    //SETTERS
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setMySQL(String mySQL) {
+        this.mySQL = mySQL;
+    }
+
     public void setConnection(Connection connection) {
         this.connection = connection;
     }
+
+
+
+
+    // OPENING connection
 
     public boolean connect(){
         try {
             connection = DriverManager.getConnection("jdbc:mysql://freedb.tech:3306/"+ mySQL,userName,password);
             return true;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            dbException = new DBException(e, "Opening the connection failed");
+            dbException.log();
         }
         return false;
     }
+
+    // CLOSING connection
+
     public boolean close(){
         try {
             connection.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            dbException = new DBException(e, "Closing the connection failed");
+            dbException.log();
         }
         return true;
     }
 
 
 
-
-
-    // CRUD OPERATIONS
-
-    //prepare
+    // PREPARE statement
     public PreparedStatement prepare(String query, ArrayList<String> values) {
         PreparedStatement statement = null;
         int placeholderCount = 0;
@@ -88,13 +106,16 @@ public class DBConnect {
             }
         } catch (Exception e) {
             //System.out.println("Error occurred...");
-            e.printStackTrace();
+            dbException = new DBException(e, "Preparing the statement failed");
+            dbException.log();
         }
 
         return statement;
     }
 
 
+
+    // ---- ---- ----- CRUD OPERATIONS  -- --- ------ - --- - -- ---
 
     // READ
     public ArrayList<ArrayList<String>> getData(String query, ArrayList<String> values, boolean hasHeader) {
@@ -127,7 +148,8 @@ public class DBConnect {
 
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            dbException = new DBException(e, "Data retrieval failed");
+            dbException.log();
         } finally {
             close();
         }
@@ -145,7 +167,8 @@ public class DBConnect {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            dbException = new DBException(e, "Manipulating the data failed");
+            dbException.log();
         } finally {
             close();
         }
@@ -166,8 +189,10 @@ public class DBConnect {
                 connection.setAutoCommit(false);
                 connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             }
-        } catch(SQLException ex) {
-            ex.printStackTrace();
+        } catch(SQLException e) {
+            rollbackTrans();
+            dbException = new DBException(e, "Starting the transaction failed");
+            dbException.log();
         }
     }
 
@@ -178,8 +203,10 @@ public class DBConnect {
             if (connection != null) {
                 connection.setAutoCommit(true);
             }
-        } catch(SQLException ex) {
-            ex.printStackTrace();
+        } catch(SQLException e) {
+            rollbackTrans();
+            dbException = new DBException(e, "Ending the transaction failed");
+            dbException.log();
         }
     }
 
@@ -191,8 +218,9 @@ public class DBConnect {
             if (connection != null) {
                 connection.rollback();
             }
-        } catch(SQLException ex) {
-            ex.printStackTrace();
+        } catch(SQLException e) {
+            dbException = new DBException(e, "Rolling back the transaction failed");
+            dbException.log();
         } finally {
             close();
         }
