@@ -68,7 +68,7 @@ public class DBConnect {
 
     public boolean connect(){
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://freedb.tech:3306/"+ mySQL,userName,password);
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+ mySQL,userName,password);
             return true;
         } catch (SQLException e) {
             dbException = new DBException(e, "Opening the connection failed");
