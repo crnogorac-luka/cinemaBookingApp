@@ -1,0 +1,69 @@
+JFDML JFormDesigner: "7.0.3.0.337" Java: "11.0.10" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq l {space :p:145:p, par t {comp label4:::p:130:p, comp scrollPane1:::p:130:p}, space :p:102:p, par l {seq {comp scrollPane2:::p:130:p, space :::x, comp scrollPane3:::p:130:p}, seq {comp label7:::::x, space :p:128:p, comp label8:::p:130:p}}, space :p:179:p}, seq {par l {seq l {space :p:336:p, comp titleLabel:::p:231:p}, seq l {space :p:197:p, par l:::p {comp label3::::140:x, comp selectProjectionsBox::::140:x}, space :p:158:p, comp sellTicketsBtn:::p:184:p}}, space :::x}}"
+			"$verticalGroup": "par l {seq {space :p:32:p, comp titleLabel:::p:63:p, space :p:46:p, comp label3:::p:30:p, space :::p, par b {comp sellTicketsBtn::b:p:38:p, comp selectProjectionsBox::b:p:38:p}, space :p:82:p, par b {comp label4::b:p:26:p, comp label7::b:p:26:p, comp label8::b:p:26:p}, space s:::p, par l {comp scrollPane1::::187:x, comp scrollPane2::::187:x, comp scrollPane3::::187:x}, space :p:94:p}}"
+		} ) {
+			name: "this"
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label3"
+				"text": "Booked projections"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 3, false )
+			} )
+			add( new FormComponent( "javax.swing.JComboBox" ) {
+				name: "selectProjectionsBox"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "sellTicketsBtn"
+				"text": "Sell ticket(s)"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 3, false )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label4"
+				"text": "Projection Info"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label7"
+				"text": "Reservation Info"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label8"
+				"text": "Customer Info"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane1"
+				add( new FormComponent( "javax.swing.JTextArea" ) {
+					name: "projectionInfoArea"
+				} )
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane2"
+				add( new FormComponent( "javax.swing.JTextArea" ) {
+					name: "reservationInfoArea"
+				} )
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane3"
+				add( new FormComponent( "javax.swing.JTextArea" ) {
+					name: "customerInfoArea"
+				} )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "titleLabel"
+				"text": "ADMINISTRATIV WINDOW"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 5, false )
+				"foreground": new java.awt.Color( 90, 191, 221, 255 )
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 915, 655 )
+		} )
+	}
+}
