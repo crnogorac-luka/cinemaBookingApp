@@ -17,7 +17,11 @@ public class HomeUserPage extends JFrame {
 //    private JButton proceedBtn;
 
     public HomeUserPage() {
-
+        initComponents();
+        pack();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
 
     public JComboBox getSelectMovieBox() {

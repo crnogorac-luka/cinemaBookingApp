@@ -1,3 +1,5 @@
+import javax.sound.midi.ShortMessage;
+
 public class View {
 
     private LoginPage loginPage;
@@ -9,29 +11,13 @@ public class View {
     public View() {
 
             loginPage = new LoginPage();
-/*
-            VBox loginPageBox = new LoginBox();
-            homeUserPage = new Scene(loginPageBox);
+            homeUserPage = new HomeUserPage();
+            homeCashierPage = new HomeCashierPage();
+            seatsPage = new SeatsPage();
 
-            VBox loginPageBox = new LoginBox();
-            seatsPage = new Scene(loginPageBox);
-
-            VBox loginPageBox = new LoginBox();
-            homeCashierPage = new Scene(loginPageBox);
-
-            VBox homeUserPageBox = FXMLLoader.<VBox>load(getClass().getResource("/javafx_files/homeUser.fxml"));
-            homeUserPage = new HomeUserScene(homeUserPageBox);
-
-            VBox seatsPageBox = FXMLLoader.<VBox>load(getClass().getResource("/javafx_files/seats.fxml"));
-            seatsPage = new SeatsScene(seatsPageBox);
-
-            VBox homeCashierPageBox = FXMLLoader.<VBox>load(getClass().getResource("/javafx_files/homeCashier.fxml"));
-            homeCashierPage = new HomeUserScene(homeCashierPageBox);
-
-
- */
-
-
+            homeUserPage.setVisible(false);
+            homeCashierPage.setVisible(false);
+            seatsPage.setVisible(false);
     }
 
 

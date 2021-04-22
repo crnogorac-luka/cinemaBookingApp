@@ -29,9 +29,15 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            String id = view.getLoginPage().getEmail().getText();
-            model.getDaoCollection().get("customer").fetch(Integer.parseInt(id));
-            System.out.println(((CustomerDAO.Customer) model.getDaoCollection().get("customer").getCurrentItem()).getFirstName());
+            String email = view.getLoginPage().getLoginFld().getText();
+            String password = String.valueOf(view.getLoginPage().getPasswordField().getPassword());
+            ((CustomerDAO) model.getDaoCollection().get("customer")).fetch(email, password);
+
+            if (model.getDaoCollection().get("customer").getCurrentItem() != null) {
+                view.getLoginPage().dispose();
+                view.getHomeUserPage().setVisible(true);
+            }
+            //System.out.println(((CustomerDAO.Customer) model.getDaoCollection().get("customer").getCurrentItem()).getFirstName());
         }
     }
 

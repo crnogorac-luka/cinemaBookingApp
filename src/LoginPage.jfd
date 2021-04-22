@@ -5,7 +5,7 @@ new FormModel {
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.intellij.uiDesigner.core.GridLayoutManager ) {
 			"$columnCount": 1
-			"$rowCount": 7
+			"$rowCount": 9
 		} ) {
 			name: "this"
 			add( new FormComponent( "javax.swing.JLabel" ) {
@@ -29,18 +29,23 @@ new FormModel {
 					"JavaCodeGenerator.variableName": "loginFld"
 				}
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-				"row": 2
+				"row": 3
 				"minimumSize": &Dimension0 new java.awt.Dimension( 200, 20 )
 			} )
-			add( new FormComponent( "javax.swing.JTextField" ) {
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label4"
+				"text": "Login"
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"row": 4
+			} )
+			add( new FormComponent( "javax.swing.JPasswordField" ) {
 				name: "textField2"
 				"toolTipText": "Password"
-				"text": "Password"
 				auxiliary() {
 					"JavaCodeGenerator.variableName": "passwordFld"
 				}
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-				"row": 3
+				"row": 5
 				"minimumSize": #Dimension0
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
@@ -51,21 +56,21 @@ new FormModel {
 					"JavaCodeGenerator.variableName": "loginBtn"
 				}
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-				"row": 4
+				"row": 6
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label3"
 				"text": "Don't have an account?"
 				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 7, false )
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-				"row": 5
+				"row": 7
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "button2"
 				"text": "Register"
 				"background": new java.awt.Color( 102, 204, 255, 255 )
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-				"row": 6
+				"row": 8
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 5, 0 )

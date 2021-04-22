@@ -161,17 +161,15 @@ public class HomeCashierPage extends JFrame {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - Luka Crnogorac
     private JLabel label3;
-    private JComboBox selectProjectionsBox;
-    private JButton sellTicketsBtn;
     private JLabel label4;
     private JLabel label7;
     private JLabel label8;
     private JScrollPane scrollPane1;
-    private JTextArea projectionInfoArea;
+
     private JScrollPane scrollPane2;
-    private JTextArea reservationInfoArea;
+
     private JScrollPane scrollPane3;
-    private JTextArea customerInfoArea;
+
     private JLabel titleLabel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

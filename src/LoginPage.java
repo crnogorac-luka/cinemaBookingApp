@@ -6,22 +6,34 @@ import com.intellij.uiDesigner.core.*;
 
 public class LoginPage extends JFrame {
 
-    private JTextField email;
-    private JPasswordField passwordField;
+    private JTextField loginFld;
+    private JPasswordField passwordFld;
     private JButton loginBtn;
     private JButton registerBtn;
 
+    private JLabel label1;
+    private JLabel label2;
+    private JLabel label3;
+
+
     public LoginPage() {
         initComponents();
+        pack();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
 
 
-    public JTextField getEmail() {
-        return email;
+
+    // GETTERS
+
+    public JTextField getLoginFld() {
+        return loginFld;
     }
 
     public JPasswordField getPasswordField() {
-        return passwordField;
+        return passwordFld;
     }
 
     public JButton getLoginBtn() {
@@ -54,14 +66,15 @@ public class LoginPage extends JFrame {
         label1 = new JLabel();
         label2 = new JLabel();
         loginFld = new JTextField();
-        passwordFld = new JTextField();
+        label4 = new JLabel();
+        passwordFld = new JPasswordField();
         loginBtn = new JButton();
         label3 = new JLabel();
         button2 = new JButton();
 
         //======== this ========
         var contentPane = getContentPane();
-        contentPane.setLayout(new GridLayoutManager(7, 1, new Insets(0, 0, 0, 0), -1, -1));
+        contentPane.setLayout(new GridLayoutManager(9, 1, new Insets(0, 0, 0, 0), -1, -1));
 
         //---- label1 ----
         label1.setText("Cinema Booking App");
@@ -85,16 +98,23 @@ public class LoginPage extends JFrame {
         //---- loginFld ----
         loginFld.setToolTipText("E-mail");
         loginFld.setText("E-mail");
-        contentPane.add(loginFld, new GridConstraints(2, 0, 1, 1,
+        contentPane.add(loginFld, new GridConstraints(3, 0, 1, 1,
             GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             new Dimension(200, 20), null, null));
 
+        //---- label4 ----
+        label4.setText("Login");
+        contentPane.add(label4, new GridConstraints(4, 0, 1, 1,
+            GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+            null, null, null));
+
         //---- passwordFld ----
         passwordFld.setToolTipText("Password");
-        passwordFld.setText("Password");
-        contentPane.add(passwordFld, new GridConstraints(3, 0, 1, 1,
+        contentPane.add(passwordFld, new GridConstraints(5, 0, 1, 1,
             GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -103,7 +123,7 @@ public class LoginPage extends JFrame {
         //---- loginBtn ----
         loginBtn.setText("Login");
         loginBtn.setBackground(new Color(102, 204, 255));
-        contentPane.add(loginBtn, new GridConstraints(4, 0, 1, 1,
+        contentPane.add(loginBtn, new GridConstraints(6, 0, 1, 1,
             GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -112,7 +132,7 @@ public class LoginPage extends JFrame {
         //---- label3 ----
         label3.setText("Don't have an account?");
         label3.setFont(label3.getFont().deriveFont(label3.getFont().getSize() + 7f));
-        contentPane.add(label3, new GridConstraints(5, 0, 1, 1,
+        contentPane.add(label3, new GridConstraints(7, 0, 1, 1,
             GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -121,7 +141,7 @@ public class LoginPage extends JFrame {
         //---- button2 ----
         button2.setText("Register");
         button2.setBackground(new Color(102, 204, 255));
-        contentPane.add(button2, new GridConstraints(6, 0, 1, 1,
+        contentPane.add(button2, new GridConstraints(8, 0, 1, 1,
             GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -133,12 +153,9 @@ public class LoginPage extends JFrame {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - Luka Crnogorac
-    private JLabel label1;
-    private JLabel label2;
-    private JTextField loginFld;
-    private JTextField passwordFld;
-    private JButton loginBtn;
-    private JLabel label3;
+
+    private JLabel label4;
+
     private JButton button2;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
