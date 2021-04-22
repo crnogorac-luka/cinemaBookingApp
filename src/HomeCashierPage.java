@@ -11,6 +11,10 @@ public class HomeCashierPage extends JFrame {
 
     public HomeCashierPage() {
         initComponents();
+        pack();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setVisible(false);
     }
 
     public JComboBox getSelectProjectionsBox() {

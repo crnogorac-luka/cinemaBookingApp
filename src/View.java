@@ -15,9 +15,6 @@ public class View {
             homeCashierPage = new HomeCashierPage();
             seatsPage = new SeatsPage();
 
-            homeUserPage.setVisible(false);
-            homeCashierPage.setVisible(false);
-            seatsPage.setVisible(false);
     }
 
 
