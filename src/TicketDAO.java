@@ -47,8 +47,9 @@ public class TicketDAO implements DAO<TicketDAO.Ticket>{
             try {
                 ArrayList<ArrayList<String>> row = db.getData("SELECT * FROM Ticket WHERE TicketID = ?", values, false);
                 fetchedTicket.setTicketID(Integer.parseInt(row.get(0).get(0)));
-                fetchedTicket.setPrice(Double.parseDouble(row.get(0).get(1)));
-                fetchedTicket.setCashierID(Integer.parseInt(row.get(0).get(1)));
+                fetchedTicket.setReservationID(Integer.parseInt(row.get(0).get(1)));
+                fetchedTicket.setPrice(Double.parseDouble(row.get(0).get(2)));
+                fetchedTicket.setCashierID(Integer.parseInt(row.get(0).get(3)));
 
 
                 setCurrentTicket(fetchedTicket);
@@ -68,13 +69,14 @@ public class TicketDAO implements DAO<TicketDAO.Ticket>{
         public boolean create(Ticket ticket) {
             ArrayList<String> values = new ArrayList<String>();
             values.add("" + ticket.getTicketID());
+            values.add("" + ticket.getReservationID());
             values.add("" + ticket.getPrice());
             values.add("" + ticket.getCashierID());
 
 
             boolean response = false;
             try {
-                response = db.setData("INSERT INTO Ticket VALUES(?,'?','?')", values);
+                response = db.setData("INSERT INTO Ticket VALUES(?,?,?,?)", values);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -89,14 +91,15 @@ public class TicketDAO implements DAO<TicketDAO.Ticket>{
         @Override
         public boolean update(int id, Ticket ticket) {
             ArrayList<String> values = new ArrayList<String>();
+            values.add("" + ticket.getReservationID());
             values.add("" + ticket.getPrice());
             values.add("" + ticket.getCashierID());
-            values.add("" + ticket.getTicketID());
+            values.add("" + id);
 
             values.add("" + id);
             boolean response = false;
             try {
-                response = db.setData("UPDATE Ticket SET Price = '?', CashierID = '?',  WHERE TicketID = '?'", values);
+                response = db.setData("UPDATE Ticket SET ReservationID = '?' Price = '?', CashierID = '?',  WHERE TicketID = '?'", values);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -135,8 +138,9 @@ public class TicketDAO implements DAO<TicketDAO.Ticket>{
                 for (ArrayList<String> record : row) {
                     Ticket currTicket = new Ticket();
                     currTicket.setTicketID(Integer.parseInt(record.get(0)));
-                    currTicket.setPrice(Double.parseDouble(record.get(1)));
-                    currTicket.setPrice(Integer.parseInt(record.get(2)));
+                    currTicket.setReservationID(Integer.parseInt(record.get(1)));
+                    currTicket.setPrice(Double.parseDouble(record.get(2)));
+                    currTicket.setCashierID(Integer.parseInt(record.get(3)));
 
                     getList().add(currTicket);
                 }
@@ -154,14 +158,20 @@ public class TicketDAO implements DAO<TicketDAO.Ticket>{
          */
         class Ticket {
             public int ticketID;
+            private int reservationID;
             public double price;
             private int cashierID;
 
             public Ticket() {
+                ticketID = -1;
+                reservationID = -1;
+                price = 0.0;
+                cashierID = -1;
             }
 
-            public Ticket(int ticketID, double price, int cashierID) {
+            public Ticket(int ticketID, int reservationID, double price, int cashierID) {
                 this.ticketID = ticketID;
+                this.reservationID = reservationID;
                 this.price = price;
                 this.cashierID = cashierID;
             }
@@ -188,6 +198,14 @@ public class TicketDAO implements DAO<TicketDAO.Ticket>{
 
             public void setCashierID(int cashierID) {
                 this.cashierID = cashierID;
+            }
+
+            public int getReservationID() {
+                return reservationID;
+            }
+
+            public void setReservationID(int reservationID) {
+                this.reservationID = reservationID;
             }
         }
 }

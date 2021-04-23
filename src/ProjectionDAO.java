@@ -52,8 +52,8 @@ public class ProjectionDAO implements DAO<ProjectionDAO.Projection>{
         try {
             ArrayList<ArrayList<String>> row = db.getData("SELECT * FROM Projection WHERE ProjectionID = ?", values, false);
             fetchedProjection.setProjectionID(Integer.parseInt(row.get(0).get(0)));
-            fetchedProjection.setStartTime(Integer.parseInt(row.get(0).get(1)));
-            fetchedProjection.setEndTime(Integer.parseInt(row.get(0).get(2)));
+            fetchedProjection.setStartTime(row.get(0).get(1));
+            fetchedProjection.setEndTime(row.get(0).get(2));
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             fetchedProjection.setDate(format.parse(row.get(0).get(3)));
             fetchedProjection.setRoomID(Integer.parseInt(row.get(0).get(4)));
@@ -76,8 +76,8 @@ public class ProjectionDAO implements DAO<ProjectionDAO.Projection>{
     public boolean create(Projection projection) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + projection.getProjectionID());
-        values.add("" + projection.getStartTime());
-        values.add("" + projection.getEndTime());
+        values.add(projection.getStartTime());
+        values.add(projection.getEndTime());
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         values.add(df.format(projection.getDate()));
         values.add("" + projection.getRoomID());
@@ -86,7 +86,7 @@ public class ProjectionDAO implements DAO<ProjectionDAO.Projection>{
 
         boolean response = false;
         try {
-            response = db.setData("INSERT INTO Projection VALUES(?,?,?,'?',?,?)", values);
+            response = db.setData("INSERT INTO Projection VALUES(?,'?','?','?',?,?)", values);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -101,8 +101,8 @@ public class ProjectionDAO implements DAO<ProjectionDAO.Projection>{
     @Override
     public boolean update(int id, Projection projection) {
         ArrayList<String> values = new ArrayList<String>();
-        values.add("" + projection.getStartTime());
-        values.add("" + projection.getEndTime());
+        values.add(projection.getStartTime());
+        values.add(projection.getEndTime());
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         values.add(df.format(projection.getDate()));
         values.add("" + projection.getRoomID());
@@ -151,8 +151,8 @@ public class ProjectionDAO implements DAO<ProjectionDAO.Projection>{
             for (ArrayList<String> record : row) {
                 Projection currProjection = new Projection();
                 currProjection.setProjectionID(Integer.parseInt(record.get(0)));
-                currProjection.setStartTime(Integer.parseInt(record.get(1)));
-                currProjection.setEndTime(Integer.parseInt(record.get(2)));
+                currProjection.setStartTime(record.get(1));
+                currProjection.setEndTime(record.get(2));
                 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 currProjection.setDate(format.parse(record.get(3)));
                 currProjection.setRoomID(Integer.parseInt(record.get(4)));
@@ -171,8 +171,8 @@ public class ProjectionDAO implements DAO<ProjectionDAO.Projection>{
     class Projection {
 
         private int projectionID;
-        private int startTime;
-        private int endTime;
+        private String startTime;
+        private String endTime;
         private Date date;
         private int roomID;
         private int movieID;
@@ -182,8 +182,8 @@ public class ProjectionDAO implements DAO<ProjectionDAO.Projection>{
          */
         public Projection() {
             this.projectionID = -1;
-            this.startTime = -1;
-            this.endTime = -1;
+            this.startTime = "";
+            this.endTime = "";
             this.date = null;
             this.roomID = -1;
             this.movieID = -1;
@@ -199,7 +199,7 @@ public class ProjectionDAO implements DAO<ProjectionDAO.Projection>{
          * @param roomID       unique ID of the room where projection is held
          * @param movieID      unique ID of the projection that is projected
          */
-        public Projection(int projectionID, int startTime, int endTime, Date date, int roomID, int movieID) {
+        public Projection(int projectionID, String startTime, String endTime, Date date, int roomID, int movieID) {
             this.projectionID = projectionID;
             this.startTime = startTime;
             this.endTime = endTime;
@@ -221,14 +221,14 @@ public class ProjectionDAO implements DAO<ProjectionDAO.Projection>{
         /**
          * @return timestamp of the start of this projection
          */
-        public int getStartTime() {
+        public String getStartTime() {
             return startTime;
         }
 
         /**
          * @return timestamp of the end of this projection
          */
-        public int getEndTime() {
+        public String getEndTime() {
             return endTime;
         }
 
@@ -266,14 +266,14 @@ public class ProjectionDAO implements DAO<ProjectionDAO.Projection>{
         /**
          * @param startTime new timestamp of the start of this projection
          */
-        public void setStartTime(int startTime) {
+        public void setStartTime(String startTime) {
             this.startTime = startTime;
         }
 
         /**
          * @param endTime new timestamp of the end of this projection
          */
-        public void setEndTime(int endTime) {
+        public void setEndTime(String endTime) {
             this.endTime = endTime;
         }
 
