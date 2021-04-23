@@ -7,10 +7,11 @@ import java.sql.*;
  * class that represents account info 
  * Authors: Igor, Ante
  */
-public class AccountInfoDAO {
+public class AccountInfoDAO implements DAO<AccountInfoDAO.AccountInfo> {
 
     private DBConnect db;
     private ArrayList<AccountInfo> list;
+    private AccountInfo currentAccountInfo;
 
     /**
      * @param db object that contains database connection protocols
@@ -24,6 +25,16 @@ public class AccountInfoDAO {
      */
     public ArrayList<AccountInfo> getList() {
         return list;
+    }
+
+    @Override
+    public AccountInfoDAO.AccountInfo getCurrentItem() {
+        return currentAccountInfo;
+    }
+
+    @Override
+    public void fetch(int id) {
+
     }
 
     /**
@@ -52,10 +63,11 @@ public class AccountInfoDAO {
     }
 
     /**
-     * @param AccountInfo prepared object of class AccountInfo whose attributes
+     * @param accountInfo prepared object of class AccountInfo whose attributes
      *                    are translated to column values of the new row in AccountInfo table
      * @return true if insertion is successful, false if otherwise
      */
+    @Override
     public boolean create(AccountInfo accountInfo) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + accountInfo.getEmail());
@@ -72,13 +84,23 @@ public class AccountInfoDAO {
         return response;
     }
 
+    @Override
+    public boolean update(int id, AccountInfo item) {
+        return false;
+    }
+
+    @Override
+    public boolean remove(int id) {
+        return false;
+    }
+
     /**
-     * @param AccountInfo prepared object of class AccountInfo whose attributes
+     * @param accountInfo prepared object of class AccountInfo whose attributes
      *                    are translated to column values of the existing row with specified ID in
      *                    AccountInfo table
      * @return true if insertion is successful, false if otherwise
      */
-    public boolean update(AccountInfo accountInfo) {
+    public boolean update(String email, AccountInfo accountInfo) {
         ArrayList<String> values = new ArrayList<String>();
         values.add(accountInfo.getEmail());
         values.add(accountInfo.getPassword());
@@ -116,6 +138,7 @@ public class AccountInfoDAO {
      * retrieves all rows from AccountInfo table and translates them to objects
      * of class AccountInfo and stores them in the list
      */
+    @Override
     public void fetchAll() {
 
         try {
