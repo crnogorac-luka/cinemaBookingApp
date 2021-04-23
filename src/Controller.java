@@ -18,7 +18,7 @@ public class Controller {
 
         LoginUser loginUser = new LoginUser();
 
-        this.view.getLoginPage().attachHandlerLoginBtn(loginUser);
+        //this.view.getLoginPage().attachHandlerLoginBtn(loginUser);
 
     }
 
@@ -156,22 +156,22 @@ public class Controller {
 
     // HOME CASHIER LISTENERS
 
-    private void setModelForFoodDropdown(JComboBox comboBox) {
-        comboBox.setModel(new DefaultComboBoxModel<>(this.model.getFoodLogger().getFoodNames().toArray(new String[0])));
-    }
 
     /**
-     * bookedProjection listener
+     * search listener
      */
-    private class bookedProjection implements ItemListener {
+    private class searchID implements ActionListener{
 
         @Override
-        public void itemStateChanged(ItemEvent event) {
+        public void actionPerformed(ActionEvent e) {
 
-            if (event.getStateChange() == ItemEvent.SELECTED) {
-                String id = event.getItem().toString();
+            int id = Integer.parseInt(view.getHomeCashierPage().getSearchTextField().getText());
 
-            }
+            model.getDaoCollection().get("reservation").fetch(id);
+
+            ReservationDAO.Reservation reservation = (ReservationDAO.Reservation) model.getDaoCollection().get("reservation").getCurrentItem();
+            view.getHomeCashierPage().getProjectionInfoArea().append(""+reservation.getReservationID());
+
 
         }
     }

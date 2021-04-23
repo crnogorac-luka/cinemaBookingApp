@@ -3,26 +3,25 @@ import javax.swing.*;
 
 public class HomeCashierPage extends JFrame {
 
-    private JComboBox selectProjectionsBox;
-    private JButton sellTicketsBtn;
-    private JTextArea projectionInfoArea;
-    private JTextArea reservationInfoArea;
-    private JTextArea customerInfoArea;
-
     public HomeCashierPage() {
         initComponents();
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setVisible(false);
+        setVisible(true);
     }
 
-    public JComboBox getSelectProjectionsBox() {
-        return selectProjectionsBox;
-    }
 
     public JButton getSellTicketsBtn() {
         return sellTicketsBtn;
+    }
+
+    public JButton getSearchBtn() {
+        return searchBtn;
+    }
+
+    public JTextField getSearchTextField() {
+        return searchTextField;
     }
 
     public JTextArea getProjectionInfoArea() {
@@ -37,11 +36,11 @@ public class HomeCashierPage extends JFrame {
         return customerInfoArea;
     }
 
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - Luka Crnogorac
         label3 = new JLabel();
-        selectProjectionsBox = new JComboBox();
         sellTicketsBtn = new JButton();
         label4 = new JLabel();
         label7 = new JLabel();
@@ -53,16 +52,15 @@ public class HomeCashierPage extends JFrame {
         scrollPane3 = new JScrollPane();
         customerInfoArea = new JTextArea();
         titleLabel = new JLabel();
+        searchTextField = new JTextField();
+        searchBtn = new JButton();
 
         //======== this ========
         var contentPane = getContentPane();
 
         //---- label3 ----
-        label3.setText("Booked projections");
+        label3.setText("Type the projection ID");
         label3.setFont(label3.getFont().deriveFont(label3.getFont().getSize() + 3f));
-
-        //---- selectProjectionsBox ----
-        selectProjectionsBox.setFont(selectProjectionsBox.getFont().deriveFont(selectProjectionsBox.getFont().getSize() + 2f));
 
         //---- sellTicketsBtn ----
         sellTicketsBtn.setText("Sell ticket(s)");
@@ -100,6 +98,9 @@ public class HomeCashierPage extends JFrame {
         titleLabel.setFont(titleLabel.getFont().deriveFont(titleLabel.getFont().getSize() + 5f));
         titleLabel.setForeground(new Color(90, 191, 221));
 
+        //---- searchBtn ----
+        searchBtn.setText("Search");
+
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
@@ -128,10 +129,14 @@ public class HomeCashierPage extends JFrame {
                         .addGroup(contentPaneLayout.createSequentialGroup()
                             .addGap(197, 197, 197)
                             .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                .addComponent(label3, GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                                .addComponent(selectProjectionsBox, GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
-                            .addGap(158, 158, 158)
+                                .addComponent(label3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(searchTextField))
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(sellTicketsBtn, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(contentPaneLayout.createSequentialGroup()
+                    .addGap(219, 219, 219)
+                    .addComponent(searchBtn, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         contentPaneLayout.setVerticalGroup(
@@ -142,19 +147,21 @@ public class HomeCashierPage extends JFrame {
                     .addGap(46, 46, 46)
                     .addComponent(label3, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addGroup(contentPaneLayout.createParallelGroup()
                         .addComponent(sellTicketsBtn, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(selectProjectionsBox, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
-                    .addGap(82, 82, 82)
+                        .addComponent(searchTextField))
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(searchBtn)
+                    .addGap(51, 51, 51)
                     .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(label4, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
                         .addComponent(label7, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
                         .addComponent(label8, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
                     .addGap(18, 18, 18)
                     .addGroup(contentPaneLayout.createParallelGroup()
-                        .addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
-                        .addComponent(scrollPane2, GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
-                        .addComponent(scrollPane3, GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE))
+                        .addComponent(scrollPane2, GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                        .addComponent(scrollPane3, GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                        .addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))
                     .addGap(94, 94, 94))
         );
         pack();
@@ -165,15 +172,18 @@ public class HomeCashierPage extends JFrame {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - Luka Crnogorac
     private JLabel label3;
+    private JButton sellTicketsBtn;
     private JLabel label4;
     private JLabel label7;
     private JLabel label8;
     private JScrollPane scrollPane1;
-
+    private JTextArea projectionInfoArea;
     private JScrollPane scrollPane2;
-
+    private JTextArea reservationInfoArea;
     private JScrollPane scrollPane3;
-
+    private JTextArea customerInfoArea;
     private JLabel titleLabel;
+    private JTextField searchTextField;
+    private JButton searchBtn;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

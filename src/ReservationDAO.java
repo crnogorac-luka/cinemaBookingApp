@@ -23,10 +23,6 @@ public class ReservationDAO implements DAO<ReservationDAO.Reservation>{
         return list;
     }
 
-    public Reservation getCurrentReservation() {
-        return currentReservation;
-    }
-
     public void setCurrentReservation(Reservation currentReservation) {
         this.currentReservation = currentReservation;
     }

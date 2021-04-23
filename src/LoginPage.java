@@ -1,8 +1,11 @@
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
-import com.intellij.uiDesigner.core.*;
+
 
 
 public class LoginPage extends JFrame {
@@ -34,7 +37,7 @@ private JButton registerBtn;
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setVisible(true);
+        setVisible(false);
     }
 
 

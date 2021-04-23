@@ -4,18 +4,14 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq l {space :p:145:p, par t {comp label4:::p:130:p, comp scrollPane1:::p:130:p}, space :p:102:p, par l {seq {comp scrollPane2:::p:130:p, space :::x, comp scrollPane3:::p:130:p}, seq {comp label7:::::x, space :p:128:p, comp label8:::p:130:p}}, space :p:179:p}, seq {par l {seq l {space :p:336:p, comp titleLabel:::p:231:p}, seq l {space :p:197:p, par l:::p {comp label3::::140:x, comp selectProjectionsBox::::140:x}, space :p:158:p, comp sellTicketsBtn:::p:184:p}}, space :::x}}"
-			"$verticalGroup": "par l {seq {space :p:32:p, comp titleLabel:::p:63:p, space :p:46:p, comp label3:::p:30:p, space :::p, par b {comp sellTicketsBtn::b:p:38:p, comp selectProjectionsBox::b:p:38:p}, space :p:82:p, par b {comp label4::b:p:26:p, comp label7::b:p:26:p, comp label8::b:p:26:p}, space s:::p, par l {comp scrollPane1::::187:x, comp scrollPane2::::187:x, comp scrollPane3::::187:x}, space :p:94:p}}"
+			"$horizontalGroup": "par l {seq l {space :p:145:p, par t {comp label4:::p:130:p, comp scrollPane1:::p:130:p}, space :p:102:p, par l {seq {comp scrollPane2:::p:130:p, space :::x, comp scrollPane3:::p:130:p}, seq {comp label7:::::x, space :p:128:p, comp label8:::p:130:p}}, space :p:179:p}, seq {par l {seq l {space :p:336:p, comp titleLabel:::p:231:p}, seq l {space :p:197:p, par l:::p {comp label3:::::x, comp searchTextField:::::x}, space :::x, comp sellTicketsBtn:::p:184:p}}, space :::x}, seq l {space :p:219:p, comp searchBtn:::p:104:p, space :::x}}"
+			"$verticalGroup": "par l {seq {space :p:32:p, comp titleLabel:::p:63:p, space :p:46:p, comp label3:::p:30:p, space :::p, par l {comp sellTicketsBtn:::p:38:p, comp searchTextField:::::x}, space u:::p, comp searchBtn:::p::p, space :p:51:p, par b {comp label4::b:p:26:p, comp label7::b:p:26:p, comp label8::b:p:26:p}, space s:::p, par l {comp scrollPane2::::177:x, comp scrollPane3::::177:x, comp scrollPane1::l::177:x}, space :p:94:p}}"
 		} ) {
 			name: "this"
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label3"
-				"text": "Booked projections"
+				"text": "Type the projection ID"
 				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 3, false )
-			} )
-			add( new FormComponent( "javax.swing.JComboBox" ) {
-				name: "selectProjectionsBox"
-				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "sellTicketsBtn"
@@ -60,6 +56,13 @@ new FormModel {
 				"text": "ADMINISTRATIV WINDOW"
 				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 5, false )
 				"foreground": new java.awt.Color( 90, 191, 221, 255 )
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "searchTextField"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "searchBtn"
+				"text": "Search"
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
