@@ -38,7 +38,6 @@ public class Controller {
                 view.getHomeUserPage().setVisible(true);
             } else {
                 ((CashierDAO) model.getDaoCollection().get("cashier")).fetch(email, password);
-
                 if(model.getDaoCollection().get("cashier").getCurrentItem() != null) {
                     view.getLoginPage().dispose();
                     view.getHomeCashierPage().setVisible(true);

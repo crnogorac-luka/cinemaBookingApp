@@ -67,7 +67,8 @@ public class CashierDAO implements DAO<CashierDAO.Cashier> {
         CashierDAO.Cashier fetchedCashier = new CashierDAO.Cashier();
 
         try {
-            ArrayList<ArrayList<String>> rowCredentials = db.getData("SELECT Password FROM AccountInfo WHERE Email = ?", values, false);
+            AccountInfoDAO accountInfoDAO = new AccountInfoDAO(db);
+            String fetchedPassword = accountInfoDAO.fetch(email).getPassword();
 
             // ENCRYPTING (HASHING) the provided password
             byte[] bytesOfMessage = password.getBytes("UTF-8");
@@ -80,7 +81,7 @@ public class CashierDAO implements DAO<CashierDAO.Cashier> {
             //password hashed with MD5
             String hashedPassword = result.toString();
 
-            if (hashedPassword.equals(rowCredentials.get(0).get(0))) {
+            if (hashedPassword.equals(fetchedPassword)) {
                 ArrayList<ArrayList<String>> row = db.getData("SELECT * FROM Customer WHERE Email = ?", values, false);
                 fetchedCashier.setCashierID(Integer.parseInt(row.get(0).get(0)));
                 fetchedCashier.setName(row.get(0).get(1));

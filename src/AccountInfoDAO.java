@@ -42,7 +42,7 @@ public class AccountInfoDAO implements DAO<AccountInfoDAO.AccountInfo> {
      *              table
      * @return object of class AccountInfo
      */
-    public AccountInfo fetch(String email) {
+    public void fetch(String email) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + email);
         AccountInfo fetchedAccount = new AccountInfo();
@@ -52,13 +52,11 @@ public class AccountInfoDAO implements DAO<AccountInfoDAO.AccountInfo> {
             fetchedAccount.setEmail(row.get(0).get(0));
             fetchedAccount.setPassword(row.get(0).get(1));
             fetchedAccount.setRole(Role.valueOf(row.get(0).get(2).toUpperCase()));
-            return fetchedAccount;
+            currentAccountInfo = fetchedAccount;
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
-            return null;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
     }
 
