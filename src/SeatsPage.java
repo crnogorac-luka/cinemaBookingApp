@@ -10,10 +10,13 @@ public class SeatsPage extends JFrame {
     private JButton reserveTicketBtn;
     private JButton buyTicketBtn;
     ArrayList<String> ticketsSelected = new ArrayList<String>();
-    int numberOfTickets = 0;
 
     public SeatsPage() {
         initComponents();
+        pack();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
 
     public JTextField getSeatsFld() {
@@ -30,6 +33,17 @@ public class SeatsPage extends JFrame {
 
     public JButton getBuyTicketBtn() {
         return buyTicketBtn;
+    }
+
+    public JList<String> getSeatsList() {return list1;}
+
+    public JTextField getTextField1() {return textField1;}
+    public JTextField getTextField2() {return textField2;}
+
+    public ArrayList<String> getTicketsSelected() {return ticketsSelected;}
+
+    public void attachHandlerAddSeats(MouseAdapter ma) {
+        list1.addMouseListener(ma);
     }
 
     private void btn_reserveTickets(ActionEvent e) {
@@ -160,71 +174,36 @@ public class SeatsPage extends JFrame {
                 //---- list1 ----
                 list1.setModel(new AbstractListModel<String>() {
                     String[] values = {
-                        "A1",
-                        "A2",
-                        "A3",
-                        "A4",
-                        "A5",
-                        "B1",
-                        "B2",
-                        "B3",
-                        "B4",
-                        "B5",
-                        "C1",
-                        "C2",
-                        "C3",
-                        "C4",
-                        "C5",
-                        "D1",
-                        "D2",
-                        "D3",
-                        "D4",
-                        "D5",
-                        "E1",
-                        "E2",
-                        "E3",
-                        "E4",
-                        "E5"
+                        "A1-1",
+                        "A2-2",
+                        "A3-3",
+                        "A4-4",
+                        "A5-5",
+                        "B1-6",
+                        "B2-7",
+                        "B3-8",
+                        "B4-9",
+                        "B5-10",
+                        "C1-11",
+                        "C2-12",
+                        "C3-13",
+                        "C4-14",
+                        "C5-15",
+                        "D1-16",
+                        "D2-17",
+                        "D3-18",
+                        "D4-19",
+                        "D5-20",
+                        "E1-21",
+                        "E2-22",
+                        "E3-23",
+                        "E4-24",
+                        "E5-25"
                     };
                     @Override
                     public int getSize() { return values.length; }
                     @Override
                     public String getElementAt(int i) { return values[i]; }
-                });
-                list1.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        list1_itemClicked(e);
-                        list1_mouseClicked(e);
-
-                        String tickets = (String) list1.getSelectedValue();
-                        if(e.getClickCount() == 1) {
-                            if(ticketsSelected.contains(tickets)) {
-                               JOptionPane.showMessageDialog(null, "The seat is already taken.");
-                                System.out.println("The seat is already taken");
-                            } else {
-                                ticketsSelected.add(tickets);
-                                textField1.setText(textField1.getText() + "" + tickets + ",");
-                                System.out.println(ticketsSelected);
-                                numberOfTickets = ticketsSelected.size();
-                                textField2.setText(String.valueOf(numberOfTickets));
-                            }
-                        }
-
-                        if(e.getClickCount() == 2) {
-                            System.out.println("Removing");
-                            for(int i = 0; i <= ticketsSelected.size(); i++) {
-                                if(ticketsSelected.get(i).equals(tickets)) {
-                                    ticketsSelected.remove(i);
-                                    numberOfTickets = ticketsSelected.size();
-                                    textField2.setText(String.valueOf(numberOfTickets));
-                                } else if (ticketsSelected.size() == 0){
-                                    JOptionPane.showMessageDialog(null, "No seats to remove..");
-                                }
-                            }
-                            System.out.println(ticketsSelected);
-                        }
-                    }
                 });
                 scrollPane1.setViewportView(list1);
             }
