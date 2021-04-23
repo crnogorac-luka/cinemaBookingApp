@@ -17,8 +17,10 @@ public class Controller {
         this.model = model;
 
         LoginUser loginUser = new LoginUser();
+        SearchID searchID = new SearchID();
 
-        //this.view.getLoginPage().attachHandlerLoginBtn(loginUser);
+        this.view.getLoginPage().attachHandlerLoginBtn(loginUser);
+        this.view.getHomeCashierPage().researchBtn(searchID);
 
     }
 
@@ -159,7 +161,7 @@ public class Controller {
     /**
      * search listener
      */
-    private class searchID implements ActionListener{
+    private class SearchID implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -169,8 +171,22 @@ public class Controller {
             model.getDaoCollection().get("reservation").fetch(id);
 
             ReservationDAO.Reservation reservation = (ReservationDAO.Reservation) model.getDaoCollection().get("reservation").getCurrentItem();
-            view.getHomeCashierPage().getProjectionInfoArea().append(""+reservation.getReservationID());
 
+            int projID = reservation.getProjectionID();
+            model.getDaoCollection().get("projection").fetch(projID);
+            ProjectionDAO.Projection projection = (ProjectionDAO.Projection) model.getDaoCollection().get("projection").getCurrentItem();
+            view.getHomeCashierPage().getProjectionInfoArea().append("Start time: " + projection.getStartTime() + " End time: " + projection.getEndTime());
+
+
+
+            int customerID = reservation.getCustomerID();
+            model.getDaoCollection().get("customer").fetch(customerID);
+            CustomerDAO.Customer customer = (CustomerDAO.Customer) model.getDaoCollection().get("customer").getCurrentItem();
+
+            view.getHomeCashierPage().getReservationInfoArea().append("Reservation number: " + reservation.getReservationID() + " For the customer:" + customer.getFirstName());
+
+            view.getHomeCashierPage().getCustomerInfoArea().append("Customer: " + customer.getFirstName() + " " + customer.getLastName() + " Phone: " + customer.getPhone() + "Email: " + customer.getEmail());
+            System.out.println("Customer: " + customer.getFirstName() + " " + customer.getLastName() + "Phone: " + customer.getPhone() + "Email: " + customer.getEmail());
 
         }
     }

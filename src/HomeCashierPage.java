@@ -1,7 +1,26 @@
 import java.awt.*;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class HomeCashierPage extends JFrame {
+
+    // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
+    // Generated using JFormDesigner Evaluation license - Igor Berehovyi
+    private JLabel label3;
+    private JButton sellTicketsBtn;
+    private JLabel label4;
+    private JLabel label7;
+    private JLabel label8;
+    private JScrollPane scrollPane1;
+    private JTextArea projectionInfoArea;
+    private JScrollPane scrollPane2;
+    private JTextArea reservationInfoArea;
+    private JScrollPane scrollPane3;
+    private JTextArea customerInfoArea;
+    private JLabel titleLabel;
+    private JTextField searchTextField;
+    private JButton searchBtn;
+    // JFormDesigner - End of variables declaration  //GEN-END:variables
 
     public HomeCashierPage() {
         initComponents();
@@ -36,6 +55,13 @@ public class HomeCashierPage extends JFrame {
         return customerInfoArea;
     }
 
+    public void researchBtn(ActionListener al) {
+        searchBtn.addActionListener(al);
+    }
+
+    public void sellTicketsBtn(ActionListener al) {
+        sellTicketsBtn.addActionListener(al);
+    }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -54,6 +80,15 @@ public class HomeCashierPage extends JFrame {
         titleLabel = new JLabel();
         searchTextField = new JTextField();
         searchBtn = new JButton();
+        //
+        projectionInfoArea.setLineWrap(true);
+        projectionInfoArea.setWrapStyleWord(true);
+        //
+        reservationInfoArea.setLineWrap(true);
+        reservationInfoArea.setWrapStyleWord(true);
+        //
+        customerInfoArea.setLineWrap(true);
+        customerInfoArea.setWrapStyleWord(true);
 
         //======== this ========
         var contentPane = getContentPane();
@@ -169,21 +204,5 @@ public class HomeCashierPage extends JFrame {
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
-    // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - Luka Crnogorac
-    private JLabel label3;
-    private JButton sellTicketsBtn;
-    private JLabel label4;
-    private JLabel label7;
-    private JLabel label8;
-    private JScrollPane scrollPane1;
-    private JTextArea projectionInfoArea;
-    private JScrollPane scrollPane2;
-    private JTextArea reservationInfoArea;
-    private JScrollPane scrollPane3;
-    private JTextArea customerInfoArea;
-    private JLabel titleLabel;
-    private JTextField searchTextField;
-    private JButton searchBtn;
-    // JFormDesigner - End of variables declaration  //GEN-END:variables
+
 }
