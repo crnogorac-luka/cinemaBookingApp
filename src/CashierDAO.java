@@ -17,13 +17,6 @@ public class CashierDAO implements DAO<CashierDAO.Cashier> {
         this.db = db;
     }
 
-    public Cashier getCurrentCashier() {
-        return currentCashier;
-    }
-
-    public void setCurrentCashier(Cashier currentCashier) {
-        this.currentCashier = currentCashier;
-    }
 
     /**
      * @return current list of cashiers
@@ -53,7 +46,7 @@ public class CashierDAO implements DAO<CashierDAO.Cashier> {
             fetchedCashier.setSalary(Double.parseDouble(row.get(0).get(2)));
             fetchedCashier.setEmail(row.get(0).get(3));
 
-            setCurrentCashier(fetchedCashier);
+            currentCashier = fetchedCashier;
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
         } catch (Exception e) {
@@ -64,7 +57,7 @@ public class CashierDAO implements DAO<CashierDAO.Cashier> {
     public void fetch(String email, String password) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + email);
-        CashierDAO.Cashier fetchedCashier = new CashierDAO.Cashier();
+        Cashier fetchedCashier = new Cashier();
 
         try {
             AccountInfoDAO accountInfoDAO = new AccountInfoDAO(db);
@@ -83,13 +76,13 @@ public class CashierDAO implements DAO<CashierDAO.Cashier> {
             String hashedPassword = result.toString();
 
             if (hashedPassword.equals(fetchedPassword)) {
-                ArrayList<ArrayList<String>> row = db.getData("SELECT * FROM Customer WHERE Email = ?", values, false);
+                ArrayList<ArrayList<String>> row = db.getData("SELECT * FROM Cashier WHERE Email = ?", values, false);
                 fetchedCashier.setCashierID(Integer.parseInt(row.get(0).get(0)));
                 fetchedCashier.setName(row.get(0).get(1));
                 fetchedCashier.setSalary(Double.parseDouble(row.get(0).get(2)));
                 fetchedCashier.setEmail(row.get(0).get(4));
 
-                setCurrentCashier(fetchedCashier);
+                currentCashier = fetchedCashier;
             } else {
                 System.out.println("Wrong username or password. Try again.");
             }

@@ -48,10 +48,9 @@ public class AccountInfoDAO implements DAO<AccountInfoDAO.AccountInfo> {
         AccountInfo fetchedAccount = new AccountInfo();
 
         try {
-            ArrayList<ArrayList<String>> row = db.getData("SELECT * FROM AccountInfo WHERE email = ?", values, false);
+            ArrayList<ArrayList<String>> row = db.getData("SELECT * FROM AccountInfo WHERE Email = ?", values, false);
             fetchedAccount.setEmail(row.get(0).get(0));
             fetchedAccount.setPassword(row.get(0).get(1));
-            fetchedAccount.setRole(Role.valueOf(row.get(0).get(2).toUpperCase()));
             currentAccountInfo = fetchedAccount;
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
@@ -70,11 +69,10 @@ public class AccountInfoDAO implements DAO<AccountInfoDAO.AccountInfo> {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + accountInfo.getEmail());
         values.add(accountInfo.getPassword());
-        values.add(accountInfo.getRole().toString());
 
         boolean response = false;
         try {
-            response = db.setData("INSERT INTO AccountInfo VALUES('?','?','?')", values);
+            response = db.setData("INSERT INTO AccountInfo VALUES('?','?')", values);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -100,13 +98,12 @@ public class AccountInfoDAO implements DAO<AccountInfoDAO.AccountInfo> {
      */
     public boolean update(String email, AccountInfo accountInfo) {
         ArrayList<String> values = new ArrayList<String>();
-        values.add(accountInfo.getEmail());
         values.add(accountInfo.getPassword());
-        values.add(""+accountInfo.getRole());
+        values.add(email);
 
         boolean response = false;
         try {
-            response = db.setData("UPDATE AccountInfo SET email = '?', password = '?', role = '?'", values);
+            response = db.setData("UPDATE AccountInfo SET Password = '?' WHERE Email = '?'", values);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -120,11 +117,11 @@ public class AccountInfoDAO implements DAO<AccountInfoDAO.AccountInfo> {
      */
     public boolean remove(String email) {
         ArrayList<String> values = new ArrayList<String>();
-        values.add("" + email);
+        values.add(email);
 
         boolean response = false;
         try {
-            response = db.setData("DELETE FROM AccountInfo WHERE email = ?", values);
+            response = db.setData("DELETE FROM AccountInfo WHERE Email = ?", values);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -145,7 +142,6 @@ public class AccountInfoDAO implements DAO<AccountInfoDAO.AccountInfo> {
                 AccountInfo currentAccount = new AccountInfo();
                 currentAccount.setEmail(record.get(0));
                 currentAccount.setPassword(record.get(1));
-                currentAccount.setRole(Role.valueOf(record.get(2).toUpperCase()));
                 getList().add(currentAccount);
             }
 
@@ -164,7 +160,6 @@ public class AccountInfoDAO implements DAO<AccountInfoDAO.AccountInfo> {
 
         public String email;
         private String password;
-        public Role role;
 
         /**
          *
@@ -175,12 +170,10 @@ public class AccountInfoDAO implements DAO<AccountInfoDAO.AccountInfo> {
         /**
          * @param email
          * @param password
-         * @param role
          */
-        public AccountInfo(String email, String password, Role role) {
+        public AccountInfo(String email, String password) {
             this.email = email;
             this.password = password;
-            this.role = role;
         }
 
         /**
@@ -211,18 +204,6 @@ public class AccountInfoDAO implements DAO<AccountInfoDAO.AccountInfo> {
             this.password = password;
         }
 
-        /**
-         * @return
-         */
-        public Role getRole() {
-            return role;
-        }
 
-        /**
-         * @param role
-         */
-        public void setRole(Role role) {
-            this.role = role;
-        }
     }
 }
