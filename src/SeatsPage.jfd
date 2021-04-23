@@ -1,0 +1,121 @@
+JFDML JFormDesigner: "7.0.3.0.337" Java: "11.0.10" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class javax.swing.BoxLayout ) ) {
+			name: "this"
+			add( new FormContainer( "javax.swing.JTabbedPane", new FormLayoutManager( class javax.swing.JTabbedPane ) ) {
+				name: "tabbedPane2"
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridLayout ) {
+					"rows": 2
+				} ) {
+					name: "panel4"
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridLayout ) {
+						"columns": 2
+					} ) {
+						name: "panel5"
+						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridLayout ) ) {
+							name: "panel6"
+							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridLayout ) ) {
+								name: "panel7"
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label1"
+									"text": "Pick seat(s)"
+									"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 10, false )
+									"foreground": new java.awt.Color( 102, 204, 255, 255 )
+									"horizontalAlignment": 0
+									"verticalAlignment": 1
+								} )
+								add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridLayout ) {
+									"rows": 3
+									"columns": 3
+								} ) {
+									name: "panel8"
+									add( new FormComponent( "javax.swing.JLabel" ) {
+										name: "label2"
+										"text": "Seats"
+										"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 6, false )
+										"horizontalAlignment": 4
+									} )
+									add( new FormComponent( "javax.swing.JTextField" ) {
+										name: "textField1"
+									} )
+									add( new FormComponent( "javax.swing.JLabel" ) {
+										name: "label3"
+										"text": "Total"
+										"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 6, false )
+										"horizontalAlignment": 4
+									} )
+									add( new FormComponent( "javax.swing.JTextField" ) {
+										name: "textField2"
+									} )
+									add( new FormComponent( "javax.swing.JButton" ) {
+										name: "button1"
+										"text": "Reserve tickets"
+										addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btn_reserveTickets", true ) )
+									} )
+									add( new FormComponent( "javax.swing.JButton" ) {
+										name: "button2"
+										"text": "Buy ticket(s)"
+									} )
+								} )
+							} )
+						} )
+					} )
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridLayout ) {
+						"columns": 2
+					} ) {
+						name: "panel9"
+						add( new FormComponent( "javax.swing.JButton" ) {
+							name: "button3"
+							"icon": new com.jformdesigner.model.SwingIcon( 1, "C:\\Users\\Korisnik\\IdeaProjects\\githubapps\\imgnew.png" )
+						} )
+					} )
+				}, new FormLayoutConstraints( null ) {
+					"title": "Reservation"
+				} )
+				add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+					name: "scrollPane1"
+					add( new FormComponent( "javax.swing.JList" ) {
+						name: "list1"
+						"model": new javax.swing.DefaultListModel {
+							addElement( "A1" )
+							addElement( "A2" )
+							addElement( "A3" )
+							addElement( "A4" )
+							addElement( "A5" )
+							addElement( "B1" )
+							addElement( "B2" )
+							addElement( "B3" )
+							addElement( "B4" )
+							addElement( "B5" )
+							addElement( "C1" )
+							addElement( "C2" )
+							addElement( "C3" )
+							addElement( "C4" )
+							addElement( "C5" )
+							addElement( "D1" )
+							addElement( "D2" )
+							addElement( "D3" )
+							addElement( "D4" )
+							addElement( "D5" )
+							addElement( "E1" )
+							addElement( "E2" )
+							addElement( "E3" )
+							addElement( "E4" )
+							addElement( "E5" )
+						}
+						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "list1_itemClicked", true ) )
+						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "list1_mouseClicked", true ) )
+					} )
+				}, new FormLayoutConstraints( null ) {
+					"title": "Seats"
+				} )
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 1010, 590 )
+		} )
+	}
+}
