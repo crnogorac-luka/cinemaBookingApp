@@ -1,5 +1,7 @@
 import java.awt.event.*;
-
+import java.util.HashMap;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 /**
  * class that serves as the access point to the business layer data model
  */
@@ -146,6 +148,10 @@ public class Controller {
 
 
     // HOME CASHIER LISTENERS
+
+    private void setModelForFoodDropdown(JComboBox comboBox) {
+        comboBox.setModel(new DefaultComboBoxModel<>(this.model.getFoodLogger().getFoodNames().toArray(new String[0])));
+    }
 
     /**
      * bookedProjection listener
