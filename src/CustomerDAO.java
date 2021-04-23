@@ -66,7 +66,8 @@ public class CustomerDAO implements DAO<CustomerDAO.Customer> {
 
         try {
             AccountInfoDAO accountInfoDAO = new AccountInfoDAO(db);
-            String fetchedPassword = accountInfoDAO.fetch(email).getPassword();
+            accountInfoDAO.fetch(email);
+            String fetchedPassword = accountInfoDAO.getCurrentItem().getPassword();
 
             // ENCRYPTING (HASHING) the provided password
             byte[] bytesOfMessage = password.getBytes("UTF-8");
