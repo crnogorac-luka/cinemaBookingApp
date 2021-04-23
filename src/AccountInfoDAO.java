@@ -7,10 +7,11 @@ import java.sql.*;
  * class that represents account info 
  * Authors: Igor, Ante
  */
-public class AccountInfoDAO {
+public class AccountInfoDAO implements DAO<AccountInfoDAO.AccountInfo> {
 
     private DBConnect db;
     private ArrayList<AccountInfo> list;
+    private AccountInfo currentAccountInfo;
 
     /**
      * @param db object that contains database connection protocols
@@ -26,45 +27,52 @@ public class AccountInfoDAO {
         return list;
     }
 
+    @Override
+    public AccountInfoDAO.AccountInfo getCurrentItem() {
+        return currentAccountInfo;
+    }
+
+    @Override
+    public void fetch(int id) {
+
+    }
+
     /**
      * @param email unique EMAIL of the AccountInfo we want to fetch from the
      *              table
      * @return object of class AccountInfo
      */
-    public AccountInfo fetch(String email) {
+    public void fetch(String email) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + email);
         AccountInfo fetchedAccount = new AccountInfo();
 
         try {
-            ArrayList<ArrayList<String>> row = db.getData("SELECT * FROM AccountInfo WHERE email = ?", values, false);
+            ArrayList<ArrayList<String>> row = db.getData("SELECT * FROM AccountInfo WHERE Email = ?", values, false);
             fetchedAccount.setEmail(row.get(0).get(0));
             fetchedAccount.setPassword(row.get(0).get(1));
-            fetchedAccount.setRole(Role.valueOf(row.get(0).get(2).toUpperCase()));
-            return fetchedAccount;
+            currentAccountInfo = fetchedAccount;
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
-            return null;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
     }
 
     /**
-     * @param AccountInfo prepared object of class AccountInfo whose attributes
+     * @param accountInfo prepared object of class AccountInfo whose attributes
      *                    are translated to column values of the new row in AccountInfo table
      * @return true if insertion is successful, false if otherwise
      */
+    @Override
     public boolean create(AccountInfo accountInfo) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + accountInfo.getEmail());
         values.add(accountInfo.getPassword());
-        values.add(accountInfo.getRole().toString());
 
         boolean response = false;
         try {
-            response = db.setData("INSERT INTO AccountInfo VALUES('?','?','?')", values);
+            response = db.setData("INSERT INTO AccountInfo VALUES('?','?')", values);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -72,21 +80,30 @@ public class AccountInfoDAO {
         return response;
     }
 
+    @Override
+    public boolean update(int id, AccountInfo item) {
+        return false;
+    }
+
+    @Override
+    public boolean remove(int id) {
+        return false;
+    }
+
     /**
-     * @param AccountInfo prepared object of class AccountInfo whose attributes
+     * @param accountInfo prepared object of class AccountInfo whose attributes
      *                    are translated to column values of the existing row with specified ID in
      *                    AccountInfo table
      * @return true if insertion is successful, false if otherwise
      */
-    public boolean update(AccountInfo accountInfo) {
+    public boolean update(String email, AccountInfo accountInfo) {
         ArrayList<String> values = new ArrayList<String>();
-        values.add(accountInfo.getEmail());
         values.add(accountInfo.getPassword());
-        values.add(""+accountInfo.getRole());
+        values.add(email);
 
         boolean response = false;
         try {
-            response = db.setData("UPDATE AccountInfo SET email = '?', password = '?', role = '?'", values);
+            response = db.setData("UPDATE AccountInfo SET Password = '?' WHERE Email = '?'", values);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -100,11 +117,11 @@ public class AccountInfoDAO {
      */
     public boolean remove(String email) {
         ArrayList<String> values = new ArrayList<String>();
-        values.add("" + email);
+        values.add(email);
 
         boolean response = false;
         try {
-            response = db.setData("DELETE FROM AccountInfo WHERE email = ?", values);
+            response = db.setData("DELETE FROM AccountInfo WHERE Email = ?", values);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -116,6 +133,7 @@ public class AccountInfoDAO {
      * retrieves all rows from AccountInfo table and translates them to objects
      * of class AccountInfo and stores them in the list
      */
+    @Override
     public void fetchAll() {
 
         try {
@@ -124,7 +142,6 @@ public class AccountInfoDAO {
                 AccountInfo currentAccount = new AccountInfo();
                 currentAccount.setEmail(record.get(0));
                 currentAccount.setPassword(record.get(1));
-                currentAccount.setRole(Role.valueOf(record.get(2).toUpperCase()));
                 getList().add(currentAccount);
             }
 
@@ -143,7 +160,6 @@ public class AccountInfoDAO {
 
         public String email;
         private String password;
-        public Role role;
 
         /**
          *
@@ -154,12 +170,10 @@ public class AccountInfoDAO {
         /**
          * @param email
          * @param password
-         * @param role
          */
-        public AccountInfo(String email, String password, Role role) {
+        public AccountInfo(String email, String password) {
             this.email = email;
             this.password = password;
-            this.role = role;
         }
 
         /**
@@ -190,18 +204,6 @@ public class AccountInfoDAO {
             this.password = password;
         }
 
-        /**
-         * @return
-         */
-        public Role getRole() {
-            return role;
-        }
 
-        /**
-         * @param role
-         */
-        public void setRole(Role role) {
-            this.role = role;
-        }
     }
 }

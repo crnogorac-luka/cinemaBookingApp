@@ -65,7 +65,9 @@ public class CustomerDAO implements DAO<CustomerDAO.Customer> {
         Customer fetchedCustomer = new Customer();
 
         try {
-            ArrayList<ArrayList<String>> rowCredentials = db.getData("SELECT Password FROM AccountInfo WHERE Email = ?", values, false);
+            AccountInfoDAO accountInfoDAO = new AccountInfoDAO(db);
+            accountInfoDAO.fetch(email);
+            String fetchedPassword = accountInfoDAO.getCurrentItem().getPassword();
 
             // ENCRYPTING (HASHING) the provided password
             byte[] bytesOfMessage = password.getBytes("UTF-8");
@@ -78,7 +80,7 @@ public class CustomerDAO implements DAO<CustomerDAO.Customer> {
             //password hashed with MD5
             String hashedPassword = result.toString();
 
-            if (hashedPassword.equals(rowCredentials.get(0).get(0))) {
+            if (hashedPassword.equals(fetchedPassword)) {
                 ArrayList<ArrayList<String>> row = db.getData("SELECT * FROM Customer WHERE Email = ?", values, false);
                 fetchedCustomer.setPersonID(Integer.parseInt(row.get(0).get(0)));
                 fetchedCustomer.setFirstName(row.get(0).get(1));

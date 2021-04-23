@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.awt.event.*;
 
 /**
@@ -15,10 +14,9 @@ public class Controller {
         this.view = view;
         this.model = model;
 
-        // LoginUser loginUser = new LoginUser();
-        AddSeats addSeats = new AddSeats();
-        // this.view.getLoginPage().attachHandlerLoginBtn(loginUser);
-        this.view.getSeatsPage().attachHandlerAddSeats(addSeats);
+        LoginUser loginUser = new LoginUser();
+
+        this.view.getLoginPage().attachHandlerLoginBtn(loginUser);
 
     }
 
