@@ -1,7 +1,10 @@
 
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
+
 import java.awt.*;
 import javax.swing.*;
-import com.intellij.uiDesigner.core.*;
+
 
 public class HomeUserPage extends JFrame {
 

@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.event.*;
-
+import java.util.HashMap;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 /**
  * class that serves as the access point to the business layer data model
  */
@@ -16,8 +18,10 @@ public class Controller {
         this.model = model;
 
         LoginUser loginUser = new LoginUser();
+        SearchID searchID = new SearchID();
 
         this.view.getLoginPage().attachHandlerLoginBtn(loginUser);
+        this.view.getHomeCashierPage().researchBtn(searchID);
 
     }
 
@@ -161,18 +165,36 @@ public class Controller {
 
     // HOME CASHIER LISTENERS
 
+
     /**
-     * bookedProjection listener
+     * search listener
      */
-    private class bookedProjection implements ItemListener {
+    private class SearchID implements ActionListener{
 
         @Override
-        public void itemStateChanged(ItemEvent event) {
+        public void actionPerformed(ActionEvent e) {
 
-            if (event.getStateChange() == ItemEvent.SELECTED) {
-                String id = event.getItem().toString();
+            int id = Integer.parseInt(view.getHomeCashierPage().getSearchTextField().getText());
 
-            }
+            model.getDaoCollection().get("reservation").fetch(id);
+
+            ReservationDAO.Reservation reservation = (ReservationDAO.Reservation) model.getDaoCollection().get("reservation").getCurrentItem();
+
+            int projID = reservation.getProjectionID();
+            model.getDaoCollection().get("projection").fetch(projID);
+            ProjectionDAO.Projection projection = (ProjectionDAO.Projection) model.getDaoCollection().get("projection").getCurrentItem();
+            view.getHomeCashierPage().getProjectionInfoArea().append("Start time: " + projection.getStartTime() + " End time: " + projection.getEndTime());
+
+
+
+            int customerID = reservation.getCustomerID();
+            model.getDaoCollection().get("customer").fetch(customerID);
+            CustomerDAO.Customer customer = (CustomerDAO.Customer) model.getDaoCollection().get("customer").getCurrentItem();
+
+            view.getHomeCashierPage().getReservationInfoArea().append("Reservation number: " + reservation.getReservationID() + " For the customer:" + customer.getFirstName());
+
+            view.getHomeCashierPage().getCustomerInfoArea().append("Customer: " + customer.getFirstName() + " " + customer.getLastName() + " Phone: " + customer.getPhone() + "Email: " + customer.getEmail());
+            System.out.println("Customer: " + customer.getFirstName() + " " + customer.getLastName() + "Phone: " + customer.getPhone() + "Email: " + customer.getEmail());
 
         }
     }

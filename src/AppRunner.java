@@ -25,7 +25,7 @@ public class AppRunner {
         DBConnect dbConnect = new DBConnect();
         dbConnect.setMySQL("CinemaDB");
         dbConnect.setUserName("root");
-        dbConnect.setPassword("student");
+        dbConnect.setPassword("qwerty");
         Model model = new Model(dbConnect);
         View view = new View();
         new Controller(view, model);

@@ -1,6 +1,9 @@
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
+
 import java.awt.*;
 import javax.swing.*;
-import com.intellij.uiDesigner.core.*;
+
 /*
  * Created by JFormDesigner on Thu Apr 22 21:47:45 CEST 2021
  */
