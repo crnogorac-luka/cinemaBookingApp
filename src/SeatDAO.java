@@ -50,7 +50,7 @@ public class SeatDAO implements DAO<SeatDAO.Seat>{
         try {
             ArrayList<ArrayList<String>> row = db.getData("SELECT * FROM Seat WHERE SeatCode = ?", values, false);
             fetchedSeat.setSeatCode(Integer.parseInt(row.get(0).get(0)));
-            fetchedSeat.setRow(Integer.parseInt(row.get(0).get(1)));
+            fetchedSeat.setRow(row.get(0).get(1).charAt(0));
             fetchedSeat.setColumn(Integer.parseInt(row.get(0).get(2)));
 
             setCurrentSeat(fetchedSeat);
@@ -136,7 +136,7 @@ public class SeatDAO implements DAO<SeatDAO.Seat>{
             for (ArrayList<String> record : row) {
                 Seat currSeat = new Seat();
                 currSeat.setSeatCode(Integer.parseInt(record.get(0)));
-                currSeat.setRow(Integer.parseInt(record.get(1)));
+                currSeat.setRow(record.get(1).charAt(0));
                 currSeat.setColumn(Integer.parseInt(record.get(2)));
                 getList().add(currSeat);
             }
@@ -151,7 +151,7 @@ public class SeatDAO implements DAO<SeatDAO.Seat>{
     class Seat {
 
         private int seatCode;
-        private int row;
+        private char row;
         private int column;
 
         public Seat() {
@@ -164,7 +164,7 @@ public class SeatDAO implements DAO<SeatDAO.Seat>{
          * @param row
          * @param column
          */
-        public Seat(int seatCode, int row, int column) {
+        public Seat(int seatCode, char row, int column) {
             this.seatCode = seatCode;
             this.row = row;
             this.column = column;
@@ -187,7 +187,7 @@ public class SeatDAO implements DAO<SeatDAO.Seat>{
          *
          * @return
          */
-        public int getRow() {
+        public char getRow() {
             return row;
         }
 
@@ -214,7 +214,7 @@ public class SeatDAO implements DAO<SeatDAO.Seat>{
         /**
          * @param row the number of the row
          */
-        public void setRow(int row) {
+        public void setRow(char row) {
             this.row = row;
         }
 

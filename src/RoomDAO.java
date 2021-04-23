@@ -46,6 +46,7 @@ public class RoomDAO implements DAO<RoomDAO.Room>{
         try {
             ArrayList<ArrayList<String>> row = db.getData("SELECT * FROM Room WHERE RoomID = ?", values, false);
             fetchedRoom.setRoomID(Integer.parseInt(row.get(0).get(0)));
+            fetchedRoom.setFor3D(Integer.parseInt(row.get(0).get(1)));
 
             setCurrentRoom(fetchedRoom);
         } catch (IndexOutOfBoundsException ex) {
@@ -64,10 +65,11 @@ public class RoomDAO implements DAO<RoomDAO.Room>{
     public boolean create(Room room) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + room.getRoomID());
+        values.add("" + room.getFor3D());
 
         boolean response = false;
         try {
-            response = db.setData("INSERT INTO Room VALUES(?)", values);
+            response = db.setData("INSERT INTO Room VALUES(?, ?)", values);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -82,13 +84,14 @@ public class RoomDAO implements DAO<RoomDAO.Room>{
     @Override
     public boolean update(int id, Room room) {
         ArrayList<String> values = new ArrayList<String>();
-        values.add("" + room.getRoomID());
-        values.add("" + room.getRoomID());
+
+        values.add("" + room.getFor3D());
+        values.add("" + id);
 
         values.add("" + id);
         boolean response = false;
         try {
-            response = db.setData("UPDATE Room SET RoomID = '?' WHERE RoomID = '?'", values);
+            response = db.setData("UPDATE Room SET For3D = '?' WHERE RoomID = '?'", values);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -141,17 +144,21 @@ public class RoomDAO implements DAO<RoomDAO.Room>{
     class Room {
 
         private int roomID;
+        private int for3D;
 
         /**
          * @param roomID parameterized constructor for Room class
+         * @param for3D
          */
         // PARAMETERIZED CONSTRUCTOR
-        public Room(int roomID) {
+        public Room(int roomID, int for3D) {
             this.roomID = roomID;
+            this.for3D = for3D;
         }
 
         public Room() {
             this.roomID = -1;
+            this.for3D = 0;
         }
 
 
@@ -164,6 +171,12 @@ public class RoomDAO implements DAO<RoomDAO.Room>{
             return roomID;
         }
 
+        /**
+         * @return 1 if room is for 3D movies and 0 if 2D
+         */
+        public int getFor3D() {
+            return for3D;
+        }
 
         // MUTATORS
 
@@ -172,6 +185,13 @@ public class RoomDAO implements DAO<RoomDAO.Room>{
          */
         public void setRoomID(int roomID) {
             this.roomID = roomID;
+        }
+
+        /**
+         * @param for3D sets 0 or 1 depending on support for 3D movies
+         */
+        public void setFor3D(int for3D) {
+            this.for3D = for3D;
         }
     }
 }
