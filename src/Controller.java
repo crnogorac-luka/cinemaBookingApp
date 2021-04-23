@@ -31,8 +31,14 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             String email = view.getLoginPage().getLoginFld().getText();
             String password = String.valueOf(view.getLoginPage().getPasswordField().getPassword());
-            ((CustomerDAO) model.getDaoCollection().get("customer")).fetch(email, password);
+            //((CustomerDAO) model.getDaoCollection().get("customer")).fetch(email, password);
 
+            ((CashierDAO) model.getDaoCollection().get("cashier")).fetch(email, password);
+            if(model.getDaoCollection().get("cashier").getCurrentItem() != null) {
+                view.getLoginPage().dispose();
+                view.getHomeCashierPage().setVisible(true);
+            }
+/*
             if (model.getDaoCollection().get("customer").getCurrentItem() != null) {
                 view.getLoginPage().dispose();
                 view.getHomeUserPage().setVisible(true);
@@ -42,7 +48,7 @@ public class Controller {
                     view.getLoginPage().dispose();
                     view.getHomeCashierPage().setVisible(true);
                 }
-            }
+            }*/
             //System.out.println(((CustomerDAO.Customer) model.getDaoCollection().get("customer").getCurrentItem()).getFirstName());
         }
     }
