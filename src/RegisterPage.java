@@ -13,11 +13,15 @@ import com.intellij.uiDesigner.core.*;
 public class RegisterPage extends JFrame {
     public RegisterPage() {
         initComponents();
+        pack();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setVisible(false);
     }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - unknown
+        // Generated using JFormDesigner Evaluation license - Luka Crnogorac
         label1 = new JLabel();
         label2 = new JLabel();
         label3 = new JLabel();
@@ -89,7 +93,7 @@ public class RegisterPage extends JFrame {
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - unknown
+    // Generated using JFormDesigner Evaluation license - Luka Crnogorac
     private JLabel label1;
     private JLabel label2;
     private JLabel label3;

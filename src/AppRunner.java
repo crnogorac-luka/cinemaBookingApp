@@ -23,8 +23,8 @@ public class AppRunner {
         }*/
 
         DBConnect dbConnect = new DBConnect();
-        dbConnect.setMySQL("freedbtech_CinemaDB");
-        dbConnect.setUserName("freedbtech_teamproject");
+        dbConnect.setMySQL("CinemaDB");
+        dbConnect.setUserName("root");
         dbConnect.setPassword("student");
         Model model = new Model(dbConnect);
         View view = new View();

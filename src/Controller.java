@@ -38,6 +38,13 @@ public class Controller {
             if (model.getDaoCollection().get("customer").getCurrentItem() != null) {
                 view.getLoginPage().dispose();
                 view.getHomeUserPage().setVisible(true);
+            } else {
+                ((CashierDAO) model.getDaoCollection().get("cashier")).fetch(email, password);
+
+                if(model.getDaoCollection().get("cashier").getCurrentItem() != null) {
+                    view.getLoginPage().dispose();
+                    view.getHomeCashierPage().setVisible(true);
+                }
             }
             //System.out.println(((CustomerDAO.Customer) model.getDaoCollection().get("customer").getCurrentItem()).getFirstName());
         }

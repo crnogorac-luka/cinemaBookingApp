@@ -26,14 +26,7 @@ CREATE TABLE IF NOT EXISTS `CinemaDB`.`Seat` (
   `SeatCode` INT NOT NULL,
   `Row` INT NOT NULL,
   `Column` INT NOT NULL,
-  `RoomID` INT NOT NULL,
-  PRIMARY KEY (`SeatCode`),
-  INDEX `fk_Seat_Room_idx` (`RoomID` ASC),
-  CONSTRAINT `fk_Seat_Room`
-    FOREIGN KEY (`RoomID`)
-    REFERENCES `CinemaDB`.`Room` (`RoomID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`SeatCode`))
 ENGINE = InnoDB;
 
 
@@ -86,19 +79,18 @@ CREATE TABLE IF NOT EXISTS `CinemaDB`.`AccountInfo` (
   PRIMARY KEY (`Email`))
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
--- Table `CinemaDB`.`Person`
+-- Table `CinemaDB`.`Customer`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `CinemaDB`.`Person` (
-  `PersonID` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `CinemaDB`.`Customer` (
+  `CustomerID` INT NOT NULL,
   `FirstName` VARCHAR(45) NOT NULL,
   `LastName` VARCHAR(45) NOT NULL,
   `Phone` VARCHAR(45) NOT NULL,
   `Email` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`PersonID`),
-  INDEX `fk_Person_AccountInfo1_idx` (`Email` ASC),
-  CONSTRAINT `fk_Person_AccountInfo1`
+  PRIMARY KEY (`CustomerID`),
+  INDEX `fk_Customer_AccountInfo1_idx` (`Email` ASC),
+  CONSTRAINT `fk_Customer_AccountInfo1`
     FOREIGN KEY (`Email`)
     REFERENCES `CinemaDB`.`AccountInfo` (`Email`)
     ON DELETE NO ACTION
@@ -111,16 +103,16 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CinemaDB`.`Reservation` (
   `ReservationID` INT NOT NULL,
-  `PersonID` INT NOT NULL,
+  `CustomerID` INT NOT NULL,
   `ProjectionID` INT NOT NULL,
   `SeatCode` INT NOT NULL,
   PRIMARY KEY (`ReservationID`),
-  INDEX `fk_Reservation_Person1_idx` (`PersonID` ASC),
+  INDEX `fk_Reservation_Customer1_idx` (`CustomerID` ASC),
   INDEX `fk_Reservation_Projection1_idx` (`ProjectionID` ASC),
   INDEX `fk_Reservation_Seat1_idx` (`SeatCode` ASC),
-  CONSTRAINT `fk_Reservation_Person1`
-    FOREIGN KEY (`PersonID`)
-    REFERENCES `CinemaDB`.`Person` (`PersonID`)
+  CONSTRAINT `fk_Reservation_Customer1`
+    FOREIGN KEY (`CustomerID`)
+    REFERENCES `CinemaDB`.`Customer` (`CustomerID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Reservation_Projection1`
