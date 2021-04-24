@@ -74,12 +74,12 @@ new FormModel {
 				"minimumSize": new java.awt.Dimension( 200, 30 )
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label3"
-				"text": "Select available room"
+				name: "label5"
+				"text": "Select a date"
 				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 6, false )
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-				"row": 3
 				"column": 1
+				"row": 3
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label7"
@@ -90,14 +90,16 @@ new FormModel {
 				"row": 3
 			} )
 			add( new FormComponent( "javax.swing.JComboBox" ) {
-				name: "comboBox2"
+				name: "comboBox1"
 				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 6, false )
+				"background": new java.awt.Color( 102, 255, 102, 255 )
+				"foreground": new java.awt.Color( 0, 0, 0, 255 )
 				auxiliary() {
-					"JavaCodeGenerator.variableName": "selectRoomBox"
+					"JavaCodeGenerator.variableName": "selectDateBox"
 				}
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-				"row": 4
 				"column": 1
+				"row": 4
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "textField3"
@@ -129,6 +131,8 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JComboBox" ) {
 				name: "comboBox3"
 				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 6, false )
+				"background": new java.awt.Color( 102, 255, 102, 255 )
+				"foreground": new java.awt.Color( 0, 0, 0, 255 )
 				auxiliary() {
 					"JavaCodeGenerator.variableName": "selectTimeBox"
 				}
@@ -148,12 +152,32 @@ new FormModel {
 				"minimumSize": new java.awt.Dimension( 200, 30 )
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label3"
+				"text": "Select available room"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 6, false )
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"row": 7
+				"column": 1
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label9"
 				"text": "3D (yes/no)"
 				"font": #SwingDerivedFont0
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 				"column": 4
 				"row": 7
+			} )
+			add( new FormComponent( "javax.swing.JComboBox" ) {
+				name: "comboBox2"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 65536, 6, false )
+				"foreground": new java.awt.Color( 0, 0, 0, 255 )
+				"background": new java.awt.Color( 102, 255, 102, 255 )
+				auxiliary() {
+					"JavaCodeGenerator.variableName": "selectRoomBox"
+				}
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"row": 8
+				"column": 1
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "textField5"
