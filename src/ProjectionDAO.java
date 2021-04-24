@@ -86,6 +86,51 @@ public class ProjectionDAO implements DAO<Projection>{
         }
     }
 
+    public ArrayList<String> fetchAvailableTimes(int movieID, String date) {
+        ArrayList<String> values = new ArrayList<String>();
+        values.add("" + movieID);
+        values.add(date);
+
+        ArrayList<String> times = new ArrayList<>();
+        try {
+            ArrayList<ArrayList<String>> row = db.getData("SELECT DISTINCT `StartTime` FROM `Projection` WHERE `MovieID` = ? AND `Date` = ?", values, false);
+            for (int i=0; i<row.size(); i++) {
+                times.add(row.get(i).get(0));
+            }
+
+            return times;
+        } catch (IndexOutOfBoundsException ex) {
+            System.out.println("The record does not exist.");
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ArrayList<String> fetchAvailableRooms(int movieID, String date, String startTime) {
+        ArrayList<String> values = new ArrayList<String>();
+        values.add("" + movieID);
+        values.add(date);
+        values.add(startTime);
+
+        ArrayList<String> rooms = new ArrayList<>();
+        try {
+            ArrayList<ArrayList<String>> row = db.getData("SELECT DISTINCT `RoomID` FROM `Projection` WHERE `MovieID` = ? AND `Date` = ? AND `StartTime` = ?", values, false);
+            for (int i=0; i<row.size(); i++) {
+                rooms.add(row.get(i).get(0));
+            }
+
+            return rooms;
+        } catch (IndexOutOfBoundsException ex) {
+            System.out.println("The record does not exist.");
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     /**
      * @param projection prepared object of class Projection whose attributes are translated to column values of the new row in Projection table

@@ -18,6 +18,9 @@ public class Controller {
         this.view = view;
         this.model = model;
 
+
+        this.model.getDaoCollection().get("movie").fetchAll();
+
         LoginUser loginUser = new LoginUser();
         GoRegister goRegister = new GoRegister();
         SearchID searchID = new SearchID();
@@ -26,6 +29,10 @@ public class Controller {
         ReserveButton resBtn = new ReserveButton();
         BuyRadioButton brb = new BuyRadioButton();
         RegisterUser registerUser = new RegisterUser();
+        ChangeMovie changeMoviePrev = new ChangeMovie(false);
+        ChangeMovie changeMovieNext = new ChangeMovie(true);
+        SelectDate selectDate = new SelectDate();
+        SelectTime selectTime = new SelectTime();
 
         this.view.getLoginPage().attachHandlerLoginBtn(loginUser);
         this.view.getSeatsPage().attachHandlerAddSeats(addSeats);
@@ -35,6 +42,10 @@ public class Controller {
         this.view.getHomeCashierPage().researchBtn(searchID);
         this.view.getLoginPage().attachHandlerRegisterBtn(goRegister);
         this.view.getRegisterPage().attachHandlerRegisterButton(registerUser);
+        this.view.getHomeUserPage().attachHandlerPrevBtn(changeMoviePrev);
+        this.view.getHomeUserPage().attachHandlerNextBtn(changeMovieNext);
+        this.view.getHomeUserPage().attachHandlerSelectDateBox(selectDate);
+        this.view.getHomeUserPage().attachHandlerSelectTimeBox(selectTime);
 
     }
 
@@ -132,32 +143,113 @@ public class Controller {
 
     // HOME USERS LISTENERS
 
-    private class PrevMovie implements ActionListener {
+    private class ChangeMovie implements ActionListener {
 
-        ArrayList<Movie> movies = ((MovieDAO) model.getDaoCollection().get("movie")).getList();
-        ListIterator<Movie> i = movies.listIterator(movies.size());
+        ArrayList<Movie> movies;
+        Movie newMovie;
+        boolean prevOrNext;
+        int currIndex;
 
-        Movie newMovie = null;
+        ChangeMovie(boolean prevOrNext) {
+            this.prevOrNext = prevOrNext;
+            movies = ((MovieDAO) model.getDaoCollection().get("movie")).getList();
+            newMovie = movies.get(0);
+            currIndex = 0;
+
+            setAnother();
+            System.out.println(movies.size());
+
+        }
+
+        private void setAnother() {
+            model.getDaoCollection().get("movie").setCurrentItem(newMovie);
+            view.getHomeUserPage().getTextField1().setText("Movie " + newMovie.getMovieID());
+            view.getHomeUserPage().getTitleFld().setText(newMovie.getTitle());
+            view.getHomeUserPage().getGenresFld().setText(newMovie.getGenre());
+            if (newMovie.getIs3D())
+                view.getHomeUserPage().getIs3DFld().setText("Yes");
+            else
+                view.getHomeUserPage().getIs3DFld().setText("No");
+            view.getHomeUserPage().getDurationFld().setText("" + newMovie.getDuration() + " minutes");
+            view.getHomeUserPage().getDescriptionArea().setText(newMovie.getDescription());
+
+            // Setting Date options by selected movie
+            ArrayList<String> dates = ((ProjectionDAO) model.getDaoCollection().get("projection")).fetchAvailableDates(newMovie.getMovieID());
+            view.getHomeUserPage().getSelectDateBox().setModel(new DefaultComboBoxModel<>(dates.toArray()));
+        }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (i.hasPrevious()) {
-                newMovie = i.previous();
-                model.getDaoCollection().get("movie").setCurrentItem(newMovie);
-                view.getHomeUserPage().getTextField1().setText("Movie " + newMovie.getMovieID());
-                view.getHomeUserPage().getTitleFld().setText(newMovie.getTitle());
-                view.getHomeUserPage().getGenresFld().setText(newMovie.getGenre());
-                if(newMovie.getIs3D())
-                    view.getHomeUserPage().getIs3DFld().setText("Yes");
-                else
-                    view.getHomeUserPage().getIs3DFld().setText("No");
-                view.getHomeUserPage().getDurationFld().setText(""+newMovie.getDuration()+" minutes");
-                view.getHomeUserPage().getDescriptionArea().setText(newMovie.getDescription());
+            Movie currMovie = (Movie) model.getDaoCollection().get("movie").getCurrentItem();
+            System.out.println(movies.indexOf(currMovie));
 
-                // Setting Date options by selected movie
-
-                //view.getHomeUserPage().getSelectTimeBox().setModel();
+            if(prevOrNext) {
+                if(movies.indexOf(currMovie)+1 < movies.size()) {
+                    if(movies.indexOf(currMovie)+1 == movies.size()-1) {
+                        view.getHomeUserPage().getNextBtn().setEnabled(false);
+                        view.getHomeUserPage().getPrevBtn().setEnabled(true);
+                    } else {
+                        view.getHomeUserPage().getNextBtn().setEnabled(true);
+                        view.getHomeUserPage().getPrevBtn().setEnabled(true);
+                    }
+                    newMovie = movies.get(movies.indexOf(currMovie)+1);
+                    setAnother();
+                }
+            } else {
+                if( movies.indexOf(currMovie)-1 > -1) {
+                    if(movies.indexOf(currMovie)-1 == 0) {
+                        view.getHomeUserPage().getPrevBtn().setEnabled(false);
+                        view.getHomeUserPage().getNextBtn().setEnabled(true);
+                    } else {
+                        view.getHomeUserPage().getPrevBtn().setEnabled(true);
+                        view.getHomeUserPage().getNextBtn().setEnabled(true);
+                    }
+                    newMovie = movies.get(movies.indexOf(currMovie)-1);
+                    setAnother();
+                }
             }
+
+        }
+    }
+
+
+    private class SelectDate implements ItemListener {
+
+        int movieID = ((Movie) model.getDaoCollection().get("movie").getCurrentItem()).getMovieID();
+
+
+        @Override
+        public void itemStateChanged(ItemEvent event) {
+
+            if (event.getStateChange() == ItemEvent.SELECTED) {
+                String date = event.getItem().toString();
+
+                ArrayList<String> times = ((ProjectionDAO)model.getDaoCollection().get("projection")).fetchAvailableTimes(movieID, date);
+                view.getHomeUserPage().getSelectTimeBox().setModel(new DefaultComboBoxModel<>(times.toArray()));
+            }
+
+        }
+    }
+
+    private class SelectTime implements ItemListener {
+
+        int movieID = ((Movie) model.getDaoCollection().get("movie").getCurrentItem()).getMovieID();
+        String date = view.getHomeUserPage().getSelectDateBox().getItemAt(0).toString();
+
+        @Override
+        public void itemStateChanged(ItemEvent event) {
+
+            if (event.getStateChange() == ItemEvent.SELECTED) {
+                String time = event.getItem().toString();
+
+                movieID = ((Movie) model.getDaoCollection().get("movie").getCurrentItem()).getMovieID();
+                date = view.getHomeUserPage().getSelectDateBox().getSelectedItem().toString();
+                System.out.println(date);
+                ArrayList<String> rooms = ((ProjectionDAO)model.getDaoCollection().get("projection")).fetchAvailableRooms(movieID, date, time);
+
+                view.getHomeUserPage().getSelectRoomBox().setModel(new DefaultComboBoxModel<>(rooms.toArray()));
+            }
+
         }
     }
 
@@ -198,18 +290,7 @@ public class Controller {
     /**
      * selectTime listener
      */
-    private class selectTime implements ItemListener {
 
-        @Override
-        public void itemStateChanged(ItemEvent event) {
-
-            if (event.getStateChange() == ItemEvent.SELECTED) {
-                String id = event.getItem().toString();
-
-            }
-
-        }
-    }
 
     /**
      * confirmSelection listener
@@ -271,6 +352,7 @@ public class Controller {
             Reservation reservation = (Reservation) model.getDaoCollection().get("reservation").getCurrentItem();
 
             int projID = reservation.getProjectionID();
+            System.out.println(projID);
             model.getDaoCollection().get("projection").fetch(projID);
 
             Projection projection = (Projection) model.getDaoCollection().get("projection").getCurrentItem();

@@ -14,6 +14,7 @@ public class MovieDAO implements DAO<Movie>{
      */
     public MovieDAO(DBConnect db) {
         this.db = db;
+        list = new ArrayList<>();
     }
 
 
