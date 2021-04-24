@@ -468,7 +468,7 @@ public class Controller {
                         view.getSeatsPage().getTicketsSelected().add(tickets);
 
                         // set the price
-                    double newPrice = 20.0;
+                    double newPrice = calcPrice();
                     view.getSeatsPage().getTextField2().setText(Double.toString(newPrice));
                 }
             }
@@ -505,14 +505,12 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             //for(int i = 1; i <= 6; i++) {
-            // int customerId = ((CustomerDAO.Customer) model.getDaoCollection().get("customer").getCurrentItem()).getPersonID();
-            // int projectionId = ((ProjectionDAO.Projection) model.getDaoCollection().get("projection").getCurrentItem()).getProjectionID();
             //}
             if(view.getSeatsPage().getTextField1().getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Please select seat before reserving ticket.");
             } else {
-                int customerId = 123;
-                int projectionId = 983;
+                int customerId = ((Customer) model.getDaoCollection().get("customer").getCurrentItem()).getPersonID();
+                int projectionId = ((Projection) model.getDaoCollection().get("projection").getCurrentItem()).getProjectionID();
                 model.getDaoCollection().get("reservation").create(new Reservation(1, customerId, projectionId, Integer.parseInt(view.getSeatsPage().getSeatCode())));
                 System.out.println("Reservation created for the ticket.");
                 System.out.println(view.getSeatsPage().getSeatCode());
@@ -528,11 +526,10 @@ public class Controller {
                 JOptionPane.showMessageDialog(null, "Please select seat before buying ticket.");
             } else {
                 Reservation reservation = (Reservation) model.getDaoCollection().get("reservation").getCurrentItem();
-                int reservationId = 2;
+                int reservationId = reservation.getReservationID();
 
-                // double price = calcPrice();
-                double newPrice = 20.0;
-                model.getDaoCollection().get("ticket").create(new Ticket(reservationId, newPrice, 1));
+                double price = calcPrice();
+                model.getDaoCollection().get("ticket").create(new Ticket(reservationId, price, 1));
             }
         }
         }
