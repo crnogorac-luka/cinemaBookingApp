@@ -10,7 +10,7 @@ new FormModel {
 			name: "this"
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label3"
-				"text": "Type the projection ID"
+				"text": "Type the reservation ID"
 				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 3, false )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {

@@ -57,8 +57,10 @@ public class ReservationDAO implements DAO<Reservation>{
             setCurrentReservation(fetchedReservation);
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
+            setCurrentReservation(null);
         } catch (Exception e) {
             e.printStackTrace();
+            setCurrentReservation(null);
         }
     }
 
