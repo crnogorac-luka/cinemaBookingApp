@@ -55,7 +55,7 @@ public class HomeCashierPage extends JFrame {
         return customerInfoArea;
     }
 
-    public void researchBtn(ActionListener al) {
+    public void searchBtn(ActionListener al) {
         searchBtn.addActionListener(al);
     }
 

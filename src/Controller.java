@@ -21,6 +21,7 @@ public class Controller {
         LoginUser loginUser = new LoginUser();
         GoRegister goRegister = new GoRegister();
         SearchID searchID = new SearchID();
+        SellTickets sellTickets = new SellTickets();
         AddSeats addSeats = new AddSeats();
         ReserveRadioButton rrb = new ReserveRadioButton();
         ReserveButton resBtn = new ReserveButton();
@@ -32,7 +33,8 @@ public class Controller {
         this.view.getSeatsPage().attachHandlerJRadio(rrb);
         this.view.getSeatsPage().attachHandlerJRadioTwo(brb);
         this.view.getSeatsPage().attachHandlerReserve(resBtn);
-        this.view.getHomeCashierPage().researchBtn(searchID);
+        this.view.getHomeCashierPage().searchBtn(searchID);
+        this.view.getHomeCashierPage().sellTicketsBtn(sellTickets);
         this.view.getLoginPage().attachHandlerRegisterBtn(goRegister);
         this.view.getRegisterPage().attachHandlerRegisterButton(registerUser);
 
@@ -287,11 +289,11 @@ public class Controller {
     /**
      * sellTickets listener
      */
-    private class sellTickets implements ActionListener {
+    private class SellTickets implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            System.out.println("Sell tickets clicked.");
         }
     }
 
