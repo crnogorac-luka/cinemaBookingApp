@@ -4,7 +4,7 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.intellij.uiDesigner.core.GridLayoutManager ) {
-			"$columnCount": 5
+			"$columnCount": 7
 			"$rowCount": 12
 		} ) {
 			name: "this"
@@ -15,7 +15,8 @@ new FormModel {
 				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 15, false )
 				"horizontalAlignment": 0
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-				"colSpan": 5
+				"colSpan": 6
+				"column": 1
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label2"
@@ -23,6 +24,7 @@ new FormModel {
 				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 6, false )
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 				"row": 1
+				"column": 1
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label11"
@@ -30,15 +32,34 @@ new FormModel {
 				"font": &SwingDerivedFont0 new com.jformdesigner.model.SwingDerivedFont( null, 0, 6, false )
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 				"row": 1
-				"column": 2
+				"column": 4
 			} )
-			add( new FormComponent( "javax.swing.JComboBox" ) {
-				name: "comboBox1"
-				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 6, false )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button3"
+				"text": "Prev"
+				"background": new java.awt.Color( 102, 204, 255, 255 )
 				auxiliary() {
-					"JavaCodeGenerator.variableName": "selectMovieBox"
+					"JavaCodeGenerator.variableName": "prevBtn"
 				}
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"row": 2
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField1"
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"row": 2
+				"minimumSize": new java.awt.Dimension( 200, 30 )
+				"column": 1
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button2"
+				"text": "Next"
+				"background": new java.awt.Color( 102, 204, 255, 255 )
+				auxiliary() {
+					"JavaCodeGenerator.variableName": "nextBtn"
+				}
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"column": 2
 				"row": 2
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
@@ -48,7 +69,7 @@ new FormModel {
 					"JavaCodeGenerator.variableName": "titleFld"
 				}
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-				"column": 2
+				"column": 4
 				"row": 2
 				"minimumSize": new java.awt.Dimension( 200, 30 )
 			} )
@@ -58,13 +79,14 @@ new FormModel {
 				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 6, false )
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 				"row": 3
+				"column": 1
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label7"
 				"text": "Genres"
 				"font": #SwingDerivedFont0
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-				"column": 2
+				"column": 4
 				"row": 3
 			} )
 			add( new FormComponent( "javax.swing.JComboBox" ) {
@@ -75,6 +97,7 @@ new FormModel {
 				}
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 				"row": 4
+				"column": 1
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "textField3"
@@ -83,7 +106,7 @@ new FormModel {
 					"JavaCodeGenerator.variableName": "genresFld"
 				}
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-				"column": 2
+				"column": 4
 				"row": 4
 				"minimumSize": new java.awt.Dimension( 200, 30 )
 			} )
@@ -93,13 +116,14 @@ new FormModel {
 				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 6, false )
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 				"row": 5
+				"column": 1
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label8"
 				"text": "Duration"
 				"font": #SwingDerivedFont0
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-				"column": 2
+				"column": 4
 				"row": 5
 			} )
 			add( new FormComponent( "javax.swing.JComboBox" ) {
@@ -110,6 +134,7 @@ new FormModel {
 				}
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 				"row": 6
+				"column": 1
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "textField4"
@@ -118,34 +143,17 @@ new FormModel {
 					"JavaCodeGenerator.variableName": "durationFld"
 				}
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-				"column": 2
+				"column": 4
 				"row": 6
 				"minimumSize": new java.awt.Dimension( 200, 30 )
-			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label5"
-				"text": "Price"
-				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 6, false )
-			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-				"row": 7
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label9"
 				"text": "3D (yes/no)"
 				"font": #SwingDerivedFont0
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-				"column": 2
+				"column": 4
 				"row": 7
-			} )
-			add( new FormComponent( "javax.swing.JTextField" ) {
-				name: "textField1"
-				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 6, false )
-				auxiliary() {
-					"JavaCodeGenerator.variableName": "priceFld"
-				}
-			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-				"row": 8
-				"minimumSize": new java.awt.Dimension( 200, 30 )
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "textField5"
@@ -154,7 +162,7 @@ new FormModel {
 					"JavaCodeGenerator.variableName": "is3DFld"
 				}
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-				"column": 2
+				"column": 4
 				"row": 8
 				"minimumSize": new java.awt.Dimension( 200, 30 )
 			} )
@@ -163,7 +171,7 @@ new FormModel {
 				"text": "Description"
 				"font": #SwingDerivedFont0
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-				"column": 2
+				"column": 4
 				"row": 9
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
@@ -176,6 +184,7 @@ new FormModel {
 				}
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 				"row": 10
+				"column": 1
 			} )
 			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 				name: "scrollPane1"
@@ -186,13 +195,13 @@ new FormModel {
 					}
 				} )
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-				"column": 2
+				"column": 4
 				"row": 10
 				"minimumSize": new java.awt.Dimension( 250, 200 )
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 660, 585 )
+			"size": new java.awt.Dimension( 745, 585 )
 		} )
 	}
 }
