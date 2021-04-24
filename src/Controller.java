@@ -297,6 +297,9 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("Sell tickets clicked.");
+
+            //model.getDaoCollection().get("ticket").create(new TicketDAO.Ticket(1,1,1);
+
         }
     }
 
