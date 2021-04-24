@@ -75,7 +75,6 @@ public class ProjectionDAO implements DAO<Projection>{
     @Override
     public boolean create(Projection projection) {
         ArrayList<String> values = new ArrayList<String>();
-        values.add("" + projection.getProjectionID());
         values.add(projection.getStartTime());
         values.add(projection.getEndTime());
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -86,7 +85,7 @@ public class ProjectionDAO implements DAO<Projection>{
 
         boolean response = false;
         try {
-            response = db.setData("INSERT INTO Projection VALUES(?,'?','?','?',?,?)", values);
+            response = db.setData("INSERT INTO Projection (StartTime, EndTime, Date, RoomID, MovieID) VALUES(?,?,?,?,?)", values);
         } catch (Exception e) {
             e.printStackTrace();
         }

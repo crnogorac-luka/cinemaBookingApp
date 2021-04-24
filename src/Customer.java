@@ -15,15 +15,13 @@ public class Customer {
     }
 
     /**
-     * @param personID
      * @param firstName
      * @param lastName
      * @param phone
      * @param email
      */
     // PARAMETERIZED CONSTRUCTOR
-    public Customer(int personID, String firstName, String lastName, String phone, String email) {
-        this.personID = personID;
+    public Customer(String firstName, String lastName, String phone, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;

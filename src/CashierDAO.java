@@ -103,14 +103,13 @@ public class CashierDAO implements DAO<CashierDAO.Cashier> {
     @Override
     public boolean create(Cashier cashierInfo) {
         ArrayList<String> values = new ArrayList<String>();
-        values.add("" + cashierInfo.getCashierID());
         values.add(cashierInfo.getName());
         values.add("" + cashierInfo.getSalary());
         values.add(cashierInfo.getEmail());
 
         boolean response = false;
         try {
-            response = db.setData("INSERT INTO Cashier VALUES('?','?','?', '?')", values);
+            response = db.setData("INSERT INTO Cashier (Name, Salary, Email) VALUES(?,?,?)", values);
         } catch (Exception e) {
             e.printStackTrace();
         }

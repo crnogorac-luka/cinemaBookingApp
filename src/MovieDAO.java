@@ -74,7 +74,6 @@ public class MovieDAO implements DAO<MovieDAO.Movie>{
     @Override
     public boolean create(Movie movie) {
         ArrayList<String> values = new ArrayList<String>();
-        values.add("" + movie.getMovieID());
         values.add(movie.getTitle());
         values.add(movie.getGenre());
         values.add(movie.getDescription());
@@ -84,7 +83,7 @@ public class MovieDAO implements DAO<MovieDAO.Movie>{
 
         boolean response = false;
         try {
-            response = db.setData("INSERT INTO Movie VALUES(?,'?','?','?','?','?')", values);
+            response = db.setData("INSERT INTO Movie (Title, Genre, Description, Duration, Is3D) VALUES(?,?,?,?,?)", values);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -191,7 +190,6 @@ public class MovieDAO implements DAO<MovieDAO.Movie>{
         /**
          * parameterized constructor for Movie class
          *
-         * @param movieID
          * @param title
          * @param genre
          * @param description
@@ -199,8 +197,7 @@ public class MovieDAO implements DAO<MovieDAO.Movie>{
          * @param is3D
          */
         // PARAMETERIZED CONSTRUCTOR
-        public Movie(int movieID, String title, String genre, String description, int duration, boolean is3D) {
-            this.movieID = movieID;
+        public Movie( String title, String genre, String description, int duration, boolean is3D) {
             this.title = title;
             this.genre = genre;
             this.description = description;

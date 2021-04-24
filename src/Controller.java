@@ -88,7 +88,6 @@ public class Controller {
      * registerUser listener
      */
     private class RegisterUser implements ActionListener{
-        public int id = 1;
         boolean accountSuccess=false;
         boolean customerSuccess=false;
         @Override
@@ -100,9 +99,9 @@ public class Controller {
             String password = String.valueOf(view.getRegisterPage().getPasswordFld().getPassword());
             accountSuccess=(model.getDaoCollection().get("accountInfo")).create(new AccountInfo(email,password));
             if(accountSuccess) {
-                customerSuccess=(model.getDaoCollection().get("customer")).create(new Customer(441, fName, lName, phone, email));
+                customerSuccess=(model.getDaoCollection().get("customer")).create(new Customer(fName, lName, phone, email));
                 if (customerSuccess) {
-                    id = id + 1;
+
                     view.getRegisterPage().dispose();
                     view.getLoginPage().setVisible(true);
                 }
