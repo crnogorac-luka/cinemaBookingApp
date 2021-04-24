@@ -143,6 +143,7 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             if (i.hasPrevious()) {
                 newMovie = i.previous();
+                model.getDaoCollection().get("movie").setCurrentItem(newMovie);
                 view.getHomeUserPage().getTextField1().setText("Movie " + newMovie.getMovieID());
                 view.getHomeUserPage().getTitleFld().setText(newMovie.getTitle());
                 view.getHomeUserPage().getGenresFld().setText(newMovie.getGenre());
@@ -154,6 +155,7 @@ public class Controller {
                 view.getHomeUserPage().getDescriptionArea().setText(newMovie.getDescription());
 
 
+                //view.getHomeUserPage().getSelectTimeBox().setModel();
             }
         }
     }
