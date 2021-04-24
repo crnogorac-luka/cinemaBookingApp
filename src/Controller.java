@@ -328,6 +328,10 @@ public class Controller {
                         System.out.println("Seat code: " + view.getSeatsPage().getSeatCode());
                         view.getSeatsPage().getTicketsSelected().add(tickets);
                         view.getSeatsPage().getTextField1().setText(view.getSeatsPage().getTextField1().getText() + "" + tickets + ",");
+                        view.getSeatsPage().getTicketsSelected().add(tickets);
+
+                        // set the price
+                    view.getSeatsPage().getTextField2().setText(Double.toString(calcPrice()));
                 }
             }
         }
@@ -372,6 +376,7 @@ public class Controller {
             model.getDaoCollection().get("reservation").create(new Reservation(1, customerId, projectionId, Integer.parseInt(view.getSeatsPage().getSeatCode())));
             System.out.println("Reservation created for the ticket.");
             System.out.println(view.getSeatsPage().getSeatCode());
+            JOptionPane.showMessageDialog(null, "The reservation is successful.");
         }
     }
     }
