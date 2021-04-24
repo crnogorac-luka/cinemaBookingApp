@@ -90,7 +90,18 @@ LOCK TABLES `CinemaDB`.`Movie` WRITE;
 INSERT INTO `CinemaDB`.`Movie` (`Title`, `Genre`, `Description`, `Duration`, `Is3D`) VALUES
 ('Fast and Furious 8', 'action', 'Dom encounters a mysterious woman, Cipher, who gets him involved in the world of terrorism. The crew has to reunite to stop Cipher and save the man who brought them together as a family.', 100, 'Yes'),
 ('Godzilla vs. Kong', 'action', 'Kong and his protectors undertake a perilous journey to find his true home. Along for the ride is Jia, an orphaned girl who has a unique and powerful bond with the mighty beast. However, they soon find themselves in the path of an enraged Godzilla as he cuts a swath of destruction across the globe. The initial confrontation between the two titans -- instigated by unseen forces -- is only the beginning of the mystery that lies deep within the core of the planet', 113, 'Yes'),
-("We're the Millers", 'comedy', 'David, a drug dealer, is forced by his boss to smuggle drugs from Mexico. He hires a stripper, a petty thief and a teenage neighbour and forms a fake family to help him smuggle the drugs.', 118, 'No');
+("We're the Millers", 'comedy', 'David, a drug dealer, is forced by his boss to smuggle drugs from Mexico. He hires a stripper, a petty thief and a teenage neighbour and forms a fake family to help him smuggle the drugs.', 118, 'No'),
+("The Equalizer", 'action', 'A man who believes he has put his mysterious past behind him cannot stand idly by when he meets a young girl under the control of ultra-violent Russian gangsters.', 172, 'No'),
+("Casino", 'crime', 'A tale of greed, deception, money, power, and murder occur between two best friends: a mafia enforcer and a casino executive compete against each other over a gambling empire, and over a fast-living and fast-loving socialite.', 241, 'No'),
+("The Godfather", 'crime', 'An organized crime dynastys aging patriarch transfers control of his clandestine empire to his reluctant son.', 305, 'No'),
+("Grown Ups 2", 'comedy', 'After moving his family back to his hometown to be with his friends and their kids, Lenny finds out that between old bullies, new bullies, schizo bus drivers, drunk cops on skis, and four hundred costumed party crashers sometimes crazy follows you.', 101, 'No'),
+("Taxi 5", 'comedy', 'A police officer who transferred in the police of Marseilles gets assigned to take down a group of Italian robbers who drive the powerful Ferraris with the older nephew of Daniel, a terrible driver who gets the legendary white taxi.', 102, 'No'),
+("The Italian Job", 'action', 'After being betrayed and left for dead in Italy, Charlie Croker and his team plan an elaborate gold heist against their former ally.', 111, 'No'),
+("American Made", 'comedy', 'The story of Barry Seal, an American pilot who became a drug-runner for the CIA in the 1980s in a clandestine operation that would be exposed as the Iran-Contra Affair.', 115, 'No'),
+("Accepted", 'comedy', 'A high school slacker who rejected by every school he applies to opts to create his own institution of higher learning, the South Harmon Institute of Technology, on a rundown piece of property near his hometown.', 93, 'No'),
+("The Wolf of Wall Street", 'crime', 'Based on the true story of Jordan Belfort, from his rise to a wealthy stock-broker living the high life to his fall involving crime, corruption and the federal government.', 180, 'No'),
+("Ford v Ferrari", 'action', 'American car designer Carroll Shelby and driver Ken Miles battle corporate interference and the laws of physics to build a revolutionary race car for Ford in order to defeat Ferrari at the 24 Hours of Le Mans in 1966.', 152, 'No'),
+("Toy Story 2", 'comedy', 'When Woody is stolen by a toy collector, Buzz and his friends set out on a rescue mission to save Woody before he becomes a museum toy property with his roundup gang Jessie, Prospector, and Bullseye.', 92, 'Yes');
 /*!40000 ALTER TABLE `CinemaDB`.`Movie` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -127,12 +138,83 @@ INSERT INTO `CinemaDB`.`Projection` (`StartTime`, `EndTime`, `Date`, `RoomID`, `
 ('18:30:00', '20:45:00', '2021-04-27', 4, 1),
 ('18:50:00', '21:05:00', '2021-04-27', 5, 1),
 ('18:30:00', '20:45:00', '2021-04-27', 2, 3),
+('20:30:00', '22:45:00', '2021-04-27', 3, 10),
+('18:30:00', '19:45:00', '2021-04-27', 3, 8),
+('21:25:00', '22:55:00', '2021-04-27', 5, 11),
+
 ('17:40:00', '19:55:00', '2021-04-28', 2, 3),
 ('18:30:00', '20:45:00', '2021-04-28', 4, 1),
 ('17:40:00', '19:55:00', '2021-04-28', 1, 3),
+('18:40:00', '20:45:00', '2021-04-28', 3, 6),
+('20:30:00', '22:45:00', '2021-04-28', 5, 10),
+('19:40:00', '21:55:00', '2021-04-28', 2, 5),
+
 ('18:50:00', '21:05:00', '2021-04-29', 1, 3),
-('21:00:00', '23:10:00', '2021-04-29', 4, 2),
-('20:10:00', '22:20:00', '2021-04-29', 5, 2);
+('21:00:00', '23:10:00', '2021-04-29', 4, 11),
+('20:10:00', '22:20:00', '2021-04-29', 5, 2),
+('19:50:00', '22:05:00', '2021-04-29', 3, 4),
+('21:10:00', '23:20:00', '2021-04-29', 2, 10),
+('18:10:00', '20:20:00', '2021-04-29', 5, 12),
+
+('18:50:00', '21:05:00', '2021-04-30', 1, 3),
+('21:00:00', '23:10:00', '2021-04-30', 4, 6),
+('20:10:00', '22:20:00', '2021-04-30', 5, 2),
+('19:50:00', '22:05:00', '2021-04-30', 3, 5),
+
+('21:10:00', '23:20:00', '2021-05-01', 2, 9),
+('18:10:00', '20:20:00', '2021-05-01', 5, 10),
+('18:05:00', '20:20:00', '2021-05-01', 3, 7),
+('20:10:00', '22:05:00', '2021-05-01', 1, 8),
+('21:10:00', '22:50:00', '2021-05-01', 2, 12),
+
+('17:40:00', '19:20:00', '2021-05-02', 3, 13),
+('20:30:00', '22:50:00', '2021-05-02', 4, 7),
+('20:30:00', '22:50:00', '2021-05-02', 1, 10),
+('20:30:00', '22:50:00', '2021-05-02', 5, 8),
+('18:30:00', '20:50:00', '2021-05-02', 4, 7),
+
+('18:50:00', '21:05:00', '2021-05-03', 5, 9),
+('20:50:00', '22:05:00', '2021-05-03', 1, 11),
+('21:05:00', '23:05:00', '2021-05-03', 3, 10),
+('19:50:00', '21:45:00', '2021-05-03', 4, 12),
+('19:30:00', '21:40:00', '2021-05-03', 2, 13),
+('21:45:00', '23:30:00', '2021-05-03', 5, 14),
+
+('20:00:00', '22:30:00', '2021-05-04', 2, 10),
+('18:00:00', '20:30:00', '2021-05-04', 3, 7),
+('20:30:00', '22:30:00', '2021-05-04', 5, 6),
+('19:00:00', '20:05:00', '2021-05-04', 1, 5),
+('20:00:00', '22:15:00', '2021-05-04', 4, 8),
+('21:45:00', '23:30:00', '2021-05-04', 1, 14),
+
+('19:50:00', '21:40:00', '2021-05-05', 1, 3),
+('19:10:00', '21:20:00', '2021-05-05', 3, 11),
+('19:50:00', '21:40:00', '2021-05-05', 2, 5),
+('19:30:00', '21:25:00', '2021-05-05', 4, 9),
+('21:45:00', '23:30:00', '2021-05-05', 4, 14),
+
+('18:50:00', '21:05:00', '2021-05-06', 5, 2),
+('20:00:00', '22:30:00', '2021-05-06', 2, 13),
+('18:00:00', '20:30:00', '2021-05-06', 2, 13),
+('19:00:00', '20:55:00', '2021-05-06', 4, 12),
+('20:30:00', '22:25:00', '2021-05-06', 1, 12),
+('21:45:00', '23:30:00', '2021-05-06', 4, 14),
+
+('19:50:00', '21:40:00', '2021-05-07', 1, 13),
+('19:10:00', '21:20:00', '2021-05-07', 3, 7),
+('19:50:00', '21:40:00', '2021-05-07', 2, 8),
+('19:30:00', '21:25:00', '2021-05-07', 4, 10),
+('21:45:00', '23:30:00', '2021-05-07', 4, 14),
+('20:30:00', '21:55:00', '2021-05-07', 5, 11),
+
+('19:50:00', '21:40:00', '2021-05-08', 1, 8),
+('19:10:00', '21:20:00', '2021-05-08', 3, 7),
+('19:50:00', '21:40:00', '2021-05-08', 2, 10),
+('19:30:00', '21:25:00', '2021-05-08', 4, 13),
+('21:45:00', '23:30:00', '2021-05-08', 4, 14),
+('18:45:00', '19:35:00', '2021-05-08', 5, 14),
+('20:30:00', '21:55:00', '2021-05-08', 5, 11);
+
 /*!40000 ALTER TABLE `CinemaDB`.`Projection` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -306,6 +388,13 @@ CREATE TABLE IF NOT EXISTS `CinemaDB`.`Ticket` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
     ENGINE = InnoDB;
+
+LOCK TABLES `CinemaDB`.`Ticket` WRITE;
+/*!40000 ALTER TABLE `CinemaDB`.`Ticket` DISABLE KEYS */;
+INSERT INTO `CinemaDB`.`Ticket` (`ReservationID`, `Price`, `CashierID`) VALUES
+(6,5.4,1);
+/*!40000 ALTER TABLE `CinemaDB`.`Ticket` ENABLE KEYS */;
+UNLOCK TABLES;
 
 /*
 -- -----------------------------------------------------
