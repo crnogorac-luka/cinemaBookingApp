@@ -25,6 +25,7 @@ public class Controller {
         AddSeats addSeats = new AddSeats();
         ReserveRadioButton rrb = new ReserveRadioButton();
         ReserveButton resBtn = new ReserveButton();
+        BuyTicketButton btb = new BuyTicketButton();
         BuyRadioButton brb = new BuyRadioButton();
         RegisterUser registerUser = new RegisterUser();
 
@@ -35,6 +36,8 @@ public class Controller {
         this.view.getSeatsPage().attachHandlerReserve(resBtn);
         this.view.getHomeCashierPage().searchBtn(searchID);
         this.view.getHomeCashierPage().sellTicketsBtn(sellTickets);
+        this.view.getSeatsPage().attachHandlerBuyTicket(btb);
+        this.view.getHomeCashierPage().researchBtn(searchID);
         this.view.getLoginPage().attachHandlerRegisterBtn(goRegister);
         this.view.getRegisterPage().attachHandlerRegisterButton(registerUser);
 
@@ -292,7 +295,7 @@ public class Controller {
     /**
      * sellTickets listener
      */
-    private class SellTickets implements ActionListener {
+    private class sellTickets implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -382,6 +385,20 @@ public class Controller {
             System.out.println("Reservation created for the ticket.");
             System.out.println(view.getSeatsPage().getSeatCode());
             JOptionPane.showMessageDialog(null, "The reservation is successful.");
+        }
+    }
+
+    private class BuyTicketButton implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Reservation reservation = (Reservation) model.getDaoCollection().get("reservation").getCurrentItem();
+            int reservationId = reservation.getReservationID();
+
+            Cashier cashier = (Cashier) model.getDaoCollection().get("cashier").getCurrentItem();
+            int cashierId = cashier.getCashierID();
+            double price = calcPrice();
+
+            model.getDaoCollection().get("ticket").create(new Ticket(reservationId, price, cashierId));
         }
     }
     }
