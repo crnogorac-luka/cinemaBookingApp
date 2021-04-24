@@ -71,7 +71,7 @@ public class ReservationDAO implements DAO<Reservation>{
 
         boolean response = false;
         try {
-            response = db.setData("INSERT INTO Reservation VALUES(?,?,?)", values);
+            response = db.setData("INSERT INTO Reservation (CustomerID, ProjectionID, SeatCode) VALUES(?,?,?)", values);
         } catch (Exception e) {
             e.printStackTrace();
         }

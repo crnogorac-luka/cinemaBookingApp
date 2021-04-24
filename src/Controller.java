@@ -19,8 +19,10 @@ public class Controller {
 
         LoginUser loginUser = new LoginUser();
         SearchID searchID = new SearchID();
+        AddSeats addSeats = new AddSeats();
 
         this.view.getLoginPage().attachHandlerLoginBtn(loginUser);
+        this.view.getSeatsPage().attachHandlerAddSeats(addSeats);
         this.view.getHomeCashierPage().researchBtn(searchID);
 
     }
@@ -178,7 +180,7 @@ public class Controller {
 
             model.getDaoCollection().get("reservation").fetch(id);
 
-            ReservationDAO.Reservation reservation = (ReservationDAO.Reservation) model.getDaoCollection().get("reservation").getCurrentItem();
+            Reservation reservation = (Reservation) model.getDaoCollection().get("reservation").getCurrentItem();
 
             int projID = reservation.getProjectionID();
             model.getDaoCollection().get("projection").fetch(projID);
@@ -228,7 +230,7 @@ public class Controller {
                     JOptionPane.showMessageDialog(null, "The seat is already taken.");
                     System.out.println("The seat is already taken");
                 } else {
-                    for(int i = 1; i <= 6; i++) {
+                    //for(int i = 1; i <= 6; i++) {
                         int seatCode = Integer.parseInt(view.getSeatsPage().getSeatsList().getSelectedValue().split("-")[1]);
                         view.getSeatsPage().getTicketsSelected().add(tickets);
                         view.getSeatsPage().getTextField1().setText(view.getSeatsPage().getTextField1().getText() + "" + tickets + ",");
@@ -237,10 +239,10 @@ public class Controller {
 
                        // int customerId = ((CustomerDAO.Customer) model.getDaoCollection().get("customer").getCurrentItem()).getPersonID();
                        // int projectionId = ((ProjectionDAO.Projection) model.getDaoCollection().get("projection").getCurrentItem()).getProjectionID();
-                        int customerId = 5;
-                        int projectionId = 30;
+                        int customerId = 123;
+                        int projectionId = 983;
                         model.getDaoCollection().get("reservation").create(new Reservation(1, customerId, projectionId, seatCode));
-                    }
+                    //}
                 }
             }
         }
