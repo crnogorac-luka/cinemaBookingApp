@@ -71,6 +71,7 @@ private JButton registerBtn;
     }
 
 
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - Luka Crnogorac
