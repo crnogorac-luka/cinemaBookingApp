@@ -385,7 +385,14 @@ public class Controller {
     private class BuyTicketButton implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            Reservation reservation = (Reservation) model.getDaoCollection().get("reservation").getCurrentItem();
+            int reservationId = reservation.getReservationID();
 
+            Cashier cashier = (Cashier) model.getDaoCollection().get("cashier").getCurrentItem();
+            int cashierId = cashier.getCashierID();
+            double price = calcPrice();
+
+            model.getDaoCollection().get("ticket").create(new Ticket(reservationId, price, cashierId));
         }
     }
     }
