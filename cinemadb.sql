@@ -233,8 +233,12 @@ LOCK TABLES `CinemaDB`.`AccountInfo` WRITE;
 INSERT INTO `CinemaDB`.`AccountInfo` VALUES
 ('johndoe@mail.com', MD5('john123')),
 ('jane.green@gmail.com', MD5('janelovebird1')),
+('bgoverin@emailru.com', MD5('boris123')),
+('galjagalja@emailru.com', MD5('galja222')),
 ('aparker@cinema.com', MD5('apark123')),
-('tmason@cinema.com', MD5('masonmason321'));
+('tmason@cinema.com', MD5('masonmason321')),
+('kmihalova@cinema.com', MD5('mihalova999')),
+('lmusorova@cinema.com', MD5('larisalarisa5'));
 /*!40000 ALTER TABLE `CinemaDB`.`AccountInfo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -261,8 +265,38 @@ LOCK TABLES `CinemaDB`.`Customer` WRITE;
 /*!40000 ALTER TABLE `CinemaDB`.`Customer` DISABLE KEYS */;
 INSERT INTO `CinemaDB`.`Customer` (`FirstName`, `LastName`, `Phone`, `Email`) VALUES
 ('John','Doe','93-223-2323','johndoe@mail.com'),
-('Jane','Green','93-721-2559','jane.green@gmail.com');
+('Jane','Green','93-721-2559','jane.green@gmail.com'),
+('Boris','Goverin','93-223-2323','bgoverin@emailru.com'),
+('Galina','Batkovna','93-223-2323','galjagalja@emailru.com');
 /*!40000 ALTER TABLE `CinemaDB`.`Customer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+-- -----------------------------------------------------
+-- Table `CinemaDB`.`Cashier`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CinemaDB`.`Cashier` (
+    `CashierID` INT NOT NULL AUTO_INCREMENT,
+    `Name` VARCHAR(45) NOT NULL,
+    `Salary` DOUBLE NOT NULL,
+    `Email` VARCHAR(45) NOT NULL,
+    PRIMARY KEY (`CashierID`),
+    INDEX `fk_Cashier_AccountInfo1_idx` (`Email` ASC),
+    CONSTRAINT `fk_Cashier_AccountInfo1`
+    FOREIGN KEY (`Email`)
+    REFERENCES `CinemaDB`.`AccountInfo` (`Email`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+    ENGINE = InnoDB;
+
+
+LOCK TABLES `CinemaDB`.`Cashier` WRITE;
+/*!40000 ALTER TABLE `CinemaDB`.`Cashier` DISABLE KEYS */;
+INSERT INTO `CinemaDB`.`Cashier` (`Name`, `Salary`, `Email`) VALUES
+('Alex Parker',900,'aparker@cinema.com'),
+('Tony Mason',800,'tmason@cinema.com'),
+('Karina Mihalova',700,'kmihalova@cinema.com'),
+('Larisa Musorova',900,'lmusorova@cinema.com');
+/*!40000 ALTER TABLE `CinemaDB`.`Cashier` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
@@ -306,7 +340,12 @@ INSERT INTO `CinemaDB`.`Reservation` (`CustomerID`, `ProjectionID`, `SeatCode`) 
 (2,1,14),
 (1,2,20),
 (1,2,21),
-(1,2,22);
+(1,2,22),
+(3,3,10),
+(3,3,11),
+(3,3,12),
+(4,4,5),
+(4,4,6);
 /*!40000 ALTER TABLE `CinemaDB`.`Reservation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -331,32 +370,6 @@ CREATE TABLE IF NOT EXISTS `CinemaDB`.`PROJECTION_RESERVATION` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 */
-
--- -----------------------------------------------------
--- Table `CinemaDB`.`Cashier`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `CinemaDB`.`Cashier` (
-    `CashierID` INT NOT NULL AUTO_INCREMENT,
-    `Name` VARCHAR(45) NOT NULL,
-    `Salary` DOUBLE NOT NULL,
-    `Email` VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`CashierID`),
-    INDEX `fk_Cashier_AccountInfo1_idx` (`Email` ASC),
-    CONSTRAINT `fk_Cashier_AccountInfo1`
-    FOREIGN KEY (`Email`)
-    REFERENCES `CinemaDB`.`AccountInfo` (`Email`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-    ENGINE = InnoDB;
-
-
-LOCK TABLES `CinemaDB`.`Cashier` WRITE;
-/*!40000 ALTER TABLE `CinemaDB`.`Cashier` DISABLE KEYS */;
-INSERT INTO `CinemaDB`.`Cashier` (`Name`, `Salary`, `Email`) VALUES
-('Alex Parker',900,'aparker@cinema.com'),
-('Tony Mason',800,'tmason@cinema.com');
-/*!40000 ALTER TABLE `CinemaDB`.`Cashier` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 -- -----------------------------------------------------

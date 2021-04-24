@@ -14,6 +14,7 @@ public class MovieDAO implements DAO<Movie>{
      */
     public MovieDAO(DBConnect db) {
         this.db = db;
+        list = new ArrayList<>();
     }
 
 
@@ -150,8 +151,9 @@ public class MovieDAO implements DAO<Movie>{
                 currMovie.setDescription(record.get(3));
                 currMovie.setDuration(Integer.parseInt(record.get(4)));
                 String is3D = row.get(0).get(5);
-                if (is3D.equals("Yes")) currMovie.setIs3D(true);
-                else currMovie.setIs3D(false);
+                System.out.println(is3D);
+                if (is3D.equals("No")) currMovie.setIs3D(false);
+                else currMovie.setIs3D(true);
                 getList().add(currMovie);
             }
 

@@ -4,6 +4,7 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 import javax.swing.*;
 
 
@@ -42,6 +43,10 @@ public class HomeUserPage extends JFrame {
 
     public JComboBox getSelectRoomBox() {
         return selectRoomBox;
+    }
+
+    public JComboBox getSelectDateBox() {
+        return selectDateBox;
     }
 
     public JComboBox getSelectTimeBox() {
@@ -84,6 +89,14 @@ public class HomeUserPage extends JFrame {
 
     public void attachHandlerNextBtn(ActionListener al) {
         nextBtn.addActionListener(al);
+    }
+
+    public void attachHandlerSelectDateBox(ItemListener il) {
+        selectDateBox.addItemListener(il);
+    }
+
+    public void attachHandlerSelectTimeBox(ItemListener il) {
+        selectTimeBox.addItemListener(il);
     }
 
     private void initComponents() {

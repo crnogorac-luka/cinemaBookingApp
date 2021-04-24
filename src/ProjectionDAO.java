@@ -60,8 +60,10 @@ public class ProjectionDAO implements DAO<Projection>{
             setCurrentItem(fetchedProjection);
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
+            setCurrentItem(null);
         } catch (Exception e) {
             e.printStackTrace();
+            setCurrentItem(null);
         }
     }
 
@@ -84,6 +86,81 @@ public class ProjectionDAO implements DAO<Projection>{
             e.printStackTrace();
             return null;
         }
+    }
+
+    public ArrayList<String> fetchAvailableTimes(int movieID, String date) {
+        ArrayList<String> values = new ArrayList<String>();
+        values.add("" + movieID);
+        values.add(date);
+
+        ArrayList<String> times = new ArrayList<>();
+        try {
+            ArrayList<ArrayList<String>> row = db.getData("SELECT DISTINCT `StartTime` FROM `Projection` WHERE `MovieID` = ? AND `Date` = ?", values, false);
+            for (int i=0; i<row.size(); i++) {
+                times.add(row.get(i).get(0));
+            }
+
+            return times;
+        } catch (IndexOutOfBoundsException ex) {
+            System.out.println("The record does not exist.");
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ArrayList<String> fetchAvailableRooms(int movieID, String date, String startTime) {
+        ArrayList<String> values = new ArrayList<String>();
+        values.add("" + movieID);
+        values.add(date);
+        values.add(startTime);
+
+        ArrayList<String> rooms = new ArrayList<>();
+        try {
+            ArrayList<ArrayList<String>> row = db.getData("SELECT DISTINCT `RoomID` FROM `Projection` WHERE `MovieID` = ? AND `Date` = ? AND `StartTime` = ?", values, false);
+            for (int i=0; i<row.size(); i++) {
+                rooms.add(row.get(i).get(0));
+            }
+
+            return rooms;
+        } catch (IndexOutOfBoundsException ex) {
+            System.out.println("The record does not exist.");
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void fetchProjectionByColumns(int movieID, String date, String startTime, int roomID) {
+        ArrayList<String> values = new ArrayList<String>();
+        values.add("" + movieID);
+        values.add(date);
+        values.add(startTime);
+        values.add(""+roomID);
+
+        Projection fetchedProjection = new Projection();
+        try {
+            ArrayList<ArrayList<String>> row = db.getData("SELECT DISTINCT * FROM `Projection` WHERE `MovieID` = ? AND `Date` = ? AND `StartTime` = ? AND `RoomID` = ?", values, false);
+
+            fetchedProjection.setProjectionID(Integer.parseInt(row.get(0).get(0)));
+            fetchedProjection.setStartTime(row.get(0).get(1));
+            fetchedProjection.setEndTime(row.get(0).get(2));
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            fetchedProjection.setDate(format.parse(row.get(0).get(3)));
+            fetchedProjection.setRoomID(Integer.parseInt(row.get(0).get(4)));
+            fetchedProjection.setMovieID(Integer.parseInt(row.get(0).get(5)));
+
+            setCurrentItem(fetchedProjection);
+        } catch (IndexOutOfBoundsException ex) {
+            System.out.println("The record does not exist.");
+            setCurrentItem(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            setCurrentItem(null);
+        }
+
     }
 
 
