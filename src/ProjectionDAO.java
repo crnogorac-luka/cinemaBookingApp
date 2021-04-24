@@ -133,6 +133,36 @@ public class ProjectionDAO implements DAO<Projection>{
         }
     }
 
+    public void fetchProjectionByColumns(int movieID, String date, String startTime, int roomID) {
+        ArrayList<String> values = new ArrayList<String>();
+        values.add("" + movieID);
+        values.add(date);
+        values.add(startTime);
+        values.add(""+roomID);
+
+        Projection fetchedProjection = new Projection();
+        try {
+            ArrayList<ArrayList<String>> row = db.getData("SELECT DISTINCT * FROM `Projection` WHERE `MovieID` = ? AND `Date` = ? AND `StartTime` = ? AND `RoomID` = ?", values, false);
+
+            fetchedProjection.setProjectionID(Integer.parseInt(row.get(0).get(0)));
+            fetchedProjection.setStartTime(row.get(0).get(1));
+            fetchedProjection.setEndTime(row.get(0).get(2));
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            fetchedProjection.setDate(format.parse(row.get(0).get(3)));
+            fetchedProjection.setRoomID(Integer.parseInt(row.get(0).get(4)));
+            fetchedProjection.setMovieID(Integer.parseInt(row.get(0).get(5)));
+
+            setCurrentItem(fetchedProjection);
+        } catch (IndexOutOfBoundsException ex) {
+            System.out.println("The record does not exist.");
+            setCurrentItem(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            setCurrentItem(null);
+        }
+
+    }
+
 
     /**
      * @param projection prepared object of class Projection whose attributes are translated to column values of the new row in Projection table

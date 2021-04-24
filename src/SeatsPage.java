@@ -19,7 +19,7 @@ public class SeatsPage extends JFrame {
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setVisible(true);
+        setVisible(false);
         button1.setEnabled(false);
         button2.setEnabled(false);
     }

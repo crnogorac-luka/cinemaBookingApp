@@ -1,6 +1,10 @@
 import javax.swing.*;
 import java.awt.event.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.ListIterator;
 
@@ -35,6 +39,7 @@ public class Controller {
         ChangeMovie changeMovieNext = new ChangeMovie(true);
         SelectDate selectDate = new SelectDate();
         SelectTime selectTime = new SelectTime();
+        ProceedProjection proceedProjection = new ProceedProjection();
 
         this.view.getLoginPage().attachHandlerLoginBtn(loginUser);
         this.view.getSeatsPage().attachHandlerAddSeats(addSeats);
@@ -51,6 +56,7 @@ public class Controller {
         this.view.getHomeUserPage().attachHandlerNextBtn(changeMovieNext);
         this.view.getHomeUserPage().attachHandlerSelectDateBox(selectDate);
         this.view.getHomeUserPage().attachHandlerSelectTimeBox(selectTime);
+        this.view.getHomeUserPage().attachHandlerProceedBtn(proceedProjection);
 
     }
 
@@ -230,6 +236,7 @@ public class Controller {
                 String date = event.getItem().toString();
 
                 ArrayList<String> times = ((ProjectionDAO)model.getDaoCollection().get("projection")).fetchAvailableTimes(movieID, date);
+                System.out.println(times.toString());
                 view.getHomeUserPage().getSelectTimeBox().setModel(new DefaultComboBoxModel<>(times.toArray()));
             }
 
@@ -300,10 +307,26 @@ public class Controller {
     /**
      * confirmSelection listener
      */
-    private class confirmSelection implements ActionListener {
+    private class ProceedProjection implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            int movieId = ((Movie)model.getDaoCollection().get("movie").getCurrentItem()).getMovieID();
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String date = view.getHomeUserPage().getSelectDateBox().getSelectedItem().toString();
+            String startTime = view.getHomeUserPage().getSelectTimeBox().getSelectedItem().toString();
+            String idString = view.getHomeUserPage().getSelectRoomBox().getSelectedItem().toString();
+            int roomID = -1;
+
+            if (date == null || startTime.equals("") || idString.equals("")) {
+                System.out.println("Please enter all data.");
+            } else {
+                roomID = Integer.parseInt(idString);
+
+                ((ProjectionDAO)model.getDaoCollection().get("projection")).fetchProjectionByColumns(movieId, date, startTime, roomID);
+                view.getHomeUserPage().setVisible(false);
+                view.getSeatsPage().setVisible(true);
+            }
 
         }
     }
