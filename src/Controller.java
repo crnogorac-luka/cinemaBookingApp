@@ -238,7 +238,7 @@ public class Controller {
 
             int projID = reservation.getProjectionID();
             model.getDaoCollection().get("projection").fetch(projID);
-            ProjectionDAO.Projection projection = (ProjectionDAO.Projection) model.getDaoCollection().get("projection").getCurrentItem();
+            Projection projection = (Projection) model.getDaoCollection().get("projection").getCurrentItem();
             view.getHomeCashierPage().getProjectionInfoArea().setText("Start time: " + projection.getStartTime() + " End time: " + projection.getEndTime());
 
             int customerID = reservation.getCustomerID();
