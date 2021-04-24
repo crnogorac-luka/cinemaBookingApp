@@ -7,7 +7,7 @@ import java.sql.*;
  * class that represents account info 
  * Authors: Igor, Ante
  */
-public class AccountInfoDAO implements DAO<AccountInfoDAO.AccountInfo> {
+public class AccountInfoDAO implements DAO<AccountInfo> {
 
     private DBConnect db;
     private ArrayList<AccountInfo> list;
@@ -28,7 +28,7 @@ public class AccountInfoDAO implements DAO<AccountInfoDAO.AccountInfo> {
     }
 
     @Override
-    public AccountInfoDAO.AccountInfo getCurrentItem() {
+    public AccountInfo getCurrentItem() {
         return currentAccountInfo;
     }
 
@@ -42,7 +42,7 @@ public class AccountInfoDAO implements DAO<AccountInfoDAO.AccountInfo> {
      *              table
      * @return object of class AccountInfo
      */
-    public void fetch(String email) {
+    public boolean fetch(String email) {
         ArrayList<String> values = new ArrayList<String>();
         values.add("" + email);
         AccountInfo fetchedAccount = new AccountInfo();
@@ -52,11 +52,13 @@ public class AccountInfoDAO implements DAO<AccountInfoDAO.AccountInfo> {
             fetchedAccount.setEmail(row.get(0).get(0));
             fetchedAccount.setPassword(row.get(0).get(1));
             currentAccountInfo = fetchedAccount;
+            return true;
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     /**
@@ -70,14 +72,15 @@ public class AccountInfoDAO implements DAO<AccountInfoDAO.AccountInfo> {
         values.add("" + accountInfo.getEmail());
         values.add(accountInfo.getPassword());
 
-        boolean response = false;
+        //boolean response = false;
         try {
-            response = db.setData("INSERT INTO AccountInfo VALUES('?','?')", values);
+            db.setData("INSERT INTO AccountInfo VALUES('?','?')", values);
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return response;
+        return false;
     }
 
     @Override
@@ -150,60 +153,5 @@ public class AccountInfoDAO implements DAO<AccountInfoDAO.AccountInfo> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * inner class of AccountInfoDAO that serves as an object model used for
-     * object-oriented manipulation of database data
-     */
-    class AccountInfo {
-
-        public String email;
-        private String password;
-
-        /**
-         *
-         */
-        public AccountInfo() {
-        }
-
-        /**
-         * @param email
-         * @param password
-         */
-        public AccountInfo(String email, String password) {
-            this.email = email;
-            this.password = password;
-        }
-
-        /**
-         * @return
-         */
-        public String getEmail() {
-            return email;
-        }
-
-        /**
-         * @param email
-         */
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        /**
-         * @return
-         */
-        public String getPassword() {
-            return password;
-        }
-
-        /**
-         * @param password
-         */
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-
     }
 }

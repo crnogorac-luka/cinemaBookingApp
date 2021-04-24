@@ -5,7 +5,7 @@ new FormModel {
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.intellij.uiDesigner.core.GridLayoutManager ) {
 			"$columnCount": 1
-			"$rowCount": 7
+			"$rowCount": 13
 		} ) {
 			name: "this"
 			add( new FormComponent( "javax.swing.JLabel" ) {
@@ -22,33 +22,78 @@ new FormModel {
 				"row": 1
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label3"
-				"text": "E-mail"
+				name: "label5"
+				"text": "First Name"
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 				"row": 2
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
-				name: "textField1"
+				name: "textField3"
 				auxiliary() {
-					"JavaCodeGenerator.variableName": "email"
+					"JavaCodeGenerator.variableName": "fNameFld"
 				}
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 				"row": 3
 				"minimumSize": new java.awt.Dimension( 200, 20 )
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label4"
-				"text": "Password"
+				name: "label6"
+				"text": "Last Name"
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 				"row": 4
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
-				name: "textField2"
+				name: "textField4"
 				auxiliary() {
-					"JavaCodeGenerator.variableName": "password"
+					"JavaCodeGenerator.variableName": "lNameFld"
 				}
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 				"row": 5
+				"minimumSize": new java.awt.Dimension( 200, 20 )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label7"
+				"text": "Phone number (xx-xxx-xxxx)"
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"row": 6
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField5"
+				auxiliary() {
+					"JavaCodeGenerator.variableName": "phoneFld"
+				}
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"row": 7
+				"minimumSize": new java.awt.Dimension( 200, 20 )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label3"
+				"text": "E-mail"
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"row": 8
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField1"
+				auxiliary() {
+					"JavaCodeGenerator.variableName": "emailFld"
+				}
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"row": 9
+				"minimumSize": new java.awt.Dimension( 200, 20 )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label4"
+				"text": "Password"
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"row": 10
+			} )
+			add( new FormComponent( "javax.swing.JPasswordField" ) {
+				name: "textField2"
+				auxiliary() {
+					"JavaCodeGenerator.variableName": "passwordFld"
+				}
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"row": 11
 				"minimumSize": new java.awt.Dimension( 200, 20 )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
@@ -59,11 +104,11 @@ new FormModel {
 					"JavaCodeGenerator.variableName": "registerButton"
 				}
 			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-				"row": 6
+				"row": 12
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 400, 300 )
+			"size": new java.awt.Dimension( 400, 415 )
 		} )
 	}
 }

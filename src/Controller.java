@@ -20,10 +20,13 @@ public class Controller {
         LoginUser loginUser = new LoginUser();
         SearchID searchID = new SearchID();
         AddSeats addSeats = new AddSeats();
+        RegisterUser registerUser = new RegisterUser();
 
         this.view.getLoginPage().attachHandlerLoginBtn(loginUser);
         this.view.getSeatsPage().attachHandlerAddSeats(addSeats);
         this.view.getHomeCashierPage().researchBtn(searchID);
+        this.view.getLoginPage().attachHandlerRegisterBtn(loginUser);
+        this.view.getRegisterPage().attachHandlerRegisterButton(registerUser);
 
     }
 
@@ -64,11 +67,26 @@ public class Controller {
     /**
      * registerUser listener
      */
-    private class registerUser implements ActionListener {
-
+    private class RegisterUser implements ActionListener{
+        public int id = 1;
+        boolean accountSuccess=false;
+        boolean customerSuccess=false;
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            String fName = view.getRegisterPage().getFNameFld().getText();
+            String lName = view.getRegisterPage().getLNameFld().getText();
+            String phone = String.valueOf(view.getRegisterPage().getPhoneFld().getText());
+            String email = view.getRegisterPage().getEmailFld().getText();
+            String password = String.valueOf(view.getRegisterPage().getPasswordFld().getPassword());
+            accountSuccess=(model.getDaoCollection().get("accountInfo")).create(new AccountInfo(email,password));
+            if(accountSuccess == true) {
+                customerSuccess=(model.getDaoCollection().get("customer")).create(new Customer(id, fName, lName, phone, email));
+                if (customerSuccess == true) {
+                    id = id + 1;
+                    view.getRegisterPage().dispose();
+                    view.getLoginPage().setVisible(true);
+                }
+            }
         }
     }
 
