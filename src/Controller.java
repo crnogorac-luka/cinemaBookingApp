@@ -43,10 +43,8 @@ public class Controller {
 
     public double calcPrice() {
         double tempPrice = 4.0;
-
         Projection projection = (Projection) model.getDaoCollection().get("projection").getCurrentItem();
         String startTime = projection.getStartTime();
-
         Room room = (Room) model.getDaoCollection().get("room").getCurrentItem();
         int for3D = room.getFor3D();
 
@@ -333,7 +331,8 @@ public class Controller {
                         view.getSeatsPage().getTicketsSelected().add(tickets);
 
                         // set the price
-                    view.getSeatsPage().getTextField2().setText(Double.toString(calcPrice()));
+                    double newPrice = 20.0;
+                    view.getSeatsPage().getTextField2().setText(Double.toString(newPrice));
                 }
             }
         }
@@ -372,27 +371,32 @@ public class Controller {
             // int customerId = ((CustomerDAO.Customer) model.getDaoCollection().get("customer").getCurrentItem()).getPersonID();
             // int projectionId = ((ProjectionDAO.Projection) model.getDaoCollection().get("projection").getCurrentItem()).getProjectionID();
             //}
-
-            int customerId = 123;
-            int projectionId = 983;
-            model.getDaoCollection().get("reservation").create(new Reservation(1, customerId, projectionId, Integer.parseInt(view.getSeatsPage().getSeatCode())));
-            System.out.println("Reservation created for the ticket.");
-            System.out.println(view.getSeatsPage().getSeatCode());
-            JOptionPane.showMessageDialog(null, "The reservation is successful.");
+            if(view.getSeatsPage().getTextField1().getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Please select seat before reserving ticket.");
+            } else {
+                int customerId = 123;
+                int projectionId = 983;
+                model.getDaoCollection().get("reservation").create(new Reservation(1, customerId, projectionId, Integer.parseInt(view.getSeatsPage().getSeatCode())));
+                System.out.println("Reservation created for the ticket.");
+                System.out.println(view.getSeatsPage().getSeatCode());
+                JOptionPane.showMessageDialog(null, "The reservation is successful.");
+            }
         }
     }
 
     private class BuyTicketButton implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            Reservation reservation = (Reservation) model.getDaoCollection().get("reservation").getCurrentItem();
-            int reservationId = reservation.getReservationID();
+            if(view.getSeatsPage().getTextField1().getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Please select seat before buying ticket.");
+            } else {
+                Reservation reservation = (Reservation) model.getDaoCollection().get("reservation").getCurrentItem();
+                int reservationId = 2;
 
-            Cashier cashier = (Cashier) model.getDaoCollection().get("cashier").getCurrentItem();
-            int cashierId = cashier.getCashierID();
-            double price = calcPrice();
-
-            model.getDaoCollection().get("ticket").create(new Ticket(reservationId, price, cashierId));
+                // double price = calcPrice();
+                double newPrice = 20.0;
+                model.getDaoCollection().get("ticket").create(new Ticket(reservationId, newPrice, 1));
+            }
         }
-    }
+        }
     }

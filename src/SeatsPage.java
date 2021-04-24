@@ -58,15 +58,12 @@ public class SeatsPage extends JFrame {
 
     public ArrayList<String> getTicketsSelected() {return ticketsSelected;}
 
-    public void attachHandlerAddSeats(MouseAdapter ma) {
-        list1.addMouseListener(ma);
-    }
+    public void attachHandlerAddSeats(MouseAdapter ma) { list1.addMouseListener(ma); }
     public void attachHandlerReserve(ActionListener e) { button1.addActionListener(e); }
-
-    public void attachHandlerJRadio(ActionListener e) {
-        radioButton2.addActionListener(e);
-    }
+    public void attachHandlerJRadio(ActionListener e) { radioButton2.addActionListener(e); }
     public void attachHandlerJRadioTwo(ActionListener e) { radioButton3.addActionListener(e); }
+    public void attachHandlerBuyTicket(ActionListener e) {button2.addActionListener(e);}
+
 
     private void list1_itemClicked(MouseEvent e) {
         // TODO add your code here
