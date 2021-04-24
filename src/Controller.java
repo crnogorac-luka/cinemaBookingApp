@@ -1,8 +1,6 @@
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.HashMap;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
+
 /**
  * class that serves as the access point to the business layer data model
  */
@@ -21,15 +19,42 @@ public class Controller {
         GoRegister goRegister = new GoRegister();
         SearchID searchID = new SearchID();
         AddSeats addSeats = new AddSeats();
+        ReserveRadioButton rrb = new ReserveRadioButton();
+        ReserveButton resBtn = new ReserveButton();
+        BuyRadioButton brb = new BuyRadioButton();
         RegisterUser registerUser = new RegisterUser();
 
         this.view.getLoginPage().attachHandlerLoginBtn(loginUser);
         this.view.getSeatsPage().attachHandlerAddSeats(addSeats);
+        this.view.getSeatsPage().attachHandlerJRadio(rrb);
+        this.view.getSeatsPage().attachHandlerJRadioTwo(brb);
+        this.view.getSeatsPage().attachHandlerReserve(resBtn);
         this.view.getHomeCashierPage().researchBtn(searchID);
         this.view.getLoginPage().attachHandlerRegisterBtn(goRegister);
         this.view.getRegisterPage().attachHandlerRegisterButton(registerUser);
 
     }
+
+
+    public double calcPrice() {
+        double tempPrice = 4.0;
+
+        Projection projection = (Projection) model.getDaoCollection().get("projection").getCurrentItem();
+        String startTime = projection.getStartTime();
+
+        Room room = (Room) model.getDaoCollection().get("room").getCurrentItem();
+        int for3D = room.getFor3D();
+
+        int startHour = Integer.parseInt(startTime.substring(0,2));
+        if(startHour > 19 || startHour < 2)
+            tempPrice += 0.5;
+        if (for3D == 1)
+            tempPrice += 1.0;
+
+        return tempPrice;
+
+    }
+
 
     // LOGIN SCREEN LISTENERS
 
@@ -81,9 +106,9 @@ public class Controller {
             String password = String.valueOf(view.getRegisterPage().getPasswordFld().getPassword());
             accountSuccess=(model.getDaoCollection().get("accountInfo")).create(new AccountInfo(email,password));
             if(accountSuccess) {
-                customerSuccess=(model.getDaoCollection().get("customer")).create(new Customer(441, fName, lName, phone, email));
+                customerSuccess=(model.getDaoCollection().get("customer")).create(new Customer(fName, lName, phone, email));
                 if (customerSuccess) {
-                    id = id + 1;
+
                     view.getRegisterPage().dispose();
                     view.getLoginPage().setVisible(true);
                 }
@@ -250,28 +275,69 @@ public class Controller {
         public void mouseClicked(MouseEvent e) {
             //view.getSeatsPage().getSeatsList().list1_itemClicked(e);
             //view.getSeatsPage().getSeatsList().list1_mouseClicked(e);
-            System.out.println("Clicked.");
+            System.out.println("Add seat clicked.");
             String tickets = (String) view.getSeatsPage().getSeatsList().getSelectedValue();
+            view.getSeatsPage().seatColumn = tickets.substring(0,1);
+            view.getSeatsPage().seatRow = tickets.substring(1,2);
+            view.getSeatsPage().seatCode = Integer.toString(view.getSeatsPage().getSeatsList().getSelectedIndex() + 1);
             if (e.getClickCount() == 1) {
                 if (view.getSeatsPage().getTicketsSelected().contains(tickets)) {
                     JOptionPane.showMessageDialog(null, "The seat is already taken.");
                     System.out.println("The seat is already taken");
                 } else {
-                    //for(int i = 1; i <= 6; i++) {
-                        int seatCode = Integer.parseInt(view.getSeatsPage().getSeatsList().getSelectedValue().split("-")[1]);
+                        view.getSeatsPage().setSeatCode(tickets);
+                        view.getSeatsPage().setSeatColumn(view.getSeatsPage().getSeatColumn());
+                        view.getSeatsPage().setSeatRow(view.getSeatsPage().getSeatRow());
+                        view.getSeatsPage().setSeatCode(view.getSeatsPage().getSeatCode());
+                        System.out.println("Seat column: " + view.getSeatsPage().getSeatColumn());
+                        System.out.println("Seat row: " + view.getSeatsPage().getSeatRow());
+                        System.out.println("Seat code: " + view.getSeatsPage().getSeatCode());
                         view.getSeatsPage().getTicketsSelected().add(tickets);
                         view.getSeatsPage().getTextField1().setText(view.getSeatsPage().getTextField1().getText() + "" + tickets + ",");
-                        System.out.println(view.getSeatsPage().getTicketsSelected());
-                        view.getSeatsPage().getTextField2().setText("1");
-
-                       // int customerId = ((CustomerDAO.Customer) model.getDaoCollection().get("customer").getCurrentItem()).getPersonID();
-                       // int projectionId = ((ProjectionDAO.Projection) model.getDaoCollection().get("projection").getCurrentItem()).getProjectionID();
-                        int customerId = 123;
-                        int projectionId = 983;
-                        model.getDaoCollection().get("reservation").create(new Reservation(1, customerId, projectionId, seatCode));
-                    //}
                 }
             }
         }
     }
-}
+
+    private class ReserveRadioButton implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(view.getSeatsPage().getRadioButton2().isSelected() == true) {
+                view.getSeatsPage().getButton1().setEnabled(true);
+                view.getSeatsPage().getRadioButton3().setSelected(false);
+                view.getSeatsPage().getButton2().setEnabled(false);
+            } else {
+                view.getSeatsPage().getButton1().setEnabled(false);
+             }
+            }
+        }
+
+    private class BuyRadioButton implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(view.getSeatsPage().getRadioButton3().isSelected() == true) {
+                view.getSeatsPage().getButton2().setEnabled(true);
+                view.getSeatsPage().getRadioButton2().setSelected(false);
+                view.getSeatsPage().getButton1().setEnabled(false);
+            } else {
+                view.getSeatsPage().getButton2().setEnabled(false);
+            }
+        }
+    }
+
+    private class ReserveButton implements  ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            //for(int i = 1; i <= 6; i++) {
+            // int customerId = ((CustomerDAO.Customer) model.getDaoCollection().get("customer").getCurrentItem()).getPersonID();
+            // int projectionId = ((ProjectionDAO.Projection) model.getDaoCollection().get("projection").getCurrentItem()).getProjectionID();
+            //}
+
+            int customerId = 123;
+            int projectionId = 983;
+            model.getDaoCollection().get("reservation").create(new Reservation(1, customerId, projectionId, Integer.parseInt(view.getSeatsPage().getSeatCode())));
+            System.out.println("Reservation created for the ticket.");
+            System.out.println(view.getSeatsPage().getSeatCode());
+        }
+    }
+    }
