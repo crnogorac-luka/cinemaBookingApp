@@ -96,15 +96,17 @@ public class HomeUserPage extends JFrame {
         textField1 = new JTextField();
         nextBtn = new JButton();
         titleFld = new JTextField();
-        label3 = new JLabel();
+        label5 = new JLabel();
         label7 = new JLabel();
-        selectRoomBox = new JComboBox();
+        selectDateBox = new JComboBox();
         genresFld = new JTextField();
         label4 = new JLabel();
         label8 = new JLabel();
         selectTimeBox = new JComboBox();
         durationFld = new JTextField();
+        label3 = new JLabel();
         label9 = new JLabel();
+        selectRoomBox = new JComboBox();
         is3DFld = new JTextField();
         label10 = new JLabel();
         proceedBtn = new JButton();
@@ -175,10 +177,10 @@ public class HomeUserPage extends JFrame {
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             new Dimension(200, 30), null, null));
 
-        //---- label3 ----
-        label3.setText("Select available room");
-        label3.setFont(label3.getFont().deriveFont(label3.getFont().getSize() + 6f));
-        contentPane.add(label3, new GridConstraints(3, 1, 1, 1,
+        //---- label5 ----
+        label5.setText("Select a date");
+        label5.setFont(label5.getFont().deriveFont(label5.getFont().getSize() + 6f));
+        contentPane.add(label5, new GridConstraints(3, 1, 1, 1,
             GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -193,9 +195,11 @@ public class HomeUserPage extends JFrame {
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             null, null, null));
 
-        //---- selectRoomBox ----
-        selectRoomBox.setFont(selectRoomBox.getFont().deriveFont(selectRoomBox.getFont().getSize() + 6f));
-        contentPane.add(selectRoomBox, new GridConstraints(4, 1, 1, 1,
+        //---- selectDateBox ----
+        selectDateBox.setFont(selectDateBox.getFont().deriveFont(selectDateBox.getFont().getSize() + 6f));
+        selectDateBox.setBackground(new Color(102, 255, 102));
+        selectDateBox.setForeground(Color.black);
+        contentPane.add(selectDateBox, new GridConstraints(4, 1, 1, 1,
             GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -229,6 +233,8 @@ public class HomeUserPage extends JFrame {
 
         //---- selectTimeBox ----
         selectTimeBox.setFont(selectTimeBox.getFont().deriveFont(selectTimeBox.getFont().getSize() + 6f));
+        selectTimeBox.setBackground(new Color(102, 255, 102));
+        selectTimeBox.setForeground(Color.black);
         contentPane.add(selectTimeBox, new GridConstraints(6, 1, 1, 1,
             GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -243,10 +249,29 @@ public class HomeUserPage extends JFrame {
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             new Dimension(200, 30), null, null));
 
+        //---- label3 ----
+        label3.setText("Select available room");
+        label3.setFont(label3.getFont().deriveFont(label3.getFont().getSize() + 6f));
+        contentPane.add(label3, new GridConstraints(7, 1, 1, 1,
+            GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+            null, null, null));
+
         //---- label9 ----
         label9.setText("3D (yes/no)");
         label9.setFont(label9.getFont().deriveFont(label9.getFont().getSize() + 6f));
         contentPane.add(label9, new GridConstraints(7, 4, 1, 1,
+            GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+            null, null, null));
+
+        //---- selectRoomBox ----
+        selectRoomBox.setFont(selectRoomBox.getFont().deriveFont(selectRoomBox.getFont().getStyle() & ~Font.BOLD, selectRoomBox.getFont().getSize() + 6f));
+        selectRoomBox.setForeground(Color.black);
+        selectRoomBox.setBackground(new Color(102, 255, 102));
+        contentPane.add(selectRoomBox, new GridConstraints(8, 1, 1, 1,
             GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -302,15 +327,17 @@ public class HomeUserPage extends JFrame {
     private JTextField textField1;
     private JButton nextBtn;
     private JTextField titleFld;
-    private JLabel label3;
+    private JLabel label5;
     private JLabel label7;
-    private JComboBox selectRoomBox;
+    private JComboBox selectDateBox;
     private JTextField genresFld;
     private JLabel label4;
     private JLabel label8;
     private JComboBox selectTimeBox;
     private JTextField durationFld;
+    private JLabel label3;
     private JLabel label9;
+    private JComboBox selectRoomBox;
     private JTextField is3DFld;
     private JLabel label10;
     private JButton proceedBtn;

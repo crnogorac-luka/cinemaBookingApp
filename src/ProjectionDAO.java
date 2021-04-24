@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -61,6 +62,27 @@ public class ProjectionDAO implements DAO<Projection>{
             System.out.println("The record does not exist.");
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public ArrayList<String> fetchAvailableDates(int movieID) {
+        ArrayList<String> values = new ArrayList<String>();
+        values.add("" + movieID);
+
+        ArrayList<String> dates = new ArrayList<>();
+        try {
+            ArrayList<ArrayList<String>> row = db.getData("SELECT DISTINCT `Date` FROM `Projection` WHERE `MovieID` = ?", values, false);
+            for (int i=0; i<row.size(); i++) {
+                dates.add(row.get(i).get(0));
+            }
+
+            return dates;
+        } catch (IndexOutOfBoundsException ex) {
+            System.out.println("The record does not exist.");
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

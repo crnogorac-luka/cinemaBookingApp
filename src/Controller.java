@@ -145,6 +145,7 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             if (i.hasPrevious()) {
                 newMovie = i.previous();
+                model.getDaoCollection().get("movie").setCurrentItem(newMovie);
                 view.getHomeUserPage().getTextField1().setText("Movie " + newMovie.getMovieID());
                 view.getHomeUserPage().getTitleFld().setText(newMovie.getTitle());
                 view.getHomeUserPage().getGenresFld().setText(newMovie.getGenre());
@@ -155,7 +156,9 @@ public class Controller {
                 view.getHomeUserPage().getDurationFld().setText(""+newMovie.getDuration()+" minutes");
                 view.getHomeUserPage().getDescriptionArea().setText(newMovie.getDescription());
 
+                // Setting Date options by selected movie
 
+                //view.getHomeUserPage().getSelectTimeBox().setModel();
             }
         }
     }
@@ -327,6 +330,10 @@ public class Controller {
                         System.out.println("Seat code: " + view.getSeatsPage().getSeatCode());
                         view.getSeatsPage().getTicketsSelected().add(tickets);
                         view.getSeatsPage().getTextField1().setText(view.getSeatsPage().getTextField1().getText() + "" + tickets + ",");
+                        view.getSeatsPage().getTicketsSelected().add(tickets);
+
+                        // set the price
+                    view.getSeatsPage().getTextField2().setText(Double.toString(calcPrice()));
                 }
             }
         }
@@ -371,6 +378,7 @@ public class Controller {
             model.getDaoCollection().get("reservation").create(new Reservation(1, customerId, projectionId, Integer.parseInt(view.getSeatsPage().getSeatCode())));
             System.out.println("Reservation created for the ticket.");
             System.out.println(view.getSeatsPage().getSeatCode());
+            JOptionPane.showMessageDialog(null, "The reservation is successful.");
         }
     }
     }
