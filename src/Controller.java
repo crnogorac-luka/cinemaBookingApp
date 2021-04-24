@@ -270,12 +270,6 @@ public class Controller {
             int projID = reservation.getProjectionID();
             model.getDaoCollection().get("projection").fetch(projID);
 
-
-            Projection projection = (Projection) model.getDaoCollection().get("projection").getCurrentItem();
-            view.getHomeCashierPage().getProjectionInfoArea().append("Start time: " + projection.getStartTime() + " End time: " + projection.getEndTime());
-
-
-            ProjectionDAO.Projection projection = (ProjectionDAO.Projection) model.getDaoCollection().get("projection").getCurrentItem();
             Projection projection = (Projection) model.getDaoCollection().get("projection").getCurrentItem();
             view.getHomeCashierPage().getProjectionInfoArea().setText("Start time: " + projection.getStartTime() + " End time: " + projection.getEndTime());
 
@@ -284,7 +278,6 @@ public class Controller {
             Customer customer = (Customer) model.getDaoCollection().get("customer").getCurrentItem();
 
             view.getHomeCashierPage().getReservationInfoArea().setText("Reservation number: " + reservation.getReservationID() + " Customer: " + customer.getFirstName());
-
             view.getHomeCashierPage().getCustomerInfoArea().setText("Customer: " + customer.getFirstName() + " " + customer.getLastName() + " Phone: " + customer.getPhone() + " Email: ↓ " + customer.getEmail());
             //System.out.println("Customer: " + customer.getFirstName() + " " + customer.getLastName() + "Phone: " + customer.getPhone() + " Email: ↓" + customer.getEmail());
 
