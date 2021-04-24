@@ -156,6 +156,7 @@ public class Controller {
                 view.getHomeUserPage().getDurationFld().setText(""+newMovie.getDuration()+" minutes");
                 view.getHomeUserPage().getDescriptionArea().setText(newMovie.getDescription());
 
+                // Setting Date options by selected movie
 
                 //view.getHomeUserPage().getSelectTimeBox().setModel();
             }
