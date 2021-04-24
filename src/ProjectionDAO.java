@@ -60,8 +60,10 @@ public class ProjectionDAO implements DAO<Projection>{
             setCurrentItem(fetchedProjection);
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
+            setCurrentItem(null);
         } catch (Exception e) {
             e.printStackTrace();
+            setCurrentItem(null);
         }
     }
 

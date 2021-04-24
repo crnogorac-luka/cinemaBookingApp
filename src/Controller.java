@@ -24,9 +24,11 @@ public class Controller {
         LoginUser loginUser = new LoginUser();
         GoRegister goRegister = new GoRegister();
         SearchID searchID = new SearchID();
+        SellTickets sellTickets = new SellTickets();
         AddSeats addSeats = new AddSeats();
         ReserveRadioButton rrb = new ReserveRadioButton();
         ReserveButton resBtn = new ReserveButton();
+        BuyTicketButton btb = new BuyTicketButton();
         BuyRadioButton brb = new BuyRadioButton();
         RegisterUser registerUser = new RegisterUser();
         ChangeMovie changeMoviePrev = new ChangeMovie(false);
@@ -39,7 +41,10 @@ public class Controller {
         this.view.getSeatsPage().attachHandlerJRadio(rrb);
         this.view.getSeatsPage().attachHandlerJRadioTwo(brb);
         this.view.getSeatsPage().attachHandlerReserve(resBtn);
-        this.view.getHomeCashierPage().researchBtn(searchID);
+        this.view.getHomeCashierPage().searchBtn(searchID);
+        this.view.getHomeCashierPage().sellTicketsBtn(sellTickets);
+        //this.view.getSeatsPage().attachHandlerBuyTicket(btb);
+        //this.view.getHomeCashierPage().researchBtn(searchID);
         this.view.getLoginPage().attachHandlerRegisterBtn(goRegister);
         this.view.getRegisterPage().attachHandlerRegisterButton(registerUser);
         this.view.getHomeUserPage().attachHandlerPrevBtn(changeMoviePrev);
@@ -345,26 +350,40 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
 
+            Reservation reservation = null;
+
             int id = Integer.parseInt(view.getHomeCashierPage().getSearchTextField().getText());
 
             model.getDaoCollection().get("reservation").fetch(id);
 
-            Reservation reservation = (Reservation) model.getDaoCollection().get("reservation").getCurrentItem();
+            reservation = (Reservation) model.getDaoCollection().get("reservation").getCurrentItem();
+
+            if(reservation != null){
+
 
             int projID = reservation.getProjectionID();
             System.out.println(projID);
             model.getDaoCollection().get("projection").fetch(projID);
 
-            Projection projection = (Projection) model.getDaoCollection().get("projection").getCurrentItem();
-            view.getHomeCashierPage().getProjectionInfoArea().setText("Start time: " + projection.getStartTime() + " End time: " + projection.getEndTime());
+                Projection projection = (Projection) model.getDaoCollection().get("projection").getCurrentItem();
 
-            int customerID = reservation.getCustomerID();
-            model.getDaoCollection().get("customer").fetch(customerID);
-            Customer customer = (Customer) model.getDaoCollection().get("customer").getCurrentItem();
+                view.getHomeCashierPage().getProjectionInfoArea().setText("Start time: " + projection.getStartTime() + " End time: " + projection.getEndTime());
 
-            view.getHomeCashierPage().getReservationInfoArea().setText("Reservation number: " + reservation.getReservationID() + " Customer: " + customer.getFirstName());
-            view.getHomeCashierPage().getCustomerInfoArea().setText("Customer: " + customer.getFirstName() + " " + customer.getLastName() + " Phone: " + customer.getPhone() + " Email: ↓ " + customer.getEmail());
-            //System.out.println("Customer: " + customer.getFirstName() + " " + customer.getLastName() + "Phone: " + customer.getPhone() + " Email: ↓" + customer.getEmail());
+                int customerID = reservation.getCustomerID();
+                model.getDaoCollection().get("customer").fetch(customerID);
+                Customer customer = (Customer) model.getDaoCollection().get("customer").getCurrentItem();
+
+                view.getHomeCashierPage().getReservationInfoArea().setText("Reservation number: " + reservation.getReservationID() + " Customer: " + customer.getFirstName());
+                view.getHomeCashierPage().getCustomerInfoArea().setText("Customer: " + customer.getFirstName() + " " + customer.getLastName() + " Phone: " + customer.getPhone() + " Email: ↓ " + customer.getEmail());
+                System.out.println("Customer: " + customer.getFirstName() + " " + customer.getLastName() + "Phone: " + customer.getPhone() + " Email: " + customer.getEmail());
+
+            }else{
+                view.getHomeCashierPage().getProjectionInfoArea().setText("No records detected");
+                view.getHomeCashierPage().getReservationInfoArea().setText("No records detected");
+                view.getHomeCashierPage().getCustomerInfoArea().setText("No records detected");
+            }
+
+
 
         }
     }
@@ -372,11 +391,26 @@ public class Controller {
     /**
      * sellTickets listener
      */
-    private class sellTickets implements ActionListener {
+    private class SellTickets implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            System.out.println("Sell tickets clicked.");
 
+            int idForSell = Integer.parseInt(view.getHomeCashierPage().getSearchTextField().getText());
+
+            model.getDaoCollection().get("reservation").fetch(idForSell);
+            model.getDaoCollection().get("cashier").fetch(idForSell);
+            model.getDaoCollection().get("projection").fetch(idForSell);
+            model.getDaoCollection().get("room").fetch(idForSell);
+
+            Reservation reservation = (Reservation) model.getDaoCollection().get("reservation").getCurrentItem();
+            Cashier cashier = (Cashier) model.getDaoCollection().get("cashier").getCurrentItem();
+            Projection projection = (Projection) model.getDaoCollection().get("projection").getCurrentItem();
+            Room room = (Room) model.getDaoCollection().get("room").getCurrentItem();
+
+            model.getDaoCollection().get("ticket").create(new Ticket(reservation.getReservationID(),calcPrice(),cashier.getCashierID()));
+            System.out.println("Data inserted: ReservationID: " + reservation.getReservationID() + " Price: " + calcPrice() + " CashierID: " + cashier.getCashierID());
         }
     }
 
@@ -459,6 +493,20 @@ public class Controller {
             System.out.println("Reservation created for the ticket.");
             System.out.println(view.getSeatsPage().getSeatCode());
             JOptionPane.showMessageDialog(null, "The reservation is successful.");
+        }
+    }
+
+    private class BuyTicketButton implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Reservation reservation = (Reservation) model.getDaoCollection().get("reservation").getCurrentItem();
+            int reservationId = reservation.getReservationID();
+
+            Cashier cashier = (Cashier) model.getDaoCollection().get("cashier").getCurrentItem();
+            int cashierId = cashier.getCashierID();
+            double price = calcPrice();
+
+            model.getDaoCollection().get("ticket").create(new Ticket(reservationId, price, cashierId));
         }
     }
     }

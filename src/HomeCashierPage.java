@@ -5,7 +5,7 @@ import javax.swing.*;
 public class HomeCashierPage extends JFrame {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - Igor Berehovyi
+    // Generated using JFormDesigner Evaluation license - Luka Crnogorac
     private JLabel label3;
     private JButton sellTicketsBtn;
     private JLabel label4;
@@ -55,7 +55,7 @@ public class HomeCashierPage extends JFrame {
         return customerInfoArea;
     }
 
-    public void researchBtn(ActionListener al) {
+    public void searchBtn(ActionListener al) {
         searchBtn.addActionListener(al);
     }
 
@@ -80,21 +80,12 @@ public class HomeCashierPage extends JFrame {
         titleLabel = new JLabel();
         searchTextField = new JTextField();
         searchBtn = new JButton();
-        //
-        projectionInfoArea.setLineWrap(true);
-        projectionInfoArea.setWrapStyleWord(true);
-        //
-        reservationInfoArea.setLineWrap(true);
-        reservationInfoArea.setWrapStyleWord(true);
-        //
-        customerInfoArea.setLineWrap(true);
-        customerInfoArea.setWrapStyleWord(true);
 
         //======== this ========
         var contentPane = getContentPane();
 
         //---- label3 ----
-        label3.setText("Type the projection ID");
+        label3.setText("Type the reservation ID");
         label3.setFont(label3.getFont().deriveFont(label3.getFont().getSize() + 3f));
 
         //---- sellTicketsBtn ----
@@ -127,6 +118,15 @@ public class HomeCashierPage extends JFrame {
         {
             scrollPane3.setViewportView(customerInfoArea);
         }
+
+        projectionInfoArea.setLineWrap(true);
+        projectionInfoArea.setWrapStyleWord(true);
+
+        reservationInfoArea.setLineWrap(true);
+        reservationInfoArea.setWrapStyleWord(true);
+
+        customerInfoArea.setLineWrap(true);
+        customerInfoArea.setWrapStyleWord(true);
 
         //---- titleLabel ----
         titleLabel.setText("ADMINISTRATIV WINDOW");
