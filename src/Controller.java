@@ -214,18 +214,16 @@ public class Controller {
             int projID = reservation.getProjectionID();
             model.getDaoCollection().get("projection").fetch(projID);
             ProjectionDAO.Projection projection = (ProjectionDAO.Projection) model.getDaoCollection().get("projection").getCurrentItem();
-            view.getHomeCashierPage().getProjectionInfoArea().append("Start time: " + projection.getStartTime() + " End time: " + projection.getEndTime());
-
-
+            view.getHomeCashierPage().getProjectionInfoArea().setText("Start time: " + projection.getStartTime() + " End time: " + projection.getEndTime());
 
             int customerID = reservation.getCustomerID();
             model.getDaoCollection().get("customer").fetch(customerID);
             Customer customer = (Customer) model.getDaoCollection().get("customer").getCurrentItem();
 
-            view.getHomeCashierPage().getReservationInfoArea().append("Reservation number: " + reservation.getReservationID() + " For the customer:" + customer.getFirstName());
+            view.getHomeCashierPage().getReservationInfoArea().setText("Reservation number: " + reservation.getReservationID() + " Customer: " + customer.getFirstName());
 
-            view.getHomeCashierPage().getCustomerInfoArea().append("Customer: " + customer.getFirstName() + " " + customer.getLastName() + " Phone: " + customer.getPhone() + "Email: " + customer.getEmail());
-            System.out.println("Customer: " + customer.getFirstName() + " " + customer.getLastName() + "Phone: " + customer.getPhone() + "Email: " + customer.getEmail());
+            view.getHomeCashierPage().getCustomerInfoArea().setText("Customer: " + customer.getFirstName() + " " + customer.getLastName() + " Phone: " + customer.getPhone() + " Email: ↓ " + customer.getEmail());
+            //System.out.println("Customer: " + customer.getFirstName() + " " + customer.getLastName() + "Phone: " + customer.getPhone() + " Email: ↓" + customer.getEmail());
 
         }
     }
