@@ -28,8 +28,9 @@ public class CustomerDAO implements DAO<Customer> {
         return currentCustomer;
     }
 
-    public void setCurrentCustomer(Customer currentCustomer) {
-        this.currentCustomer = currentCustomer;
+    @Override
+    public void setCurrentItem(Customer currentItem) {
+        currentCustomer = currentItem;
     }
 
 
@@ -50,7 +51,7 @@ public class CustomerDAO implements DAO<Customer> {
             fetchedCustomer.setPhone(row.get(0).get(3));
             fetchedCustomer.setEmail(row.get(0).get(4));
 
-            setCurrentCustomer(fetchedCustomer);
+            setCurrentItem(fetchedCustomer);
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
         } catch (Exception e) {
@@ -88,7 +89,7 @@ public class CustomerDAO implements DAO<Customer> {
                 fetchedCustomer.setPhone(row.get(0).get(3));
                 fetchedCustomer.setEmail(row.get(0).get(4));
 
-                setCurrentCustomer(fetchedCustomer);
+                setCurrentItem(fetchedCustomer);
             } else {
                 System.out.println("Wrong username or password. Try again.");
             }

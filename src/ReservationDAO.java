@@ -32,6 +32,11 @@ public class ReservationDAO implements DAO<Reservation>{
         return currentReservation;
     }
 
+    @Override
+    public void setCurrentItem(Reservation currentItem) {
+
+    }
+
     /**
      * @param id unique ID of the reservation we want to fetch from the table
      * @return object of class Reservation

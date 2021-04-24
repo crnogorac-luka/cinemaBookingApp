@@ -24,17 +24,15 @@ public class SeatDAO implements DAO<SeatDAO.Seat>{
         return list;
     }
 
-    public Seat getCurrentSeat() {
-        return currentSeat;
-    }
-
-    public void setCurrentSeat(Seat currentSeat) {
-        this.currentSeat = currentSeat;
-    }
 
     @Override
     public Seat getCurrentItem() {
         return currentSeat;
+    }
+
+    @Override
+    public void setCurrentItem(Seat currentItem) {
+        currentSeat = currentItem;
     }
 
     /**
@@ -53,7 +51,7 @@ public class SeatDAO implements DAO<SeatDAO.Seat>{
             fetchedSeat.setRow(row.get(0).get(1).charAt(0));
             fetchedSeat.setColumn(Integer.parseInt(row.get(0).get(2)));
 
-            setCurrentSeat(fetchedSeat);
+            setCurrentItem(fetchedSeat);
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
         } catch (Exception e) {

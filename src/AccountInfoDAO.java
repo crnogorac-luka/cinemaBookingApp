@@ -33,6 +33,11 @@ public class AccountInfoDAO implements DAO<AccountInfo> {
     }
 
     @Override
+    public void setCurrentItem(AccountInfo currentItem) {
+        currentAccountInfo = currentItem;
+    }
+
+    @Override
     public void fetch(int id) {
 
     }

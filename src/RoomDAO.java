@@ -24,13 +24,15 @@ public class RoomDAO implements DAO<Room>{
         return list;
     }
 
-    public void setCurrentRoom(Room currentRoom) {
-        this.currentRoom = currentRoom;
-    }
 
     @Override
     public Room getCurrentItem() {
         return currentRoom;
+    }
+
+    @Override
+    public void setCurrentItem(Room currentItem) {
+        currentRoom = currentItem;
     }
 
     /**
@@ -48,7 +50,7 @@ public class RoomDAO implements DAO<Room>{
             fetchedRoom.setRoomID(Integer.parseInt(row.get(0).get(0)));
             fetchedRoom.setFor3D(Integer.parseInt(row.get(0).get(1)));
 
-            setCurrentRoom(fetchedRoom);
+            setCurrentItem(fetchedRoom);
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
         } catch (Exception e) {
