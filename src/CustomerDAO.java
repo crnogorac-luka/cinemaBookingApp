@@ -118,7 +118,7 @@ public class CustomerDAO implements DAO<Customer> {
 
         boolean response = false;
         try {
-            response = db.setData("INSERT INTO Customer VALUES(?,'?','?','?','?')", values);
+            response = db.setData("INSERT INTO Customer VALUES(?,?,?,?,?)", values);
         } catch (Exception e) {
             e.printStackTrace();
         }

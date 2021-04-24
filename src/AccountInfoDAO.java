@@ -74,7 +74,7 @@ public class AccountInfoDAO implements DAO<AccountInfo> {
 
         //boolean response = false;
         try {
-            db.setData("INSERT INTO AccountInfo VALUES('?','?')", values);
+            db.setData("INSERT INTO AccountInfo (Email, Password) VALUES(?,MD5(?))", values);
             return true;
         } catch (Exception e) {
             e.printStackTrace();

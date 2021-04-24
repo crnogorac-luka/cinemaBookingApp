@@ -18,6 +18,7 @@ public class Controller {
         this.model = model;
 
         LoginUser loginUser = new LoginUser();
+        GoRegister goRegister = new GoRegister();
         SearchID searchID = new SearchID();
         AddSeats addSeats = new AddSeats();
         RegisterUser registerUser = new RegisterUser();
@@ -25,7 +26,7 @@ public class Controller {
         this.view.getLoginPage().attachHandlerLoginBtn(loginUser);
         this.view.getSeatsPage().attachHandlerAddSeats(addSeats);
         this.view.getHomeCashierPage().researchBtn(searchID);
-        this.view.getLoginPage().attachHandlerRegisterBtn(loginUser);
+        this.view.getLoginPage().attachHandlerRegisterBtn(goRegister);
         this.view.getRegisterPage().attachHandlerRegisterButton(registerUser);
 
     }
@@ -41,14 +42,14 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             String email = view.getLoginPage().getLoginFld().getText();
             String password = String.valueOf(view.getLoginPage().getPasswordField().getPassword());
-            //((CustomerDAO) model.getDaoCollection().get("customer")).fetch(email, password);
+            ((CustomerDAO) model.getDaoCollection().get("customer")).fetch(email, password);
 
-            ((CashierDAO) model.getDaoCollection().get("cashier")).fetch(email, password);
+            /*((CashierDAO) model.getDaoCollection().get("cashier")).fetch(email, password);
             if(model.getDaoCollection().get("cashier").getCurrentItem() != null) {
                 view.getLoginPage().dispose();
                 view.getHomeCashierPage().setVisible(true);
-            }
-/*
+            }*/
+
             if (model.getDaoCollection().get("customer").getCurrentItem() != null) {
                 view.getLoginPage().dispose();
                 view.getHomeUserPage().setVisible(true);
@@ -59,7 +60,7 @@ public class Controller {
                     view.getLoginPage().dispose();
                     view.getHomeCashierPage().setVisible(true);
                 }
-            }*/
+            }
             //System.out.println(((CustomerDAO.Customer) model.getDaoCollection().get("customer").getCurrentItem()).getFirstName());
         }
     }
@@ -79,14 +80,24 @@ public class Controller {
             String email = view.getRegisterPage().getEmailFld().getText();
             String password = String.valueOf(view.getRegisterPage().getPasswordFld().getPassword());
             accountSuccess=(model.getDaoCollection().get("accountInfo")).create(new AccountInfo(email,password));
-            if(accountSuccess == true) {
-                customerSuccess=(model.getDaoCollection().get("customer")).create(new Customer(id, fName, lName, phone, email));
-                if (customerSuccess == true) {
+            if(accountSuccess) {
+                customerSuccess=(model.getDaoCollection().get("customer")).create(new Customer(441, fName, lName, phone, email));
+                if (customerSuccess) {
                     id = id + 1;
                     view.getRegisterPage().dispose();
                     view.getLoginPage().setVisible(true);
                 }
             }
+        }
+    }
+
+
+    private class GoRegister implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+           view.getLoginPage().setVisible(false);
+           view.getRegisterPage().setVisible(true);
         }
     }
 
@@ -209,7 +220,7 @@ public class Controller {
 
             int customerID = reservation.getCustomerID();
             model.getDaoCollection().get("customer").fetch(customerID);
-            CustomerDAO.Customer customer = (CustomerDAO.Customer) model.getDaoCollection().get("customer").getCurrentItem();
+            Customer customer = (Customer) model.getDaoCollection().get("customer").getCurrentItem();
 
             view.getHomeCashierPage().getReservationInfoArea().append("Reservation number: " + reservation.getReservationID() + " For the customer:" + customer.getFirstName());
 
