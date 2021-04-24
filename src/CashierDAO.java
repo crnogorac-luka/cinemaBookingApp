@@ -80,7 +80,7 @@ public class CashierDAO implements DAO<CashierDAO.Cashier> {
                 fetchedCashier.setCashierID(Integer.parseInt(row.get(0).get(0)));
                 fetchedCashier.setName(row.get(0).get(1));
                 fetchedCashier.setSalary(Double.parseDouble(row.get(0).get(2)));
-                fetchedCashier.setEmail(row.get(0).get(4));
+                fetchedCashier.setEmail(row.get(0).get(3));
 
                 currentCashier = fetchedCashier;
             } else {

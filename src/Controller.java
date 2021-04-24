@@ -70,6 +70,7 @@ public class Controller {
             }*/
 
             if (model.getDaoCollection().get("customer").getCurrentItem() != null) {
+                System.out.println(((Customer)model.getDaoCollection().get("customer").getCurrentItem()).getFirstName());
                 view.getLoginPage().dispose();
                 view.getHomeUserPage().setVisible(true);
             } else {
