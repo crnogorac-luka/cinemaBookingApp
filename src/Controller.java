@@ -1,8 +1,6 @@
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.HashMap;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
+
 /**
  * class that serves as the access point to the business layer data model
  */
@@ -30,6 +28,27 @@ public class Controller {
         this.view.getRegisterPage().attachHandlerRegisterButton(registerUser);
 
     }
+
+
+    public double calcPrice() {
+        double tempPrice = 4.0;
+
+        Projection projection = (Projection) model.getDaoCollection().get("projection").getCurrentItem();
+        String startTime = projection.getStartTime();
+
+        Room room = (Room) model.getDaoCollection().get("room").getCurrentItem();
+        int for3D = room.getFor3D();
+
+        int startHour = Integer.parseInt(startTime.substring(0,2));
+        if(startHour > 19 || startHour < 2)
+            tempPrice += 0.5;
+        if (for3D == 1)
+            tempPrice += 1.0;
+
+        return tempPrice;
+
+    }
+
 
     // LOGIN SCREEN LISTENERS
 
@@ -213,7 +232,7 @@ public class Controller {
 
             int projID = reservation.getProjectionID();
             model.getDaoCollection().get("projection").fetch(projID);
-            ProjectionDAO.Projection projection = (ProjectionDAO.Projection) model.getDaoCollection().get("projection").getCurrentItem();
+            Projection projection = (Projection) model.getDaoCollection().get("projection").getCurrentItem();
             view.getHomeCashierPage().getProjectionInfoArea().append("Start time: " + projection.getStartTime() + " End time: " + projection.getEndTime());
 
 

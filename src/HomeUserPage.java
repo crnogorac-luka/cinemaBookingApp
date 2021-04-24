@@ -24,7 +24,7 @@ public class HomeUserPage extends JFrame {
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setVisible(false);
+        setVisible(true);
     }
 
     public JComboBox getSelectMovieBox() {
