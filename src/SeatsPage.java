@@ -10,6 +10,9 @@ public class SeatsPage extends JFrame {
     private JButton reserveTicketBtn;
     private JButton buyTicketBtn;
     ArrayList<String> ticketsSelected = new ArrayList<String>();
+    String seatCode;
+    String seatColumn;
+    String seatRow;
 
     public SeatsPage() {
         initComponents();
@@ -17,6 +20,8 @@ public class SeatsPage extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
+        button1.setEnabled(false);
+        button2.setEnabled(false);
     }
 
     public JTextField getSeatsFld() {
@@ -35,30 +40,43 @@ public class SeatsPage extends JFrame {
         return buyTicketBtn;
     }
 
-    public JList<String> getSeatsList() {return list1;}
+    public String getSeatColumn() {return seatColumn;}
+    public String getSeatRow() {return seatRow;}
 
+    public void setSeatColumn(String seatColumn) {seatColumn = seatColumn;}
+    public void setSeatRow(String seatRow) {seatRow = seatRow;}
+
+    public JList<String> getSeatsList() {return list1;}
+    public String getSeatCode() {return seatCode;}
+    public void setSeatCode(String seatCode) {seatCode = seatCode;}
     public JTextField getTextField1() {return textField1;}
     public JTextField getTextField2() {return textField2;}
+    public JRadioButton getRadioButton2() {return radioButton2;}
+    public JRadioButton getRadioButton3() {return radioButton3;}
+    public JButton getButton1() {return button1;} // reserve tickets
+    public JButton getButton2() {return button2;} // buy tickets
 
     public ArrayList<String> getTicketsSelected() {return ticketsSelected;}
 
     public void attachHandlerAddSeats(MouseAdapter ma) {
         list1.addMouseListener(ma);
     }
+    public void attachHandlerReserve(ActionListener e) { button1.addActionListener(e); }
 
-    private void btn_reserveTickets(ActionEvent e) {
-        if(e.getActionCommand().equals("Reserve tickets")) {
-            String tickets = (String) list1.getSelectedValue();
-            textField1.setText(textField1.getText() + "" + tickets + ",");
-            System.out.println("Working seats...");
-        }
+    public void attachHandlerJRadio(ActionListener e) {
+        radioButton2.addActionListener(e);
     }
+    public void attachHandlerJRadioTwo(ActionListener e) { radioButton3.addActionListener(e); }
 
     private void list1_itemClicked(MouseEvent e) {
         // TODO add your code here
     }
 
     private void list1_mouseClicked(MouseEvent e) {
+        // TODO add your code here
+    }
+
+    private void btn_reserveTickets(ActionEvent e) {
         // TODO add your code here
     }
 
@@ -71,6 +89,9 @@ public class SeatsPage extends JFrame {
         panel6 = new JPanel();
         panel7 = new JPanel();
         label1 = new JLabel();
+        panel1 = new JPanel();
+        radioButton2 = new JRadioButton();
+        radioButton3 = new JRadioButton();
         panel8 = new JPanel();
         label2 = new JLabel();
         textField1 = new JTextField();
@@ -82,8 +103,6 @@ public class SeatsPage extends JFrame {
         button3 = new JButton();
         scrollPane1 = new JScrollPane();
         list1 = new JList<>();
-        textField1.setEditable(false);
-        textField2.setEditable(false);
 
         //======== this ========
         var contentPane = getContentPane();
@@ -94,11 +113,13 @@ public class SeatsPage extends JFrame {
 
             //======== panel4 ========
             {
-                panel4.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax . swing. border .EmptyBorder ( 0
-                , 0 ,0 , 0) ,  "JF\u006frmDes\u0069gner \u0045valua\u0074ion" , javax. swing .border . TitledBorder. CENTER ,javax . swing. border .TitledBorder . BOTTOM
-                , new java. awt .Font ( "D\u0069alog", java .awt . Font. BOLD ,12 ) ,java . awt. Color .red ) ,
-                panel4. getBorder () ) ); panel4. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override public void propertyChange (java . beans. PropertyChangeEvent e
-                ) { if( "\u0062order" .equals ( e. getPropertyName () ) )throw new RuntimeException( ) ;} } );
+                panel4.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax
+                . swing. border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frmDes\u0069gner \u0045valua\u0074ion" , javax. swing
+                .border . TitledBorder. CENTER ,javax . swing. border .TitledBorder . BOTTOM, new java. awt .
+                Font ( "D\u0069alog", java .awt . Font. BOLD ,12 ) ,java . awt. Color .red
+                ) ,panel4. getBorder () ) ); panel4. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override
+                public void propertyChange (java . beans. PropertyChangeEvent e) { if( "\u0062order" .equals ( e. getPropertyName (
+                ) ) )throw new RuntimeException( ) ;} } );
                 panel4.setLayout(new GridLayout(2, 0));
 
                 //======== panel5 ========
@@ -120,6 +141,20 @@ public class SeatsPage extends JFrame {
                             label1.setHorizontalAlignment(SwingConstants.CENTER);
                             label1.setVerticalAlignment(SwingConstants.TOP);
                             panel7.add(label1);
+
+                            //======== panel1 ========
+                            {
+                                panel1.setLayout(new GridLayout(1, 2));
+
+                                //---- radioButton1 ----
+                                radioButton2.setText("Reserve ticket");
+                                panel1.add(radioButton2);
+
+                                //---- radioButton2 ----
+                                radioButton3.setText("Buy ticket");
+                                panel1.add(radioButton3);
+                            }
+                            panel7.add(panel1);
 
                             //======== panel8 ========
                             {
@@ -145,7 +180,7 @@ public class SeatsPage extends JFrame {
                                 panel8.add(button1);
 
                                 //---- button2 ----
-                                button2.setText("Proceed");
+                                button2.setText("Buy ticket(s)");
                                 panel8.add(button2);
                             }
                             panel7.add(panel8);
@@ -174,36 +209,43 @@ public class SeatsPage extends JFrame {
                 //---- list1 ----
                 list1.setModel(new AbstractListModel<String>() {
                     String[] values = {
-                        "A1-1",
-                        "A2-2",
-                        "A3-3",
-                        "A4-4",
-                        "A5-5",
-                        "B1-6",
-                        "B2-7",
-                        "B3-8",
-                        "B4-9",
-                        "B5-10",
-                        "C1-11",
-                        "C2-12",
-                        "C3-13",
-                        "C4-14",
-                        "C5-15",
-                        "D1-16",
-                        "D2-17",
-                        "D3-18",
-                        "D4-19",
-                        "D5-20",
-                        "E1-21",
-                        "E2-22",
-                        "E3-23",
-                        "E4-24",
-                        "E5-25"
+                        "A1",
+                        "A2",
+                        "A3",
+                        "A4",
+                        "A5",
+                        "B1",
+                        "B2",
+                        "B3",
+                        "B4",
+                        "B5",
+                        "C1",
+                        "C2",
+                        "C3",
+                        "C4",
+                        "C5",
+                        "D1",
+                        "D2",
+                        "D3",
+                        "D4",
+                        "D5",
+                        "E1",
+                        "E2",
+                        "E3",
+                        "E4",
+                        "E5"
                     };
                     @Override
                     public int getSize() { return values.length; }
                     @Override
                     public String getElementAt(int i) { return values[i]; }
+                });
+                list1.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        list1_itemClicked(e);
+                        list1_mouseClicked(e);
+                    }
                 });
                 scrollPane1.setViewportView(list1);
             }
@@ -223,6 +265,9 @@ public class SeatsPage extends JFrame {
     private JPanel panel6;
     private JPanel panel7;
     private JLabel label1;
+    private JPanel panel1;
+    private JRadioButton radioButton2;
+    private JRadioButton radioButton3;
     private JPanel panel8;
     private JLabel label2;
     private JTextField textField1;
