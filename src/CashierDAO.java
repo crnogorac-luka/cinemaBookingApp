@@ -5,11 +5,11 @@ import java.util.ArrayList;
  * class that represents cashier account info 
  * Authors: Igor, Ante
  */
-public class CashierDAO implements DAO<CashierDAO.Cashier> {
+public class CashierDAO implements DAO<Cashier> {
 
     private DBConnect db;
     private ArrayList<Cashier> list;
-    private CashierDAO.Cashier currentCashier;
+    private Cashier currentCashier;
     /**
      * @param db object that contains database connection protocols
      */
@@ -80,7 +80,7 @@ public class CashierDAO implements DAO<CashierDAO.Cashier> {
                 fetchedCashier.setCashierID(Integer.parseInt(row.get(0).get(0)));
                 fetchedCashier.setName(row.get(0).get(1));
                 fetchedCashier.setSalary(Double.parseDouble(row.get(0).get(2)));
-                fetchedCashier.setEmail(row.get(0).get(4));
+                fetchedCashier.setEmail(row.get(0).get(3));
 
                 currentCashier = fetchedCashier;
             } else {
@@ -103,14 +103,13 @@ public class CashierDAO implements DAO<CashierDAO.Cashier> {
     @Override
     public boolean create(Cashier cashierInfo) {
         ArrayList<String> values = new ArrayList<String>();
-        values.add("" + cashierInfo.getCashierID());
         values.add(cashierInfo.getName());
         values.add("" + cashierInfo.getSalary());
         values.add(cashierInfo.getEmail());
 
         boolean response = false;
         try {
-            response = db.setData("INSERT INTO Cashier VALUES('?','?','?', '?')", values);
+            response = db.setData("INSERT INTO Cashier (Name, Salary, Email) VALUES(?,?,?)", values);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -191,88 +190,5 @@ public class CashierDAO implements DAO<CashierDAO.Cashier> {
      * inner class of CashierDAO that serves as an object model used for
      * object-oriented manipulation of database data
      */
-     class Cashier {
 
-        public int cashierID;
-        public String name;
-        public double salary;
-        public String email;
-
-        /**
-         * @param cashierID
-         * @param name
-         * @param salary
-         * @param email
-         */
-        public Cashier(int cashierID, String name, double salary, String email) {
-            this.cashierID = cashierID;
-            this.name = name;
-            this.salary = salary;
-            this.email = email;
-        }
-
-        public Cashier() {
-
-        }
-
-        // ACCESSORS
-
-        /**
-         * @return cashierID
-         */
-        public int getCashierID() {
-            return cashierID;
-        }
-
-        /**
-         * @return name
-         */
-        public String getName() {
-            return name;
-        }
-
-        /**
-         * @return salary
-         */
-        public double getSalary() {
-            return salary;
-        }
-
-        /**
-         * @return email
-         */
-        public String getEmail() {
-            return email;
-        }
-
-        // MUTATORS
-
-        /**
-         * @param cashierID sets new cashierID
-         */
-        public void setCashierID(int cashierID) {
-            this.cashierID = cashierID;
-        }
-
-        /**
-         * @param name sets new name
-         */
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        /**
-         * @param salary sets new salary
-         */
-        public void setSalary(double salary) {
-            this.salary = salary;
-        }
-
-        /**
-         * @param email sets new email
-         */
-        public void setEmail(String email) {
-            this.email = email;
-        }
-    }
 }

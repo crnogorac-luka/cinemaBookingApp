@@ -68,7 +68,6 @@ public class TicketDAO implements DAO<TicketDAO.Ticket>{
         @Override
         public boolean create(Ticket ticket) {
             ArrayList<String> values = new ArrayList<String>();
-            values.add("" + ticket.getTicketID());
             values.add("" + ticket.getReservationID());
             values.add("" + ticket.getPrice());
             values.add("" + ticket.getCashierID());
@@ -76,7 +75,7 @@ public class TicketDAO implements DAO<TicketDAO.Ticket>{
 
             boolean response = false;
             try {
-                response = db.setData("INSERT INTO Ticket VALUES(?,?,?,?)", values);
+                response = db.setData("INSERT INTO Ticket (ReservationID, Price, CashierID) VALUES(?,?,?)", values);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -169,8 +168,7 @@ public class TicketDAO implements DAO<TicketDAO.Ticket>{
                 cashierID = -1;
             }
 
-            public Ticket(int ticketID, int reservationID, double price, int cashierID) {
-                this.ticketID = ticketID;
+            public Ticket(int reservationID, double price, int cashierID) {
                 this.reservationID = reservationID;
                 this.price = price;
                 this.cashierID = cashierID;

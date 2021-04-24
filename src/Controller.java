@@ -1,8 +1,6 @@
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.HashMap;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
+
 /**
  * class that serves as the access point to the business layer data model
  */
@@ -37,6 +35,27 @@ public class Controller {
 
     }
 
+
+    public double calcPrice() {
+        double tempPrice = 4.0;
+
+        Projection projection = (Projection) model.getDaoCollection().get("projection").getCurrentItem();
+        String startTime = projection.getStartTime();
+
+        Room room = (Room) model.getDaoCollection().get("room").getCurrentItem();
+        int for3D = room.getFor3D();
+
+        int startHour = Integer.parseInt(startTime.substring(0,2));
+        if(startHour > 19 || startHour < 2)
+            tempPrice += 0.5;
+        if (for3D == 1)
+            tempPrice += 1.0;
+
+        return tempPrice;
+
+    }
+
+
     // LOGIN SCREEN LISTENERS
 
     /**
@@ -57,6 +76,7 @@ public class Controller {
             }*/
 
             if (model.getDaoCollection().get("customer").getCurrentItem() != null) {
+                System.out.println(((Customer)model.getDaoCollection().get("customer").getCurrentItem()).getFirstName());
                 view.getLoginPage().dispose();
                 view.getHomeUserPage().setVisible(true);
             } else {
@@ -75,7 +95,6 @@ public class Controller {
      * registerUser listener
      */
     private class RegisterUser implements ActionListener{
-        public int id = 1;
         boolean accountSuccess=false;
         boolean customerSuccess=false;
         @Override
@@ -87,9 +106,9 @@ public class Controller {
             String password = String.valueOf(view.getRegisterPage().getPasswordFld().getPassword());
             accountSuccess=(model.getDaoCollection().get("accountInfo")).create(new AccountInfo(email,password));
             if(accountSuccess) {
-                customerSuccess=(model.getDaoCollection().get("customer")).create(new Customer(441, fName, lName, phone, email));
+                customerSuccess=(model.getDaoCollection().get("customer")).create(new Customer(fName, lName, phone, email));
                 if (customerSuccess) {
-                    id = id + 1;
+
                     view.getRegisterPage().dispose();
                     view.getLoginPage().setVisible(true);
                 }
@@ -219,7 +238,7 @@ public class Controller {
 
             int projID = reservation.getProjectionID();
             model.getDaoCollection().get("projection").fetch(projID);
-            ProjectionDAO.Projection projection = (ProjectionDAO.Projection) model.getDaoCollection().get("projection").getCurrentItem();
+            Projection projection = (Projection) model.getDaoCollection().get("projection").getCurrentItem();
             view.getHomeCashierPage().getProjectionInfoArea().append("Start time: " + projection.getStartTime() + " End time: " + projection.getEndTime());
 
 

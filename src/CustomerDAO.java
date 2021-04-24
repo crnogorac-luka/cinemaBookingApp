@@ -110,7 +110,6 @@ public class CustomerDAO implements DAO<Customer> {
     @Override
     public boolean create(Customer customer) {
         ArrayList<String> values = new ArrayList<String>();
-        values.add("" + customer.getPersonID());
         values.add(customer.getFirstName());
         values.add(customer.getLastName());
         values.add(customer.getPhone());
@@ -118,7 +117,7 @@ public class CustomerDAO implements DAO<Customer> {
 
         boolean response = false;
         try {
-            response = db.setData("INSERT INTO Customer VALUES(?,?,?,?,?)", values);
+            response = db.setData("INSERT INTO Customer (FirstName, LastName, Phone, Email) VALUES(?,?,?,?)", values);
         } catch (Exception e) {
             e.printStackTrace();
         }
