@@ -1,5 +1,8 @@
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.ListIterator;
 
 /**
  * class that serves as the access point to the business layer data model
@@ -45,8 +48,8 @@ public class Controller {
         Room room = (Room) model.getDaoCollection().get("room").getCurrentItem();
         int for3D = room.getFor3D();
 
-        int startHour = Integer.parseInt(startTime.substring(0,2));
-        if(startHour > 19 || startHour < 2)
+        int startHour = Integer.parseInt(startTime.substring(0, 2));
+        if (startHour > 19 || startHour < 2)
             tempPrice += 0.5;
         if (for3D == 1)
             tempPrice += 1.0;
@@ -104,9 +107,9 @@ public class Controller {
             String phone = String.valueOf(view.getRegisterPage().getPhoneFld().getText());
             String email = view.getRegisterPage().getEmailFld().getText();
             String password = String.valueOf(view.getRegisterPage().getPasswordFld().getPassword());
-            accountSuccess=(model.getDaoCollection().get("accountInfo")).create(new AccountInfo(email,password));
-            if(accountSuccess) {
-                customerSuccess=(model.getDaoCollection().get("customer")).create(new Customer(fName, lName, phone, email));
+            accountSuccess = (model.getDaoCollection().get("accountInfo")).create(new AccountInfo(email, password));
+            if (accountSuccess) {
+                customerSuccess = (model.getDaoCollection().get("customer")).create(new Customer(fName, lName, phone, email));
                 if (customerSuccess) {
 
                     view.getRegisterPage().dispose();
@@ -117,21 +120,48 @@ public class Controller {
     }
 
 
-    private class GoRegister implements ActionListener{
+    private class GoRegister implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-           view.getLoginPage().setVisible(false);
-           view.getRegisterPage().setVisible(true);
+            view.getLoginPage().setVisible(false);
+            view.getRegisterPage().setVisible(true);
         }
     }
 
 
     // HOME USERS LISTENERS
 
+    private class PrevMovie implements ActionListener {
+
+        ArrayList<Movie> movies = ((MovieDAO) model.getDaoCollection().get("movie")).getList();
+        ListIterator<Movie> i = movies.listIterator(movies.size());
+
+        Movie newMovie = null;
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (i.hasPrevious()) {
+                newMovie = i.previous();
+                view.getHomeUserPage().getTextField1().setText("Movie " + newMovie.getMovieID());
+                view.getHomeUserPage().getTitleFld().setText(newMovie.getTitle());
+                view.getHomeUserPage().getGenresFld().setText(newMovie.getGenre());
+                if(newMovie.getIs3D())
+                    view.getHomeUserPage().getIs3DFld().setText("Yes");
+                else
+                    view.getHomeUserPage().getIs3DFld().setText("No");
+                view.getHomeUserPage().getDurationFld().setText(""+newMovie.getDuration()+" minutes");
+                view.getHomeUserPage().getDescriptionArea().setText(newMovie.getDescription());
+
+
+            }
+        }
+    }
+
     /**
      * selectMovie listener
      */
+    /*
     private class selectMovie implements ItemListener {
 
         @Override
@@ -144,6 +174,7 @@ public class Controller {
 
         }
     }
+*/
 
     /**
      * selectRoom listener
@@ -225,7 +256,7 @@ public class Controller {
     /**
      * search listener
      */
-    private class SearchID implements ActionListener{
+    private class SearchID implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -238,6 +269,11 @@ public class Controller {
 
             int projID = reservation.getProjectionID();
             model.getDaoCollection().get("projection").fetch(projID);
+            Projection projection = (Projection) model.getDaoCollection().get("projection").getCurrentItem();
+            view.getHomeCashierPage().getProjectionInfoArea().append("Start time: " + projection.getStartTime() + " End time: " + projection.getEndTime());
+
+
+            ProjectionDAO.Projection projection = (ProjectionDAO.Projection) model.getDaoCollection().get("projection").getCurrentItem();
             Projection projection = (Projection) model.getDaoCollection().get("projection").getCurrentItem();
             view.getHomeCashierPage().getProjectionInfoArea().setText("Start time: " + projection.getStartTime() + " End time: " + projection.getEndTime());
 

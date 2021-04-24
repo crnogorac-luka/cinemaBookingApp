@@ -27,17 +27,14 @@ public class ProjectionDAO implements DAO<Projection>{
         return list;
     }
 
-    public Projection getCurrentProjection() {
-        return currentProjection;
-    }
-
-    public void setCurrentProjection(Projection currentProjection) {
-        this.currentProjection = currentProjection;
-    }
-
     @Override
     public Projection getCurrentItem() {
         return currentProjection;
+    }
+
+    @Override
+    public void setCurrentItem(Projection currentItem) {
+        currentProjection = currentItem;
     }
 
     /**
@@ -59,7 +56,7 @@ public class ProjectionDAO implements DAO<Projection>{
             fetchedProjection.setRoomID(Integer.parseInt(row.get(0).get(4)));
             fetchedProjection.setMovieID(Integer.parseInt(row.get(0).get(5)));
 
-            setCurrentProjection(fetchedProjection);
+            setCurrentItem(fetchedProjection);
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
         } catch (Exception e) {
