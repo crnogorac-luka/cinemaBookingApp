@@ -1,3 +1,5 @@
+import org.w3c.dom.ls.LSOutput;
+
 import javax.swing.*;
 import java.awt.event.*;
 import java.text.DateFormat;
@@ -34,6 +36,7 @@ public class Controller {
         ReserveButton resBtn = new ReserveButton();
         BuyTicketButton btb = new BuyTicketButton();
         BuyRadioButton brb = new BuyRadioButton();
+        GoBackToHome goBackToHome = new GoBackToHome();
         RegisterUser registerUser = new RegisterUser();
         ChangeMovie changeMoviePrev = new ChangeMovie(false);
         ChangeMovie changeMovieNext = new ChangeMovie(true);
@@ -46,6 +49,8 @@ public class Controller {
         this.view.getSeatsPage().attachHandlerJRadio(rrb);
         this.view.getSeatsPage().attachHandlerJRadioTwo(brb);
         this.view.getSeatsPage().attachHandlerReserve(resBtn);
+        this.view.getSeatsPage().attachHandlerBuyTicket(btb);
+        this.view.getSeatsPage().attachHandlerGoBack(goBackToHome);
         this.view.getHomeCashierPage().searchBtn(searchID);
         this.view.getHomeCashierPage().sellTicketsBtn(sellTickets);
         //this.view.getSeatsPage().attachHandlerBuyTicket(btb);
@@ -122,7 +127,6 @@ public class Controller {
 
         //System.out.println(((CustomerDAO.Customer) model.getDaoCollection().get("customer").getCurrentItem()).getFirstName());
     }
-
 
     /**
      * registerUser listener
@@ -204,28 +208,28 @@ public class Controller {
             Movie currMovie = (Movie) model.getDaoCollection().get("movie").getCurrentItem();
             System.out.println(movies.indexOf(currMovie));
 
-            if (prevOrNext) {
-                if (movies.indexOf(currMovie) + 1 < movies.size()) {
-                    if (movies.indexOf(currMovie) + 1 == movies.size() - 1) {
+            if(prevOrNext) {
+                if(movies.indexOf(currMovie)+1 < movies.size()) {
+                    if(movies.indexOf(currMovie)+1 == movies.size()-1) {
                         view.getHomeUserPage().getNextBtn().setEnabled(false);
                         view.getHomeUserPage().getPrevBtn().setEnabled(true);
                     } else {
                         view.getHomeUserPage().getNextBtn().setEnabled(true);
                         view.getHomeUserPage().getPrevBtn().setEnabled(true);
                     }
-                    newMovie = movies.get(movies.indexOf(currMovie) + 1);
+                    newMovie = movies.get(movies.indexOf(currMovie)+1);
                     setAnother();
                 }
             } else {
-                if (movies.indexOf(currMovie) - 1 > -1) {
-                    if (movies.indexOf(currMovie) - 1 == 0) {
+                if( movies.indexOf(currMovie)-1 > -1) {
+                    if(movies.indexOf(currMovie)-1 == 0) {
                         view.getHomeUserPage().getPrevBtn().setEnabled(false);
                         view.getHomeUserPage().getNextBtn().setEnabled(true);
                     } else {
                         view.getHomeUserPage().getPrevBtn().setEnabled(true);
                         view.getHomeUserPage().getNextBtn().setEnabled(true);
                     }
-                    newMovie = movies.get(movies.indexOf(currMovie) - 1);
+                    newMovie = movies.get(movies.indexOf(currMovie)-1);
                     setAnother();
                 }
             }
@@ -237,17 +241,31 @@ public class Controller {
     private class SelectDate implements ItemListener {
 
         int movieID = ((Movie) model.getDaoCollection().get("movie").getCurrentItem()).getMovieID();
+        String date = view.getHomeUserPage().getSelectDateBox().getItemAt(0).toString();
+        ArrayList<String> times = ((ProjectionDAO)model.getDaoCollection().get("projection")).fetchAvailableTimes(movieID, date);
+        ArrayList<String> rooms;
 
+        SelectDate() {
+            view.getHomeUserPage().getSelectTimeBox().setModel(new DefaultComboBoxModel<>(times.toArray()));
+        }
 
         @Override
         public void itemStateChanged(ItemEvent event) {
 
             if (event.getStateChange() == ItemEvent.SELECTED) {
-                String date = event.getItem().toString();
+                movieID = ((Movie) model.getDaoCollection().get("movie").getCurrentItem()).getMovieID();
+                System.out.println(movieID);
+                date = event.getItem().toString();
 
-                ArrayList<String> times = ((ProjectionDAO) model.getDaoCollection().get("projection")).fetchAvailableTimes(movieID, date);
-                System.out.println(times.toString());
+                times = ((ProjectionDAO)model.getDaoCollection().get("projection")).fetchAvailableTimes(movieID, date);
+                System.out.println("All times for clicked date: "+times.toString());
+
                 view.getHomeUserPage().getSelectTimeBox().setModel(new DefaultComboBoxModel<>(times.toArray()));
+
+                rooms = ((ProjectionDAO)model.getDaoCollection().get("projection")).fetchAvailableRooms(movieID, date, times.get(0));
+                System.out.println("All rooms for selected time: ");
+
+                view.getHomeUserPage().getSelectRoomBox().setModel(new DefaultComboBoxModel<>(rooms.toArray()));
             }
 
         }
@@ -255,25 +273,37 @@ public class Controller {
 
     private class SelectTime implements ItemListener {
 
-        int movieID = ((Movie) model.getDaoCollection().get("movie").getCurrentItem()).getMovieID();
-        String date = view.getHomeUserPage().getSelectDateBox().getItemAt(0).toString();
+        int movieID;
+        String date;
+        String time;
+        ArrayList<String> rooms;
+
+        SelectTime() {
+            movieID = ((Movie) model.getDaoCollection().get("movie").getCurrentItem()).getMovieID();
+            date = view.getHomeUserPage().getSelectDateBox().getItemAt(0).toString();
+            time = view.getHomeUserPage().getSelectTimeBox().getItemAt(0).toString();
+
+            rooms = ((ProjectionDAO)model.getDaoCollection().get("projection")).fetchAvailableRooms(movieID, date, time);
+            view.getHomeUserPage().getSelectRoomBox().setModel(new DefaultComboBoxModel<>(rooms.toArray()));
+        }
 
         @Override
         public void itemStateChanged(ItemEvent event) {
 
             if (event.getStateChange() == ItemEvent.SELECTED) {
-                String time = event.getItem().toString();
-
+                time = event.getItem().toString();
                 movieID = ((Movie) model.getDaoCollection().get("movie").getCurrentItem()).getMovieID();
                 date = view.getHomeUserPage().getSelectDateBox().getSelectedItem().toString();
-                System.out.println(date);
-                ArrayList<String> rooms = ((ProjectionDAO) model.getDaoCollection().get("projection")).fetchAvailableRooms(movieID, date, time);
+
+                rooms = ((ProjectionDAO)model.getDaoCollection().get("projection")).fetchAvailableRooms(movieID, date, time);
+                System.out.println("All rooms for selected time: ");
 
                 view.getHomeUserPage().getSelectRoomBox().setModel(new DefaultComboBoxModel<>(rooms.toArray()));
             }
 
         }
     }
+
 
 
     /**
@@ -283,7 +313,7 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            int movieId = ((Movie) model.getDaoCollection().get("movie").getCurrentItem()).getMovieID();
+            int movieId = ((Movie)model.getDaoCollection().get("movie").getCurrentItem()).getMovieID();
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             String date = view.getHomeUserPage().getSelectDateBox().getSelectedItem().toString();
             String startTime = view.getHomeUserPage().getSelectTimeBox().getSelectedItem().toString();
@@ -296,7 +326,7 @@ public class Controller {
                 roomID = Integer.parseInt(idString);
                 model.getDaoCollection().get("room").fetch(roomID);
 
-                ((ProjectionDAO) model.getDaoCollection().get("projection")).fetchProjectionByColumns(movieId, date, startTime, roomID);
+                ((ProjectionDAO)model.getDaoCollection().get("projection")).fetchProjectionByColumns(movieId, date, startTime, roomID);
                 view.getHomeUserPage().setVisible(false);
                 view.getSeatsPage().setVisible(true);
             }
@@ -305,7 +335,8 @@ public class Controller {
     }
 
 
-// HOME CASHIER LISTENERS
+
+    // HOME CASHIER LISTENERS
 
 
     /**
@@ -324,7 +355,7 @@ public class Controller {
 
             reservation = (Reservation) model.getDaoCollection().get("reservation").getCurrentItem();
 
-            if (reservation != null) {
+            if(reservation != null){
 
 
                 int projID = reservation.getProjectionID();
@@ -343,11 +374,12 @@ public class Controller {
                 view.getHomeCashierPage().getCustomerInfoArea().setText("Customer: " + customer.getFirstName() + " " + customer.getLastName() + " Phone: " + customer.getPhone() + " Email: ↓ " + customer.getEmail());
                 System.out.println("Customer: " + customer.getFirstName() + " " + customer.getLastName() + "Phone: " + customer.getPhone() + " Email: " + customer.getEmail());
 
-            } else {
+            }else{
                 view.getHomeCashierPage().getProjectionInfoArea().setText("No records detected");
                 view.getHomeCashierPage().getReservationInfoArea().setText("No records detected");
                 view.getHomeCashierPage().getCustomerInfoArea().setText("No records detected");
             }
+
 
 
         }
@@ -374,13 +406,13 @@ public class Controller {
             Projection projection = (Projection) model.getDaoCollection().get("projection").getCurrentItem();
             Room room = (Room) model.getDaoCollection().get("room").getCurrentItem();
 
-            model.getDaoCollection().get("ticket").create(new Ticket(reservation.getReservationID(), calcPrice(), cashier.getCashierID()));
+            model.getDaoCollection().get("ticket").create(new Ticket(reservation.getReservationID(),calcPrice(),cashier.getCashierID()));
             System.out.println("Data inserted: ReservationID: " + reservation.getReservationID() + " Price: " + calcPrice() + " CashierID: " + cashier.getCashierID());
         }
     }
 
 
-// PAYMENT INFO LISTENER
+    // PAYMENT INFO LISTENER
 
     /**
      * buyTickets listener
@@ -392,26 +424,26 @@ public class Controller {
             //view.getSeatsPage().getSeatsList().list1_mouseClicked(e);
             System.out.println("Add seat clicked.");
             String tickets = (String) view.getSeatsPage().getSeatsList().getSelectedValue();
-            view.getSeatsPage().seatColumn = tickets.substring(0, 1);
-            view.getSeatsPage().seatRow = tickets.substring(1, 2);
+            view.getSeatsPage().seatColumn = tickets.substring(0,1);
+            view.getSeatsPage().seatRow = tickets.substring(1,2);
             view.getSeatsPage().seatCode = Integer.toString(view.getSeatsPage().getSeatsList().getSelectedIndex() + 1);
             if (e.getClickCount() == 1) {
                 if (view.getSeatsPage().getTicketsSelected().contains(tickets)) {
                     JOptionPane.showMessageDialog(null, "The seat is already taken.");
                     System.out.println("The seat is already taken");
                 } else {
-                    view.getSeatsPage().setSeatCode(tickets);
-                    view.getSeatsPage().setSeatColumn(view.getSeatsPage().getSeatColumn());
-                    view.getSeatsPage().setSeatRow(view.getSeatsPage().getSeatRow());
-                    view.getSeatsPage().setSeatCode(view.getSeatsPage().getSeatCode());
-                    System.out.println("Seat column: " + view.getSeatsPage().getSeatColumn());
-                    System.out.println("Seat row: " + view.getSeatsPage().getSeatRow());
-                    System.out.println("Seat code: " + view.getSeatsPage().getSeatCode());
-                    view.getSeatsPage().getTicketsSelected().add(tickets);
-                    view.getSeatsPage().getTextField1().setText(view.getSeatsPage().getTextField1().getText() + "" + tickets + ",");
-                    view.getSeatsPage().getTicketsSelected().add(tickets);
-
-                    // set the price
+                        view.getSeatsPage().setSeatCode(tickets);
+                        view.getSeatsPage().setSeatColumn(view.getSeatsPage().getSeatColumn());
+                        view.getSeatsPage().setSeatRow(view.getSeatsPage().getSeatRow());
+                        view.getSeatsPage().setSeatCode(view.getSeatsPage().getSeatCode());
+                        System.out.println("Seat column: " + view.getSeatsPage().getSeatColumn());
+                        System.out.println("Seat row: " + view.getSeatsPage().getSeatRow());
+                        System.out.println("Seat code: " + view.getSeatsPage().getSeatCode());
+                        view.getSeatsPage().getTicketsSelected().add(tickets);
+                        view.getSeatsPage().getTextField1().setText(view.getSeatsPage().getTextField1().getText() + "" + tickets + ",");
+                        view.getSeatsPage().getTicketsSelected().add(tickets);
+                        view.getSeatsPage().getSeatsList().setEnabled(false);
+                        // set the price
                     double newPrice = calcPrice();
                     view.getSeatsPage().getTextField2().setText(Double.toString(newPrice));
                 }
@@ -422,20 +454,20 @@ public class Controller {
     private class ReserveRadioButton implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (view.getSeatsPage().getRadioButton2().isSelected() == true) {
+            if(view.getSeatsPage().getRadioButton2().isSelected() == true) {
                 view.getSeatsPage().getButton1().setEnabled(true);
                 view.getSeatsPage().getRadioButton3().setSelected(false);
                 view.getSeatsPage().getButton2().setEnabled(false);
             } else {
                 view.getSeatsPage().getButton1().setEnabled(false);
+             }
             }
         }
-    }
 
     private class BuyRadioButton implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (view.getSeatsPage().getRadioButton3().isSelected() == true) {
+            if(view.getSeatsPage().getRadioButton3().isSelected() == true) {
                 view.getSeatsPage().getButton2().setEnabled(true);
                 view.getSeatsPage().getRadioButton2().setSelected(false);
                 view.getSeatsPage().getButton1().setEnabled(false);
@@ -445,12 +477,12 @@ public class Controller {
         }
     }
 
-    private class ReserveButton implements ActionListener {
+    private class ReserveButton implements  ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             //for(int i = 1; i <= 6; i++) {
             //}
-            if (view.getSeatsPage().getTextField1().getText().equals("")) {
+            if(view.getSeatsPage().getTextField1().getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Please select seat before reserving ticket.");
             } else {
                 int customerId = ((Customer) model.getDaoCollection().get("customer").getCurrentItem()).getPersonID();
@@ -466,15 +498,46 @@ public class Controller {
     private class BuyTicketButton implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (view.getSeatsPage().getTextField1().getText().equals("")) {
+            if(view.getSeatsPage().getTextField1().getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Please select seat before buying ticket.");
             } else {
+
+                int customerId = ((Customer) model.getDaoCollection().get("customer").getCurrentItem()).getPersonID();
+                int projectionId = ((Projection) model.getDaoCollection().get("projection").getCurrentItem()).getProjectionID();
+
+                // Info to display when ticket is bought
+                String projectionStartTime = ((Projection) model.getDaoCollection().get("projection").getCurrentItem()).getStartTime();
+                int projectionRoom = ((Projection) model.getDaoCollection().get("projection").getCurrentItem()).getRoomID();
+                String movieName = ((Movie) model.getDaoCollection().get("movie").getCurrentItem()).getTitle();
+
+                model.getDaoCollection().get("reservation").create(new Reservation(1, customerId, projectionId, Integer.parseInt(view.getSeatsPage().getSeatCode())));
+
+                ((ReservationDAO)model.getDaoCollection().get("reservation")).fetchByColumn(customerId, projectionId, Integer.parseInt(view.getSeatsPage().getSeatCode()));
                 Reservation reservation = (Reservation) model.getDaoCollection().get("reservation").getCurrentItem();
                 int reservationId = reservation.getReservationID();
 
                 double price = calcPrice();
-                ((TicketDAO) model.getDaoCollection().get("ticket")).createAsCustomer(new Ticket(reservationId, price, -1));
+                model.getDaoCollection().get("ticket").create(new Ticket(reservationId, price, 1));
+
+                model.getDaoCollection().get("reservation").remove(reservationId);
+                JOptionPane.showMessageDialog(null, "You bought tickets for " + movieName + " that starts at " + projectionStartTime + " in a room " + projectionRoom + ".");
+
+                }
+             }
+        }
+
+        private class GoBackToHome implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                view.getSeatsPage().getTextField1().setText("");
+                view.getSeatsPage().getTextField2().setText("");
+                view.getSeatsPage().getRadioButton2().setSelected(false);
+                view.getSeatsPage().getRadioButton3().setSelected(false);
+                view.getSeatsPage().getButton1().setEnabled(false);
+                view.getSeatsPage().getButton2().setEnabled(false);
+                view.getSeatsPage().getSeatsList().setEnabled(true);
+                view.getSeatsPage().setVisible(false);
+                view.getHomeUserPage().setVisible(true);
             }
         }
     }
-}
