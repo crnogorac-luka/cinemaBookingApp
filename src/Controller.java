@@ -263,43 +263,6 @@ public class Controller {
         }
     }
 
-    /**
-     * selectMovie listener
-     */
-    /*
-    private class selectMovie implements ItemListener {
-
-        @Override
-        public void itemStateChanged(ItemEvent event) {
-
-            if (event.getStateChange() == ItemEvent.SELECTED) {
-                String id = event.getItem().toString();
-
-            }
-
-        }
-    }
-*/
-
-    /**
-     * selectRoom listener
-     */
-    private class selectRoom implements ItemListener {
-
-        @Override
-        public void itemStateChanged(ItemEvent event) {
-
-            if (event.getStateChange() == ItemEvent.SELECTED) {
-                String id = event.getItem().toString();
-
-            }
-
-        }
-    }
-
-    /**
-     * selectTime listener
-     */
 
 
     /**
@@ -320,6 +283,7 @@ public class Controller {
                 System.out.println("Please enter all data.");
             } else {
                 roomID = Integer.parseInt(idString);
+                model.getDaoCollection().get("room").fetch(roomID);
 
                 ((ProjectionDAO)model.getDaoCollection().get("projection")).fetchProjectionByColumns(movieId, date, startTime, roomID);
                 view.getHomeUserPage().setVisible(false);
@@ -329,35 +293,6 @@ public class Controller {
         }
     }
 
-
-    // SEATS USER LISTENERS
-
-    /**
-     * board selection listener
-     */
-    private class selectBoard implements ItemListener {
-
-        @Override
-        public void itemStateChanged(ItemEvent event) {
-
-            if (event.getStateChange() == ItemEvent.SELECTED) {
-                String id = event.getItem().toString();
-
-            }
-
-        }
-    }
-
-    /**
-     * buyTickets listener
-     */
-//    private class buyTickets implements ActionListener{
-//
-//        @Override
-//        public void actionPerformed(ActionEvent e) {
-//
-//        }
-//    }
 
 
     // HOME CASHIER LISTENERS

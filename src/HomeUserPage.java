@@ -26,7 +26,7 @@ public class HomeUserPage extends JFrame {
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setVisible(true);
+        setVisible(false);
     }
     // GETTERS
     public JButton getPrevBtn() {
