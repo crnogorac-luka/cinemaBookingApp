@@ -54,7 +54,7 @@ public class RoomDAO implements DAO<Room>{
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "The record does not exist for the Room");
         }
     }
 
@@ -73,7 +73,7 @@ public class RoomDAO implements DAO<Room>{
         try {
             response = db.setData("INSERT INTO Room VALUES(?, ?)", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong create operation for the Room");
         }
 
         return response;
@@ -95,7 +95,7 @@ public class RoomDAO implements DAO<Room>{
         try {
             response = db.setData("UPDATE Room SET For3D = '?' WHERE RoomID = '?'", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong update operation for the Room");
         }
 
         return response;
@@ -114,7 +114,7 @@ public class RoomDAO implements DAO<Room>{
         try {
             response = db.setData("DELETE FROM Room WHERE RoomID = ?", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong remove operation for the Room");
         }
 
         return response;
@@ -138,7 +138,7 @@ public class RoomDAO implements DAO<Room>{
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "The record does not exist for the Room");
         }
     }
 

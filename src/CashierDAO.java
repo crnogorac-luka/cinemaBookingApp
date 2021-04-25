@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 
@@ -53,9 +54,9 @@ public class CashierDAO implements DAO<Cashier> {
 
             currentCashier = fetchedCashier;
         } catch (IndexOutOfBoundsException ex) {
-            System.out.println("The record does not exist.");
+            System.out.println("The record does not exist. - Cashier");
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong record for the Cashier");
         }
     }
 
@@ -90,13 +91,18 @@ public class CashierDAO implements DAO<Cashier> {
                 currentCashier = fetchedCashier;
             } else {
                 System.out.println("Wrong username or password. Try again.");
+                JOptionPane.showMessageDialog(null, "Wrong username or password. Try again.");
+
             }
 
 
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
+            JOptionPane.showMessageDialog(null, "The record does not exist.");
+
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong record for the Cashier");
+            JOptionPane.showMessageDialog(null,  "The record does not exist.");
         }
     }
 
@@ -116,7 +122,7 @@ public class CashierDAO implements DAO<Cashier> {
         try {
             response = db.setData("INSERT INTO Cashier (Name, Salary, Email) VALUES(?,?,?)", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong create operation for the cashier");
         }
 
         return response;
@@ -141,7 +147,7 @@ public class CashierDAO implements DAO<Cashier> {
         try {
             response = db.setData("UPDATE Cashier SET CashierID = '?', name = '?', salary = '?', email = '?'", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong update operation for the cashier");
         }
 
         return response;
@@ -160,7 +166,7 @@ public class CashierDAO implements DAO<Cashier> {
         try {
             response = db.setData("DELETE FROM Cashier WHERE CashierID = ?", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong remove operation for the cashier");
         }
 
         return response;
@@ -187,7 +193,7 @@ public class CashierDAO implements DAO<Cashier> {
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "The record doesn't exist for the cashier");
         }
     }
 

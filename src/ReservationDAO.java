@@ -59,7 +59,7 @@ public class ReservationDAO implements DAO<Reservation>{
             System.out.println("The record does not exist.");
             setCurrentReservation(null);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "The record does not exist for the Reservation");
             setCurrentReservation(null);
         }
     }
@@ -80,7 +80,7 @@ public class ReservationDAO implements DAO<Reservation>{
         try {
             response = db.setData("INSERT INTO Reservation (CustomerID, ProjectionID, SeatCode) VALUES(?,?,?)", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong create operation for the Reservation");
         }
 
         return response;
@@ -103,7 +103,7 @@ public class ReservationDAO implements DAO<Reservation>{
         try {
             response = db.setData("UPDATE Reservation SET CustomerID = ?, ProjectionID = ?, SeatCode = ? WHERE ReservationID = ?", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong update operation for the Reservation");
         }
 
         return response;
@@ -122,7 +122,7 @@ public class ReservationDAO implements DAO<Reservation>{
         try {
             response = db.setData("DELETE FROM Reservation WHERE ReservationID = ?", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong remove operation for the Reservation");
         }
 
         return response;
@@ -149,7 +149,7 @@ public class ReservationDAO implements DAO<Reservation>{
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "The record does not exist for the Reservation");
         }
     }
 

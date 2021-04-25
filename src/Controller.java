@@ -95,36 +95,47 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             String email = view.getLoginPage().getLoginFld().getText();
             String password = String.valueOf(view.getLoginPage().getPasswordField().getPassword());
-            ((CustomerDAO) model.getDaoCollection().get("customer")).fetch(email, password);
 
-            /*((CashierDAO) model.getDaoCollection().get("cashier")).fetch(email, password);
-            if(model.getDaoCollection().get("cashier").getCurrentItem() != null) {
-                view.getLoginPage().dispose();
-                view.getHomeCashierPage().setVisible(true);
-            }*/
+            if (email.length() < 10) {
 
-            if (model.getDaoCollection().get("customer").getCurrentItem() != null) {
-                view.getLoginPage().dispose();
-                view.getHomeUserPage().setVisible(true);
-            } else {
-                ((CashierDAO) model.getDaoCollection().get("cashier")).fetch(email, password);
+                ((CustomerDAO) model.getDaoCollection().get("customer")).fetch(email, password);
 
-                if (model.getDaoCollection().get("cashier").getCurrentItem() != null) {
+                if (model.getDaoCollection().get("customer").getCurrentItem() != null) {
                     view.getLoginPage().dispose();
-                    view.getHomeCashierPage().setVisible(true);
+                    view.getHomeUserPage().setVisible(true);
+                }
+            } else {
+                if (email.substring(email.length() - 10, email.length()).equals("cinema.com")) {
+                    ((CashierDAO) model.getDaoCollection().get("cashier")).fetch(email, password);
+
+                    if (model.getDaoCollection().get("cashier").getCurrentItem() != null) {
+                        view.getLoginPage().dispose();
+                        view.getHomeCashierPage().setVisible(true);
+                    }
+                } else {
+                    ((CustomerDAO) model.getDaoCollection().get("customer")).fetch(email, password);
+
+                    if (model.getDaoCollection().get("customer").getCurrentItem() != null) {
+                        view.getLoginPage().dispose();
+                        view.getHomeUserPage().setVisible(true);
+                    }
                 }
             }
-            //System.out.println(((CustomerDAO.Customer) model.getDaoCollection().get("customer").getCurrentItem()).getFirstName());
+
         }
+
+
+        //System.out.println(((CustomerDAO.Customer) model.getDaoCollection().get("customer").getCurrentItem()).getFirstName());
     }
 
     /**
      * registerUser listener
      */
-    private class RegisterUser implements ActionListener{
+    private class RegisterUser implements ActionListener {
         public int id = 1;
-        boolean accountSuccess=false;
-        boolean customerSuccess=false;
+        boolean accountSuccess = false;
+        boolean customerSuccess = false;
+
         @Override
         public void actionPerformed(ActionEvent e) {
             String fName = view.getRegisterPage().getFNameFld().getText();
@@ -155,7 +166,7 @@ public class Controller {
     }
 
 
-    // HOME USERS LISTENERS
+// HOME USERS LISTENERS
 
     private class ChangeMovie implements ActionListener {
 
@@ -363,9 +374,9 @@ public class Controller {
             if(reservation != null){
 
 
-            int projID = reservation.getProjectionID();
-            System.out.println(projID);
-            model.getDaoCollection().get("projection").fetch(projID);
+                int projID = reservation.getProjectionID();
+                System.out.println(projID);
+                model.getDaoCollection().get("projection").fetch(projID);
 
                 Projection projection = (Projection) model.getDaoCollection().get("projection").getCurrentItem();
 
@@ -433,7 +444,7 @@ public class Controller {
             view.getSeatsPage().seatRow = tickets.substring(1,2);
             view.getSeatsPage().seatCode = Integer.toString(view.getSeatsPage().getSeatsList().getSelectedIndex() + 1);
             if (e.getClickCount() == 1) {
-                if (!((ReservationDAO) model.getDaoCollection().get("reservation")).checkSeat(Integer.parseInt(view.getSeatsPage().getSeatCode()), ((Projection) model.getDaoCollection().get("projection").getCurrentItem()).getProjectionID())) {
+                if (view.getSeatsPage().getTicketsSelected().contains(tickets)) {
                     JOptionPane.showMessageDialog(null, "The seat is already taken.");
                     System.out.println("The seat is already taken");
                 } else {
@@ -447,7 +458,7 @@ public class Controller {
                         view.getSeatsPage().getTicketsSelected().add(tickets);
                         view.getSeatsPage().getTextField1().setText(view.getSeatsPage().getTextField1().getText() + "" + tickets + ",");
                         view.getSeatsPage().getTicketsSelected().add(tickets);
-
+                        view.getSeatsPage().getSeatsList().setEnabled(false);
                         // set the price
                     double newPrice = calcPrice();
                     view.getSeatsPage().getTextField2().setText(Double.toString(newPrice));
@@ -509,6 +520,12 @@ public class Controller {
 
                 int customerId = ((Customer) model.getDaoCollection().get("customer").getCurrentItem()).getPersonID();
                 int projectionId = ((Projection) model.getDaoCollection().get("projection").getCurrentItem()).getProjectionID();
+
+                // Info to display when ticket is bought
+                String projectionStartTime = ((Projection) model.getDaoCollection().get("projection").getCurrentItem()).getStartTime();
+                int projectionRoom = ((Projection) model.getDaoCollection().get("projection").getCurrentItem()).getRoomID();
+                String movieName = ((Movie) model.getDaoCollection().get("movie").getCurrentItem()).getTitle();
+
                 model.getDaoCollection().get("reservation").create(new Reservation(1, customerId, projectionId, Integer.parseInt(view.getSeatsPage().getSeatCode())));
 
                 ((ReservationDAO)model.getDaoCollection().get("reservation")).fetchByColumn(customerId, projectionId, Integer.parseInt(view.getSeatsPage().getSeatCode()));
@@ -518,8 +535,8 @@ public class Controller {
                 double price = calcPrice();
                 model.getDaoCollection().get("ticket").create(new Ticket(reservationId, price, 1));
 
-               model.getDaoCollection().get("reservation").remove(reservationId);
-                JOptionPane.showMessageDialog(null, "Ticket successfuly bought!");
+                model.getDaoCollection().get("reservation").remove(reservationId);
+                JOptionPane.showMessageDialog(null, "You bought tickets for " + movieName + " that starts at " + projectionStartTime + " in a room " + projectionRoom + ".");
 
                 }
              }
@@ -528,6 +545,13 @@ public class Controller {
         private class GoBackToHome implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
+                view.getSeatsPage().getTextField1().setText("");
+                view.getSeatsPage().getTextField2().setText("");
+                view.getSeatsPage().getRadioButton2().setSelected(false);
+                view.getSeatsPage().getRadioButton3().setSelected(false);
+                view.getSeatsPage().getButton1().setEnabled(false);
+                view.getSeatsPage().getButton2().setEnabled(false);
+                view.getSeatsPage().getSeatsList().setEnabled(true);
                 view.getSeatsPage().setVisible(false);
                 view.getHomeUserPage().setVisible(true);
             }

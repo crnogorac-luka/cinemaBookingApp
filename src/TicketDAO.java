@@ -54,7 +54,7 @@ public class TicketDAO implements DAO<Ticket> {
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "The record does not exist for the Ticket");
         }
     }
 
@@ -75,7 +75,7 @@ public class TicketDAO implements DAO<Ticket> {
         try {
             response = db.setData("INSERT INTO Ticket (ReservationID, Price, CashierID) VALUES(?,?,?)", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong create operation for the Ticket");
         }
 
         return response;
@@ -91,7 +91,7 @@ public class TicketDAO implements DAO<Ticket> {
         try {
             response = db.setData("INSERT INTO Ticket (ReservationID, Price, CashierID) VALUES(?,?,null)", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong createAsCustomer operation for the Ticket");
         }
 
         return response;
@@ -114,7 +114,7 @@ public class TicketDAO implements DAO<Ticket> {
         try {
             response = db.setData("UPDATE Ticket SET ReservationID = '?' Price = '?', CashierID = '?',  WHERE TicketID = '?'", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong update operation for the Ticket");
         }
 
         return response;
@@ -133,7 +133,7 @@ public class TicketDAO implements DAO<Ticket> {
         try {
             response = db.setData("DELETE FROM Ticket WHERE TicketID = ?", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong remove operation for the Ticket");
         }
 
         return response;
@@ -161,7 +161,7 @@ public class TicketDAO implements DAO<Ticket> {
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "The record does not exist for the Ticket");
         }
     }
 

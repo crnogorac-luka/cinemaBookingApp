@@ -55,7 +55,7 @@ public class SeatDAO implements DAO<SeatDAO.Seat>{
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "The record does not exist for the Seats");
         }
     }
 
@@ -75,7 +75,7 @@ public class SeatDAO implements DAO<SeatDAO.Seat>{
         try {
             response = db.setData("INSERT INTO Seat VALUES(?,?,?)", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong create operation for the Seats");
         }
 
         return response;
@@ -97,7 +97,7 @@ public class SeatDAO implements DAO<SeatDAO.Seat>{
         try {
             response = db.setData("UPDATE Seat SET Row = ?, Column = ? WHERE SeatCode = ?", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong update operation for the Seats");
         }
 
         return response;
@@ -116,7 +116,7 @@ public class SeatDAO implements DAO<SeatDAO.Seat>{
         try {
             response = db.setData("DELETE FROM Seat WHERE SeatCode = ?", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong remove operation for the Seats");
         }
 
         return response;
@@ -142,7 +142,7 @@ public class SeatDAO implements DAO<SeatDAO.Seat>{
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "The record does not exist for the Seats");
         }
     }
 

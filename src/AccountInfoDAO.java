@@ -1,4 +1,5 @@
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.*;
 import java.sql.*;
@@ -59,9 +60,9 @@ public class AccountInfoDAO implements DAO<AccountInfo> {
             currentAccountInfo = fetchedAccount;
             return true;
         } catch (IndexOutOfBoundsException ex) {
-            System.out.println("The record does not exist.");
+            System.out.println("The record does not exist. -acc info");
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "The record does not exist at accountInfo");
         }
         return false;
     }
@@ -82,7 +83,7 @@ public class AccountInfoDAO implements DAO<AccountInfo> {
             db.setData("INSERT INTO AccountInfo (Email, Password) VALUES(?,MD5(?))", values);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong create operation for the AccountInfo");
         }
 
         return false;
@@ -113,7 +114,7 @@ public class AccountInfoDAO implements DAO<AccountInfo> {
         try {
             response = db.setData("UPDATE AccountInfo SET Password = '?' WHERE Email = '?'", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong update operation for the AccountInfo");
         }
 
         return response;
@@ -131,7 +132,7 @@ public class AccountInfoDAO implements DAO<AccountInfo> {
         try {
             response = db.setData("DELETE FROM AccountInfo WHERE Email = ?", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong remove operation for the AccountInfo");
         }
 
         return response;
@@ -156,7 +157,7 @@ public class AccountInfoDAO implements DAO<AccountInfo> {
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "The record doesn't exist for the AccountInfo");
         }
     }
 }
