@@ -16,9 +16,9 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" exported="" name="lib" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="javafx" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-8.0.23" level="project" />
     <orderEntry type="library" name="lib1" level="project" />
-    <orderEntry type="library" name="mysql-connector-java-8.0" level="project" />
   </component>
 </module>

@@ -21,6 +21,7 @@ public class DBException extends Exception{
         }
         errorMessage = e.getMessage();
         this.additionalInfo = additionalInfo;
+        log();
     }
 
 

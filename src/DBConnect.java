@@ -72,7 +72,7 @@ public class DBConnect {
             return true;
         } catch (SQLException e) {
             dbException = new DBException(e, "Opening the connection failed");
-            dbException.log();
+            //dbException.log();
         }
         return false;
     }
@@ -84,7 +84,7 @@ public class DBConnect {
             connection.close();
         } catch (SQLException e) {
             dbException = new DBException(e, "Closing the connection failed");
-            dbException.log();
+            //dbException.log();
         }
         return true;
     }
@@ -107,7 +107,7 @@ public class DBConnect {
         } catch (Exception e) {
             //System.out.println("Error occurred...");
             dbException = new DBException(e, "Preparing the statement failed");
-            dbException.log();
+            //dbException.log();
         }
 
         return statement;
@@ -149,7 +149,7 @@ public class DBConnect {
             }
         } catch (Exception e) {
             dbException = new DBException(e, "Data retrieval failed");
-            dbException.log();
+            //dbException.log();
         } finally {
             close();
         }
@@ -168,7 +168,7 @@ public class DBConnect {
 
         } catch (SQLException e) {
             dbException = new DBException(e, "Manipulating the data failed");
-            dbException.log();
+            //dbException.log();
         } finally {
             close();
         }
@@ -192,7 +192,7 @@ public class DBConnect {
         } catch(SQLException e) {
             rollbackTrans();
             dbException = new DBException(e, "Starting the transaction failed");
-            dbException.log();
+            //dbException.log();
         }
     }
 
@@ -206,7 +206,7 @@ public class DBConnect {
         } catch(SQLException e) {
             rollbackTrans();
             dbException = new DBException(e, "Ending the transaction failed");
-            dbException.log();
+            //dbException.log();
         }
     }
 
@@ -220,7 +220,7 @@ public class DBConnect {
             }
         } catch(SQLException e) {
             dbException = new DBException(e, "Rolling back the transaction failed");
-            dbException.log();
+            //dbException.log();
         } finally {
             close();
         }
