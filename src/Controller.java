@@ -90,36 +90,48 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             String email = view.getLoginPage().getLoginFld().getText();
             String password = String.valueOf(view.getLoginPage().getPasswordField().getPassword());
-            ((CustomerDAO) model.getDaoCollection().get("customer")).fetch(email, password);
 
-            /*((CashierDAO) model.getDaoCollection().get("cashier")).fetch(email, password);
-            if(model.getDaoCollection().get("cashier").getCurrentItem() != null) {
-                view.getLoginPage().dispose();
-                view.getHomeCashierPage().setVisible(true);
-            }*/
+            if (email.length() < 10) {
 
-            if (model.getDaoCollection().get("customer").getCurrentItem() != null) {
-                view.getLoginPage().dispose();
-                view.getHomeUserPage().setVisible(true);
-            } else {
-                ((CashierDAO) model.getDaoCollection().get("cashier")).fetch(email, password);
+                ((CustomerDAO) model.getDaoCollection().get("customer")).fetch(email, password);
 
-                if (model.getDaoCollection().get("cashier").getCurrentItem() != null) {
+                if (model.getDaoCollection().get("customer").getCurrentItem() != null) {
                     view.getLoginPage().dispose();
-                    view.getHomeCashierPage().setVisible(true);
+                    view.getHomeUserPage().setVisible(true);
+                }
+            } else {
+                if (email.substring(email.length() - 10, email.length()).equals("cinema.com")) {
+                    ((CashierDAO) model.getDaoCollection().get("cashier")).fetch(email, password);
+
+                    if (model.getDaoCollection().get("cashier").getCurrentItem() != null) {
+                        view.getLoginPage().dispose();
+                        view.getHomeCashierPage().setVisible(true);
+                    }
+                } else {
+                    ((CustomerDAO) model.getDaoCollection().get("customer")).fetch(email, password);
+
+                    if (model.getDaoCollection().get("customer").getCurrentItem() != null) {
+                        view.getLoginPage().dispose();
+                        view.getHomeUserPage().setVisible(true);
+                    }
                 }
             }
-            //System.out.println(((CustomerDAO.Customer) model.getDaoCollection().get("customer").getCurrentItem()).getFirstName());
+
         }
+
+
+        //System.out.println(((CustomerDAO.Customer) model.getDaoCollection().get("customer").getCurrentItem()).getFirstName());
     }
+
 
     /**
      * registerUser listener
      */
-    private class RegisterUser implements ActionListener{
+    private class RegisterUser implements ActionListener {
         public int id = 1;
-        boolean accountSuccess=false;
-        boolean customerSuccess=false;
+        boolean accountSuccess = false;
+        boolean customerSuccess = false;
+
         @Override
         public void actionPerformed(ActionEvent e) {
             String fName = view.getRegisterPage().getFNameFld().getText();
@@ -150,7 +162,7 @@ public class Controller {
     }
 
 
-    // HOME USERS LISTENERS
+// HOME USERS LISTENERS
 
     private class ChangeMovie implements ActionListener {
 
@@ -192,28 +204,28 @@ public class Controller {
             Movie currMovie = (Movie) model.getDaoCollection().get("movie").getCurrentItem();
             System.out.println(movies.indexOf(currMovie));
 
-            if(prevOrNext) {
-                if(movies.indexOf(currMovie)+1 < movies.size()) {
-                    if(movies.indexOf(currMovie)+1 == movies.size()-1) {
+            if (prevOrNext) {
+                if (movies.indexOf(currMovie) + 1 < movies.size()) {
+                    if (movies.indexOf(currMovie) + 1 == movies.size() - 1) {
                         view.getHomeUserPage().getNextBtn().setEnabled(false);
                         view.getHomeUserPage().getPrevBtn().setEnabled(true);
                     } else {
                         view.getHomeUserPage().getNextBtn().setEnabled(true);
                         view.getHomeUserPage().getPrevBtn().setEnabled(true);
                     }
-                    newMovie = movies.get(movies.indexOf(currMovie)+1);
+                    newMovie = movies.get(movies.indexOf(currMovie) + 1);
                     setAnother();
                 }
             } else {
-                if( movies.indexOf(currMovie)-1 > -1) {
-                    if(movies.indexOf(currMovie)-1 == 0) {
+                if (movies.indexOf(currMovie) - 1 > -1) {
+                    if (movies.indexOf(currMovie) - 1 == 0) {
                         view.getHomeUserPage().getPrevBtn().setEnabled(false);
                         view.getHomeUserPage().getNextBtn().setEnabled(true);
                     } else {
                         view.getHomeUserPage().getPrevBtn().setEnabled(true);
                         view.getHomeUserPage().getNextBtn().setEnabled(true);
                     }
-                    newMovie = movies.get(movies.indexOf(currMovie)-1);
+                    newMovie = movies.get(movies.indexOf(currMovie) - 1);
                     setAnother();
                 }
             }
@@ -233,7 +245,7 @@ public class Controller {
             if (event.getStateChange() == ItemEvent.SELECTED) {
                 String date = event.getItem().toString();
 
-                ArrayList<String> times = ((ProjectionDAO)model.getDaoCollection().get("projection")).fetchAvailableTimes(movieID, date);
+                ArrayList<String> times = ((ProjectionDAO) model.getDaoCollection().get("projection")).fetchAvailableTimes(movieID, date);
                 System.out.println(times.toString());
                 view.getHomeUserPage().getSelectTimeBox().setModel(new DefaultComboBoxModel<>(times.toArray()));
             }
@@ -255,14 +267,13 @@ public class Controller {
                 movieID = ((Movie) model.getDaoCollection().get("movie").getCurrentItem()).getMovieID();
                 date = view.getHomeUserPage().getSelectDateBox().getSelectedItem().toString();
                 System.out.println(date);
-                ArrayList<String> rooms = ((ProjectionDAO)model.getDaoCollection().get("projection")).fetchAvailableRooms(movieID, date, time);
+                ArrayList<String> rooms = ((ProjectionDAO) model.getDaoCollection().get("projection")).fetchAvailableRooms(movieID, date, time);
 
                 view.getHomeUserPage().getSelectRoomBox().setModel(new DefaultComboBoxModel<>(rooms.toArray()));
             }
 
         }
     }
-
 
 
     /**
@@ -272,7 +283,7 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            int movieId = ((Movie)model.getDaoCollection().get("movie").getCurrentItem()).getMovieID();
+            int movieId = ((Movie) model.getDaoCollection().get("movie").getCurrentItem()).getMovieID();
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             String date = view.getHomeUserPage().getSelectDateBox().getSelectedItem().toString();
             String startTime = view.getHomeUserPage().getSelectTimeBox().getSelectedItem().toString();
@@ -285,7 +296,7 @@ public class Controller {
                 roomID = Integer.parseInt(idString);
                 model.getDaoCollection().get("room").fetch(roomID);
 
-                ((ProjectionDAO)model.getDaoCollection().get("projection")).fetchProjectionByColumns(movieId, date, startTime, roomID);
+                ((ProjectionDAO) model.getDaoCollection().get("projection")).fetchProjectionByColumns(movieId, date, startTime, roomID);
                 view.getHomeUserPage().setVisible(false);
                 view.getSeatsPage().setVisible(true);
             }
@@ -294,8 +305,7 @@ public class Controller {
     }
 
 
-
-    // HOME CASHIER LISTENERS
+// HOME CASHIER LISTENERS
 
 
     /**
@@ -314,12 +324,12 @@ public class Controller {
 
             reservation = (Reservation) model.getDaoCollection().get("reservation").getCurrentItem();
 
-            if(reservation != null){
+            if (reservation != null) {
 
 
-            int projID = reservation.getProjectionID();
-            System.out.println(projID);
-            model.getDaoCollection().get("projection").fetch(projID);
+                int projID = reservation.getProjectionID();
+                System.out.println(projID);
+                model.getDaoCollection().get("projection").fetch(projID);
 
                 Projection projection = (Projection) model.getDaoCollection().get("projection").getCurrentItem();
 
@@ -333,12 +343,11 @@ public class Controller {
                 view.getHomeCashierPage().getCustomerInfoArea().setText("Customer: " + customer.getFirstName() + " " + customer.getLastName() + " Phone: " + customer.getPhone() + " Email: ↓ " + customer.getEmail());
                 System.out.println("Customer: " + customer.getFirstName() + " " + customer.getLastName() + "Phone: " + customer.getPhone() + " Email: " + customer.getEmail());
 
-            }else{
+            } else {
                 view.getHomeCashierPage().getProjectionInfoArea().setText("No records detected");
                 view.getHomeCashierPage().getReservationInfoArea().setText("No records detected");
                 view.getHomeCashierPage().getCustomerInfoArea().setText("No records detected");
             }
-
 
 
         }
@@ -365,13 +374,13 @@ public class Controller {
             Projection projection = (Projection) model.getDaoCollection().get("projection").getCurrentItem();
             Room room = (Room) model.getDaoCollection().get("room").getCurrentItem();
 
-            model.getDaoCollection().get("ticket").create(new Ticket(reservation.getReservationID(),calcPrice(),cashier.getCashierID()));
+            model.getDaoCollection().get("ticket").create(new Ticket(reservation.getReservationID(), calcPrice(), cashier.getCashierID()));
             System.out.println("Data inserted: ReservationID: " + reservation.getReservationID() + " Price: " + calcPrice() + " CashierID: " + cashier.getCashierID());
         }
     }
 
 
-    // PAYMENT INFO LISTENER
+// PAYMENT INFO LISTENER
 
     /**
      * buyTickets listener
@@ -383,26 +392,26 @@ public class Controller {
             //view.getSeatsPage().getSeatsList().list1_mouseClicked(e);
             System.out.println("Add seat clicked.");
             String tickets = (String) view.getSeatsPage().getSeatsList().getSelectedValue();
-            view.getSeatsPage().seatColumn = tickets.substring(0,1);
-            view.getSeatsPage().seatRow = tickets.substring(1,2);
+            view.getSeatsPage().seatColumn = tickets.substring(0, 1);
+            view.getSeatsPage().seatRow = tickets.substring(1, 2);
             view.getSeatsPage().seatCode = Integer.toString(view.getSeatsPage().getSeatsList().getSelectedIndex() + 1);
             if (e.getClickCount() == 1) {
                 if (view.getSeatsPage().getTicketsSelected().contains(tickets)) {
                     JOptionPane.showMessageDialog(null, "The seat is already taken.");
                     System.out.println("The seat is already taken");
                 } else {
-                        view.getSeatsPage().setSeatCode(tickets);
-                        view.getSeatsPage().setSeatColumn(view.getSeatsPage().getSeatColumn());
-                        view.getSeatsPage().setSeatRow(view.getSeatsPage().getSeatRow());
-                        view.getSeatsPage().setSeatCode(view.getSeatsPage().getSeatCode());
-                        System.out.println("Seat column: " + view.getSeatsPage().getSeatColumn());
-                        System.out.println("Seat row: " + view.getSeatsPage().getSeatRow());
-                        System.out.println("Seat code: " + view.getSeatsPage().getSeatCode());
-                        view.getSeatsPage().getTicketsSelected().add(tickets);
-                        view.getSeatsPage().getTextField1().setText(view.getSeatsPage().getTextField1().getText() + "" + tickets + ",");
-                        view.getSeatsPage().getTicketsSelected().add(tickets);
+                    view.getSeatsPage().setSeatCode(tickets);
+                    view.getSeatsPage().setSeatColumn(view.getSeatsPage().getSeatColumn());
+                    view.getSeatsPage().setSeatRow(view.getSeatsPage().getSeatRow());
+                    view.getSeatsPage().setSeatCode(view.getSeatsPage().getSeatCode());
+                    System.out.println("Seat column: " + view.getSeatsPage().getSeatColumn());
+                    System.out.println("Seat row: " + view.getSeatsPage().getSeatRow());
+                    System.out.println("Seat code: " + view.getSeatsPage().getSeatCode());
+                    view.getSeatsPage().getTicketsSelected().add(tickets);
+                    view.getSeatsPage().getTextField1().setText(view.getSeatsPage().getTextField1().getText() + "" + tickets + ",");
+                    view.getSeatsPage().getTicketsSelected().add(tickets);
 
-                        // set the price
+                    // set the price
                     double newPrice = calcPrice();
                     view.getSeatsPage().getTextField2().setText(Double.toString(newPrice));
                 }
@@ -413,20 +422,20 @@ public class Controller {
     private class ReserveRadioButton implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(view.getSeatsPage().getRadioButton2().isSelected() == true) {
+            if (view.getSeatsPage().getRadioButton2().isSelected() == true) {
                 view.getSeatsPage().getButton1().setEnabled(true);
                 view.getSeatsPage().getRadioButton3().setSelected(false);
                 view.getSeatsPage().getButton2().setEnabled(false);
             } else {
                 view.getSeatsPage().getButton1().setEnabled(false);
-             }
             }
         }
+    }
 
     private class BuyRadioButton implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(view.getSeatsPage().getRadioButton3().isSelected() == true) {
+            if (view.getSeatsPage().getRadioButton3().isSelected() == true) {
                 view.getSeatsPage().getButton2().setEnabled(true);
                 view.getSeatsPage().getRadioButton2().setSelected(false);
                 view.getSeatsPage().getButton1().setEnabled(false);
@@ -436,12 +445,12 @@ public class Controller {
         }
     }
 
-    private class ReserveButton implements  ActionListener {
+    private class ReserveButton implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             //for(int i = 1; i <= 6; i++) {
             //}
-            if(view.getSeatsPage().getTextField1().getText().equals("")) {
+            if (view.getSeatsPage().getTextField1().getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Please select seat before reserving ticket.");
             } else {
                 int customerId = ((Customer) model.getDaoCollection().get("customer").getCurrentItem()).getPersonID();
@@ -457,15 +466,15 @@ public class Controller {
     private class BuyTicketButton implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(view.getSeatsPage().getTextField1().getText().equals("")) {
+            if (view.getSeatsPage().getTextField1().getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Please select seat before buying ticket.");
             } else {
                 Reservation reservation = (Reservation) model.getDaoCollection().get("reservation").getCurrentItem();
                 int reservationId = reservation.getReservationID();
 
                 double price = calcPrice();
-                ((TicketDAO)model.getDaoCollection().get("ticket")).createAsCustomer(new Ticket(reservationId, price, -1));
+                ((TicketDAO) model.getDaoCollection().get("ticket")).createAsCustomer(new Ticket(reservationId, price, -1));
             }
         }
-        }
     }
+}

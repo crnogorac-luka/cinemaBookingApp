@@ -62,7 +62,7 @@ public class ProjectionDAO implements DAO<Projection>{
             System.out.println("The record does not exist.");
             setCurrentItem(null);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "The record does not exist for the Projection");
             setCurrentItem(null);
         }
     }
@@ -83,7 +83,7 @@ public class ProjectionDAO implements DAO<Projection>{
             System.out.println("The record does not exist.");
             return null;
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "The record does not exist for the Projection - Available dates");
             return null;
         }
     }
@@ -105,7 +105,7 @@ public class ProjectionDAO implements DAO<Projection>{
             System.out.println("The record does not exist.");
             return null;
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "The record does not exist for the Projection - available times");
             return null;
         }
     }
@@ -128,7 +128,7 @@ public class ProjectionDAO implements DAO<Projection>{
             System.out.println("The record does not exist.");
             return null;
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "The record does not exist for the Projection - available rooms");
             return null;
         }
     }
@@ -157,7 +157,7 @@ public class ProjectionDAO implements DAO<Projection>{
             System.out.println("The record does not exist.");
             setCurrentItem(null);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "The record does not exist for the Projection - search by columns");
             setCurrentItem(null);
         }
 
@@ -183,7 +183,7 @@ public class ProjectionDAO implements DAO<Projection>{
         try {
             response = db.setData("INSERT INTO Projection (StartTime, EndTime, Date, RoomID, MovieID) VALUES(?,?,?,?,?)", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong create operation for the Projection");
         }
 
         return response;
@@ -209,7 +209,7 @@ public class ProjectionDAO implements DAO<Projection>{
         try {
             response = db.setData("UPDATE Projection SET StartTime = '?', EndTime = '?', Date = '?', RoomID = '?', MovieID = '?' WHERE ProjectionID = '?'", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong update operation for the Projection");
         }
 
         return response;
@@ -228,7 +228,7 @@ public class ProjectionDAO implements DAO<Projection>{
         try {
             response = db.setData("DELETE FROM Projection WHERE ProjectionID = ?", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong remove operation for the Projection");
         }
 
         return response;
@@ -258,7 +258,7 @@ public class ProjectionDAO implements DAO<Projection>{
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "The record does not exist for the Projection");
         }
     }
 

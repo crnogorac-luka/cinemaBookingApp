@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 
@@ -53,9 +54,9 @@ public class CustomerDAO implements DAO<Customer> {
 
             setCurrentItem(fetchedCustomer);
         } catch (IndexOutOfBoundsException ex) {
-            System.out.println("The record does not exist.");
+            System.out.println("The record does not exist. - customer");
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong record for the customer");
         }
     }
 
@@ -91,15 +92,18 @@ public class CustomerDAO implements DAO<Customer> {
 
                 setCurrentItem(fetchedCustomer);
             } else {
-                System.out.println("Wrong username or password. Try again.");
+                System.out.println("Wrong username or password. Try again. - customer");
+                JOptionPane.showMessageDialog(null,  "Wrong username or password. Try again.");
             }
 
 
 
         } catch (IndexOutOfBoundsException ex) {
-            System.out.println("The record does not exist.");
+            System.out.println("The record does not exist. - Customer");
+            JOptionPane.showMessageDialog(null, "The record does not exist.");
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong record for the customer");
+            JOptionPane.showMessageDialog(null,  "The record does not exist.");
         }
     }
 
@@ -120,7 +124,7 @@ public class CustomerDAO implements DAO<Customer> {
         try {
             response = db.setData("INSERT INTO Customer (FirstName, LastName, Phone, Email) VALUES(?,?,?,?)", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong create operation for the customer");
         }
 
         return response;
@@ -144,7 +148,7 @@ public class CustomerDAO implements DAO<Customer> {
         try {
             response = db.setData("UPDATE Customer SET FirstName = '?', LastName = '?', Phone = '?', Email = '?' WHERE PersonID = '?'", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong update operation for the customer");
         }
 
         return response;
@@ -163,7 +167,7 @@ public class CustomerDAO implements DAO<Customer> {
         try {
             response = db.setData("DELETE FROM Customer WHERE CustomerID = ?", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong remove operation for the customer");
         }
 
         return response;
@@ -192,7 +196,7 @@ public class CustomerDAO implements DAO<Customer> {
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "The record doesn't exist for the customer");
         }
     }
 }

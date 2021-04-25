@@ -60,7 +60,7 @@ public class MovieDAO implements DAO<Movie>{
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "The record does not exist for the movie");
         }
     }
 
@@ -83,7 +83,7 @@ public class MovieDAO implements DAO<Movie>{
         try {
             response = db.setData("INSERT INTO Movie (Title, Genre, Description, Duration, Is3D) VALUES(?,?,?,?,?)", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "The record does not exist for the movie");
         }
 
         return response;
@@ -109,7 +109,7 @@ public class MovieDAO implements DAO<Movie>{
         try {
             response = db.setData("UPDATE Movie SET Title = '?', Genre = '?', Description = '?', Duration = '?', Is3D = '?' WHERE MovieID = '?'", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong insert for the movie");
         }
 
         return response;
@@ -128,7 +128,7 @@ public class MovieDAO implements DAO<Movie>{
         try {
             response = db.setData("DELETE FROM Movie WHERE MovieID = ?", values);
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "Wrong remove operation for the movie");
         }
 
         return response;
@@ -160,7 +160,7 @@ public class MovieDAO implements DAO<Movie>{
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("The record does not exist.");
         } catch (Exception e) {
-            e.printStackTrace();
+            new DBException(e, "The record does not exist for the movie");
         }
     }
 
