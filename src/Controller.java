@@ -404,7 +404,7 @@ public class Controller {
                         view.getSeatsPage().getTicketsSelected().add(tickets);
                         view.getSeatsPage().getTextField1().setText(view.getSeatsPage().getTextField1().getText() + "" + tickets + ",");
                         view.getSeatsPage().getTicketsSelected().add(tickets);
-
+                        view.getSeatsPage().getSeatsList().setEnabled(false);
                         // set the price
                     double newPrice = calcPrice();
                     view.getSeatsPage().getTextField2().setText(Double.toString(newPrice));
@@ -466,6 +466,12 @@ public class Controller {
 
                 int customerId = ((Customer) model.getDaoCollection().get("customer").getCurrentItem()).getPersonID();
                 int projectionId = ((Projection) model.getDaoCollection().get("projection").getCurrentItem()).getProjectionID();
+
+                // Info to display when ticket is bought
+                String projectionStartTime = ((Projection) model.getDaoCollection().get("projection").getCurrentItem()).getStartTime();
+                int projectionRoom = ((Projection) model.getDaoCollection().get("projection").getCurrentItem()).getRoomID();
+                String movieName = ((Movie) model.getDaoCollection().get("movie").getCurrentItem()).getTitle();
+
                 model.getDaoCollection().get("reservation").create(new Reservation(1, customerId, projectionId, Integer.parseInt(view.getSeatsPage().getSeatCode())));
 
                 ((ReservationDAO)model.getDaoCollection().get("reservation")).fetchByColumn(customerId, projectionId, Integer.parseInt(view.getSeatsPage().getSeatCode()));
@@ -475,8 +481,8 @@ public class Controller {
                 double price = calcPrice();
                 model.getDaoCollection().get("ticket").create(new Ticket(reservationId, price, 1));
 
-               model.getDaoCollection().get("reservation").remove(reservationId);
-                JOptionPane.showMessageDialog(null, "Ticket successfuly bought!");
+                model.getDaoCollection().get("reservation").remove(reservationId);
+                JOptionPane.showMessageDialog(null, "You bought tickets for " + movieName + " that starts at " + projectionStartTime + " in a room " + projectionRoom + ".");
 
                 }
              }
@@ -485,6 +491,13 @@ public class Controller {
         private class GoBackToHome implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
+                view.getSeatsPage().getTextField1().setText("");
+                view.getSeatsPage().getTextField2().setText("");
+                view.getSeatsPage().getRadioButton2().setSelected(false);
+                view.getSeatsPage().getRadioButton3().setSelected(false);
+                view.getSeatsPage().getButton1().setEnabled(false);
+                view.getSeatsPage().getButton2().setEnabled(false);
+                view.getSeatsPage().getSeatsList().setEnabled(true);
                 view.getSeatsPage().setVisible(false);
                 view.getHomeUserPage().setVisible(true);
             }
