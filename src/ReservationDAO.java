@@ -152,6 +152,27 @@ public class ReservationDAO implements DAO<Reservation>{
             e.printStackTrace();
         }
     }
+
+    public boolean checkSeat(int seatCode, int projectionID) {
+        ArrayList<String> values = new ArrayList<String>();
+        values.add("" + seatCode);
+        values.add("" + projectionID);
+
+        try {
+            ArrayList<ArrayList<String>> row = db.getData("SELECT * FROM Reservation WHERE SeatCode = ? AND ProjectionID = ?", values, false);
+            if(row.isEmpty()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (IndexOutOfBoundsException ex) {
+            System.out.println(ex);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return true;
+        }
+    }
 }
 
 //public class Reservation {

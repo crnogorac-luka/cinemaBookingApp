@@ -452,7 +452,7 @@ public class Controller {
             view.getSeatsPage().seatRow = tickets.substring(1,2);
             view.getSeatsPage().seatCode = Integer.toString(view.getSeatsPage().getSeatsList().getSelectedIndex() + 1);
             if (e.getClickCount() == 1) {
-                if (view.getSeatsPage().getTicketsSelected().contains(tickets)) {
+                if (!((ReservationDAO) model.getDaoCollection().get("reservation")).checkSeat(Integer.parseInt(view.getSeatsPage().getSeatCode()), ((Projection) model.getDaoCollection().get("projection").getCurrentItem()).getProjectionID())) {
                     JOptionPane.showMessageDialog(null, "The seat is already taken.");
                     System.out.println("The seat is already taken");
                 } else {
@@ -525,11 +525,18 @@ public class Controller {
             if(view.getSeatsPage().getTextField1().getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Please select seat before buying ticket.");
             } else {
+
+                int customerId = ((Customer) model.getDaoCollection().get("customer").getCurrentItem()).getPersonID();
+                int projectionId = ((Projection) model.getDaoCollection().get("projection").getCurrentItem()).getProjectionID();
+                model.getDaoCollection().get("reservation").create(new Reservation(1, customerId, projectionId, Integer.parseInt(view.getSeatsPage().getSeatCode())));
+
                 Reservation reservation = (Reservation) model.getDaoCollection().get("reservation").getCurrentItem();
                 int reservationId = reservation.getReservationID();
 
                 double price = calcPrice();
                 model.getDaoCollection().get("ticket").create(new Ticket(reservationId, price, 1));
+
+                model.getDaoCollection().get("reservation").remove(reservationId);
             }
         }
         }
