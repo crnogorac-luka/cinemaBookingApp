@@ -136,8 +136,10 @@ public class Controller {
         boolean accountSuccess = false;
         boolean customerSuccess = false;
 
+
         @Override
         public void actionPerformed(ActionEvent e) {
+
             String fName = view.getRegisterPage().getFNameFld().getText();
             String lName = view.getRegisterPage().getLNameFld().getText();
             String phone = String.valueOf(view.getRegisterPage().getPhoneFld().getText());
@@ -145,11 +147,24 @@ public class Controller {
             String password = String.valueOf(view.getRegisterPage().getPasswordFld().getPassword());
             accountSuccess = (model.getDaoCollection().get("accountInfo")).create(new AccountInfo(email, password));
             if (accountSuccess) {
-                customerSuccess = (model.getDaoCollection().get("customer")).create(new Customer(fName, lName, phone, email));
+                if(fName.length() >= 3 || lName.length() >= 3 || phone.length() == 11 || password.length() >= 8) {
+                    customerSuccess = (model.getDaoCollection().get("customer")).create(new Customer(fName, lName, phone, email));
+                }else {
+                    JOptionPane.showMessageDialog(null, "Please, provide all required information");
+
+                }
                 if (customerSuccess) {
 
                     view.getRegisterPage().dispose();
                     view.getLoginPage().setVisible(true);
+                    view.getRegisterPage().getFNameFld().setText("");
+                    view.getRegisterPage().getLNameFld().setText("");
+                    view.getRegisterPage().getPhoneFld().setText("");
+                    view.getRegisterPage().getEmailFld().setText("");
+                    view.getRegisterPage().getPasswordFld().setText("");
+                    view.getLoginPage().getLoginFld().setText(email);
+                    view.getLoginPage().getPasswordField().setText(password);
+
                 }
             }
         }
@@ -419,11 +434,14 @@ public class Controller {
 
             Reservation reservation = (Reservation) model.getDaoCollection().get("reservation").getCurrentItem();
             Cashier cashier = (Cashier) model.getDaoCollection().get("cashier").getCurrentItem();
+            System.out.println(cashier.getName());
             Projection projection = (Projection) model.getDaoCollection().get("projection").getCurrentItem();
             Room room = (Room) model.getDaoCollection().get("room").getCurrentItem();
 
             model.getDaoCollection().get("ticket").create(new Ticket(reservation.getReservationID(),calcPrice(),cashier.getCashierID()));
             System.out.println("Data inserted: ReservationID: " + reservation.getReservationID() + " Price: " + calcPrice() + " CashierID: " + cashier.getCashierID());
+
+            JOptionPane.showMessageDialog(null, "The ticket(s) were proceed.");
         }
     }
 
