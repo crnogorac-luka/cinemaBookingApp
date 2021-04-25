@@ -55,6 +55,7 @@ public class SeatsPage extends JFrame {
     public JRadioButton getRadioButton3() {return radioButton3;}
     public JButton getButton1() {return button1;} // reserve tickets
     public JButton getButton2() {return button2;} // buy tickets
+    public JButton getButton4() {return  button4;} // go back
 
     public ArrayList<String> getTicketsSelected() {return ticketsSelected;}
 
@@ -63,6 +64,7 @@ public class SeatsPage extends JFrame {
     public void attachHandlerJRadio(ActionListener e) { radioButton2.addActionListener(e); }
     public void attachHandlerJRadioTwo(ActionListener e) { radioButton3.addActionListener(e); }
     public void attachHandlerBuyTicket(ActionListener e) {button2.addActionListener(e);}
+    public void attachHandlerGoBack(ActionListener e) {button4.addActionListener(e);}
 
 
     private void list1_itemClicked(MouseEvent e) {
@@ -92,10 +94,11 @@ public class SeatsPage extends JFrame {
         panel8 = new JPanel();
         label2 = new JLabel();
         textField1 = new JTextField();
+        button1 = new JButton();
         label3 = new JLabel();
         textField2 = new JTextField();
-        button1 = new JButton();
         button2 = new JButton();
+        button4 = new JButton();
         panel9 = new JPanel();
         button3 = new JButton();
         scrollPane1 = new JScrollPane();
@@ -110,13 +113,13 @@ public class SeatsPage extends JFrame {
 
             //======== panel4 ========
             {
-                panel4.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax
-                . swing. border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax. swing
-                . border. TitledBorder. CENTER, javax. swing. border. TitledBorder. BOTTOM, new java .awt .
-                Font ("Dia\u006cog" ,java .awt .Font .BOLD ,12 ), java. awt. Color. red
-                ) ,panel4. getBorder( )) ); panel4. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override
-                public void propertyChange (java .beans .PropertyChangeEvent e) {if ("\u0062ord\u0065r" .equals (e .getPropertyName (
-                ) )) throw new RuntimeException( ); }} );
+                panel4.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.
+                swing.border.EmptyBorder(0,0,0,0), "JF\u006frm\u0044es\u0069gn\u0065r \u0045va\u006cua\u0074io\u006e",javax.swing.border
+                .TitledBorder.CENTER,javax.swing.border.TitledBorder.BOTTOM,new java.awt.Font("D\u0069al\u006fg"
+                ,java.awt.Font.BOLD,12),java.awt.Color.red),panel4. getBorder
+                ()));panel4. addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override public void propertyChange(java
+                .beans.PropertyChangeEvent e){if("\u0062or\u0064er".equals(e.getPropertyName()))throw new RuntimeException
+                ();}});
                 panel4.setLayout(new GridLayout(2, 0));
 
                 //======== panel5 ========
@@ -164,6 +167,11 @@ public class SeatsPage extends JFrame {
                                 panel8.add(label2);
                                 panel8.add(textField1);
 
+                                //---- button1 ----
+                                button1.setText("Reserve tickets");
+                                button1.addActionListener(e -> btn_reserveTickets(e));
+                                panel8.add(button1);
+
                                 //---- label3 ----
                                 label3.setText("Total");
                                 label3.setFont(label3.getFont().deriveFont(label3.getFont().getStyle() | Font.BOLD, label3.getFont().getSize() + 6f));
@@ -171,14 +179,13 @@ public class SeatsPage extends JFrame {
                                 panel8.add(label3);
                                 panel8.add(textField2);
 
-                                //---- button1 ----
-                                button1.setText("Reserve tickets");
-                                button1.addActionListener(e -> btn_reserveTickets(e));
-                                panel8.add(button1);
-
                                 //---- button2 ----
                                 button2.setText("Buy ticket(s)");
                                 panel8.add(button2);
+
+                                //---- button4 ----
+                                button4.setText("Go back");
+                                panel8.add(button4);
                             }
                             panel7.add(panel8);
                         }
@@ -268,10 +275,11 @@ public class SeatsPage extends JFrame {
     private JPanel panel8;
     private JLabel label2;
     private JTextField textField1;
+    private JButton button1;
     private JLabel label3;
     private JTextField textField2;
-    private JButton button1;
     private JButton button2;
+    private JButton button4;
     private JPanel panel9;
     private JButton button3;
     private JScrollPane scrollPane1;

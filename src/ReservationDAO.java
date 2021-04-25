@@ -173,6 +173,30 @@ public class ReservationDAO implements DAO<Reservation>{
             return true;
         }
     }
+
+    public void fetchByColumn(int customerID, int projectionID, int seatCode) {
+        ArrayList<String> values = new ArrayList<String>();
+        values.add("" + customerID);
+        values.add("" + projectionID);
+        values.add("" + seatCode);
+        Reservation fetchedReservation = new Reservation();
+
+        try {
+            ArrayList<ArrayList<String>> row = db.getData("SELECT * FROM Reservation WHERE CustomerID = ? AND ProjectionID = ? AND SeatCode = ?", values, false);
+            fetchedReservation.setReservationID(Integer.parseInt(row.get(0).get(0)));
+            fetchedReservation.setCustomerID(Integer.parseInt(row.get(0).get(1)));
+            fetchedReservation.setProjectionID(Integer.parseInt(row.get(0).get(2)));
+            fetchedReservation.setSeatCode(Integer.parseInt(row.get(0).get(3)));
+
+            setCurrentReservation(fetchedReservation);
+        } catch (IndexOutOfBoundsException ex) {
+            System.out.println("The record does not exist.");
+            setCurrentReservation(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            setCurrentReservation(null);
+        }
+    }
 }
 
 //public class Reservation {
