@@ -36,6 +36,7 @@ public class Controller {
         ReserveButton resBtn = new ReserveButton();
         BuyTicketButton btb = new BuyTicketButton();
         BuyRadioButton brb = new BuyRadioButton();
+        GoBackToHome goBackToHome = new GoBackToHome();
         RegisterUser registerUser = new RegisterUser();
         ChangeMovie changeMoviePrev = new ChangeMovie(false);
         ChangeMovie changeMovieNext = new ChangeMovie(true);
@@ -48,6 +49,8 @@ public class Controller {
         this.view.getSeatsPage().attachHandlerJRadio(rrb);
         this.view.getSeatsPage().attachHandlerJRadioTwo(brb);
         this.view.getSeatsPage().attachHandlerReserve(resBtn);
+        this.view.getSeatsPage().attachHandlerBuyTicket(btb);
+        this.view.getSeatsPage().attachHandlerGoBack(goBackToHome);
         this.view.getHomeCashierPage().searchBtn(searchID);
         this.view.getHomeCashierPage().sellTicketsBtn(sellTickets);
         //this.view.getSeatsPage().attachHandlerBuyTicket(btb);
@@ -414,7 +417,7 @@ public class Controller {
             view.getSeatsPage().seatRow = tickets.substring(1,2);
             view.getSeatsPage().seatCode = Integer.toString(view.getSeatsPage().getSeatsList().getSelectedIndex() + 1);
             if (e.getClickCount() == 1) {
-                if (view.getSeatsPage().getTicketsSelected().contains(tickets)) {
+                if (!((ReservationDAO) model.getDaoCollection().get("reservation")).checkSeat(Integer.parseInt(view.getSeatsPage().getSeatCode()), ((Projection) model.getDaoCollection().get("projection").getCurrentItem()).getProjectionID())) {
                     JOptionPane.showMessageDialog(null, "The seat is already taken.");
                     System.out.println("The seat is already taken");
                 } else {
@@ -487,12 +490,30 @@ public class Controller {
             if(view.getSeatsPage().getTextField1().getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Please select seat before buying ticket.");
             } else {
+
+                int customerId = ((Customer) model.getDaoCollection().get("customer").getCurrentItem()).getPersonID();
+                int projectionId = ((Projection) model.getDaoCollection().get("projection").getCurrentItem()).getProjectionID();
+                model.getDaoCollection().get("reservation").create(new Reservation(1, customerId, projectionId, Integer.parseInt(view.getSeatsPage().getSeatCode())));
+
+                ((ReservationDAO)model.getDaoCollection().get("reservation")).fetchByColumn(customerId, projectionId, Integer.parseInt(view.getSeatsPage().getSeatCode()));
                 Reservation reservation = (Reservation) model.getDaoCollection().get("reservation").getCurrentItem();
                 int reservationId = reservation.getReservationID();
 
                 double price = calcPrice();
-                ((TicketDAO)model.getDaoCollection().get("ticket")).createAsCustomer(new Ticket(reservationId, price, -1));
-            }
+                model.getDaoCollection().get("ticket").create(new Ticket(reservationId, price, 1));
+
+               model.getDaoCollection().get("reservation").remove(reservationId);
+                JOptionPane.showMessageDialog(null, "Ticket successfuly bought!");
+
+                }
+             }
         }
+
+        private class GoBackToHome implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                view.getSeatsPage().setVisible(false);
+                view.getHomeUserPage().setVisible(true);
+            }
         }
     }

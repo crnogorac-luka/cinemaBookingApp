@@ -54,6 +54,11 @@ new FormModel {
 									add( new FormComponent( "javax.swing.JTextField" ) {
 										name: "textField1"
 									} )
+									add( new FormComponent( "javax.swing.JButton" ) {
+										name: "button1"
+										"text": "Reserve tickets"
+										addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btn_reserveTickets", true ) )
+									} )
 									add( new FormComponent( "javax.swing.JLabel" ) {
 										name: "label3"
 										"text": "Total"
@@ -64,13 +69,12 @@ new FormModel {
 										name: "textField2"
 									} )
 									add( new FormComponent( "javax.swing.JButton" ) {
-										name: "button1"
-										"text": "Reserve tickets"
-										addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btn_reserveTickets", true ) )
-									} )
-									add( new FormComponent( "javax.swing.JButton" ) {
 										name: "button2"
 										"text": "Buy ticket(s)"
+									} )
+									add( new FormComponent( "javax.swing.JButton" ) {
+										name: "button4"
+										"text": "Go back"
 									} )
 								} )
 							} )
