@@ -304,9 +304,21 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             int movieId = ((Movie)model.getDaoCollection().get("movie").getCurrentItem()).getMovieID();
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            String date = view.getHomeUserPage().getSelectDateBox().getSelectedItem().toString();
-            String startTime = view.getHomeUserPage().getSelectTimeBox().getSelectedItem().toString();
-            String idString = view.getHomeUserPage().getSelectRoomBox().getSelectedItem().toString();
+            String date = "";
+            if(view.getHomeUserPage().getSelectDateBox().getModel().getSize() == 1)
+                date = view.getHomeUserPage().getSelectDateBox().getItemAt(0).toString();
+            else
+                date = view.getHomeUserPage().getSelectDateBox().getSelectedItem().toString();
+            String startTime = "";
+            if(view.getHomeUserPage().getSelectTimeBox().getModel().getSize() == 1)
+                startTime = view.getHomeUserPage().getSelectTimeBox().getItemAt(0).toString();
+            else
+                startTime = view.getHomeUserPage().getSelectTimeBox().getSelectedItem().toString();
+            String idString = "";
+            if(view.getHomeUserPage().getSelectRoomBox().getModel().getSize() == 1)
+                idString = view.getHomeUserPage().getSelectRoomBox().getItemAt(0).toString();
+            else
+                idString = view.getHomeUserPage().getSelectRoomBox().getSelectedItem().toString();
             int roomID = -1;
 
             if (date == null || startTime.equals("") || idString.equals("")) {
@@ -316,8 +328,12 @@ public class Controller {
                 model.getDaoCollection().get("room").fetch(roomID);
 
                 ((ProjectionDAO)model.getDaoCollection().get("projection")).fetchProjectionByColumns(movieId, date, startTime, roomID);
-                view.getHomeUserPage().setVisible(false);
-                view.getSeatsPage().setVisible(true);
+                if(model.getDaoCollection().get("projection").getCurrentItem() != null) {
+                    view.getHomeUserPage().setVisible(false);
+                    view.getSeatsPage().setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Projection doesn't exist, please select required info again.");
+                }
             }
 
         }
