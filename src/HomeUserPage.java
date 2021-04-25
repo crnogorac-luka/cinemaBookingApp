@@ -101,7 +101,7 @@ public class HomeUserPage extends JFrame {
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - unknown
+        // Generated using JFormDesigner Evaluation license - Luka Crnogorac
         label1 = new JLabel();
         label2 = new JLabel();
         label11 = new JLabel();
@@ -319,6 +319,9 @@ public class HomeUserPage extends JFrame {
 
         //======== scrollPane1 ========
         {
+
+            //---- descriptionArea ----
+            descriptionArea.setLineWrap(true);
             scrollPane1.setViewportView(descriptionArea);
         }
         contentPane.add(scrollPane1, new GridConstraints(10, 4, 1, 1,
@@ -332,7 +335,7 @@ public class HomeUserPage extends JFrame {
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - unknown
+    // Generated using JFormDesigner Evaluation license - Luka Crnogorac
     private JLabel label1;
     private JLabel label2;
     private JLabel label11;

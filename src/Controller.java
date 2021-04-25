@@ -1,3 +1,5 @@
+import org.w3c.dom.ls.LSOutput;
+
 import javax.swing.*;
 import java.awt.event.*;
 import java.text.DateFormat;
@@ -225,17 +227,31 @@ public class Controller {
     private class SelectDate implements ItemListener {
 
         int movieID = ((Movie) model.getDaoCollection().get("movie").getCurrentItem()).getMovieID();
+        String date = view.getHomeUserPage().getSelectDateBox().getItemAt(0).toString();
+        ArrayList<String> times = ((ProjectionDAO)model.getDaoCollection().get("projection")).fetchAvailableTimes(movieID, date);
+        ArrayList<String> rooms;
 
+        SelectDate() {
+            view.getHomeUserPage().getSelectTimeBox().setModel(new DefaultComboBoxModel<>(times.toArray()));
+        }
 
         @Override
         public void itemStateChanged(ItemEvent event) {
 
             if (event.getStateChange() == ItemEvent.SELECTED) {
-                String date = event.getItem().toString();
+                movieID = ((Movie) model.getDaoCollection().get("movie").getCurrentItem()).getMovieID();
+                System.out.println(movieID);
+                date = event.getItem().toString();
 
-                ArrayList<String> times = ((ProjectionDAO)model.getDaoCollection().get("projection")).fetchAvailableTimes(movieID, date);
-                System.out.println(times.toString());
+                times = ((ProjectionDAO)model.getDaoCollection().get("projection")).fetchAvailableTimes(movieID, date);
+                System.out.println("All times for clicked date: "+times.toString());
+
                 view.getHomeUserPage().getSelectTimeBox().setModel(new DefaultComboBoxModel<>(times.toArray()));
+
+                rooms = ((ProjectionDAO)model.getDaoCollection().get("projection")).fetchAvailableRooms(movieID, date, times.get(0));
+                System.out.println("All rooms for selected time: ");
+
+                view.getHomeUserPage().getSelectRoomBox().setModel(new DefaultComboBoxModel<>(rooms.toArray()));
             }
 
         }
@@ -243,19 +259,30 @@ public class Controller {
 
     private class SelectTime implements ItemListener {
 
-        int movieID = ((Movie) model.getDaoCollection().get("movie").getCurrentItem()).getMovieID();
-        String date = view.getHomeUserPage().getSelectDateBox().getItemAt(0).toString();
+        int movieID;
+        String date;
+        String time;
+        ArrayList<String> rooms;
+
+        SelectTime() {
+            movieID = ((Movie) model.getDaoCollection().get("movie").getCurrentItem()).getMovieID();
+            date = view.getHomeUserPage().getSelectDateBox().getItemAt(0).toString();
+            time = view.getHomeUserPage().getSelectTimeBox().getItemAt(0).toString();
+
+            rooms = ((ProjectionDAO)model.getDaoCollection().get("projection")).fetchAvailableRooms(movieID, date, time);
+            view.getHomeUserPage().getSelectRoomBox().setModel(new DefaultComboBoxModel<>(rooms.toArray()));
+        }
 
         @Override
         public void itemStateChanged(ItemEvent event) {
 
             if (event.getStateChange() == ItemEvent.SELECTED) {
-                String time = event.getItem().toString();
-
+                time = event.getItem().toString();
                 movieID = ((Movie) model.getDaoCollection().get("movie").getCurrentItem()).getMovieID();
                 date = view.getHomeUserPage().getSelectDateBox().getSelectedItem().toString();
-                System.out.println(date);
-                ArrayList<String> rooms = ((ProjectionDAO)model.getDaoCollection().get("projection")).fetchAvailableRooms(movieID, date, time);
+
+                rooms = ((ProjectionDAO)model.getDaoCollection().get("projection")).fetchAvailableRooms(movieID, date, time);
+                System.out.println("All rooms for selected time: ");
 
                 view.getHomeUserPage().getSelectRoomBox().setModel(new DefaultComboBoxModel<>(rooms.toArray()));
             }
